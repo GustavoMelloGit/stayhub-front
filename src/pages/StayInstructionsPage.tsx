@@ -1,21 +1,24 @@
+import { useGetPublicStay } from '@/modules/stay/service/StayService.hooks';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
 import { useParams } from 'react-router-dom';
 
 const StayInstructionsPage: React.FC = () => {
   const { stay_id } = useParams<{ stay_id: string }>();
-
-  const stay = {
-    tenant: {
-      name: 'John Doe',
-    },
-    entranceCode: '123456',
-    checkIn: '2021-01-01',
-    checkOut: '2021-01-02',
-  };
+  const { data: stay, isPending } = useGetPublicStay(stay_id || '');
 
   return (
     <main className='grid place-items-center'>
-      <StayInstructionsView stay={stay} />
+      {isPending && <div>Carregando...</div>}
+      {stay && (
+        <StayInstructionsView
+          stay={{
+            checkIn: stay.check_in,
+            checkOut: stay.check_out,
+            entranceCode: stay.entrance_code,
+            tenant: stay.tenant,
+          }}
+        />
+      )}
     </main>
   );
 };

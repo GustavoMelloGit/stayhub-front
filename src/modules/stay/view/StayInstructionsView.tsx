@@ -10,13 +10,22 @@ import {
   Wrench,
 } from 'lucide-react';
 
+const dateFormatter = Intl.DateTimeFormat('pt-BR', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZone: 'America/Sao_Paulo',
+});
+
 type Stay = {
   tenant: {
     name: string;
   };
   entranceCode: string;
-  checkIn: string;
-  checkOut: string;
+  checkIn: Date;
+  checkOut: Date;
 };
 
 type Props = {
@@ -24,8 +33,9 @@ type Props = {
 };
 
 export const StayInstructionsView: FC<Props> = ({ stay }) => {
-  const checkInDate = stay.checkIn;
-  const checkOutDate = stay.checkOut;
+  const checkInDate = dateFormatter.format(stay.checkIn);
+  const checkOutDate = dateFormatter.format(stay.checkOut);
+
   return (
     <div className='max-w-[40rem] space-y-4 leading-none'>
       <img
@@ -163,6 +173,11 @@ export const StayInstructionsView: FC<Props> = ({ stay }) => {
                   aperte &quot;#&quot;.
                 </li>
                 <li>
+                  <b>Evite problemas:</b> mantenha o pequeno
+                  &quot;interruptor&quot; abaixo da maçaneta (lado de dentro)
+                  sempre na posição para baixo.
+                </li>
+                <li>
                   <iframe
                     className='w-full aspect-video'
                     src='https://www.youtube.com/embed/Y8eaU1zkkB8'
@@ -171,11 +186,6 @@ export const StayInstructionsView: FC<Props> = ({ stay }) => {
                     referrerPolicy='strict-origin-when-cross-origin'
                     allowFullScreen
                   ></iframe>
-                </li>
-                <li>
-                  <b>Evite problemas:</b> mantenha o pequeno
-                  &quot;interruptor&quot; abaixo da maçaneta (lado de dentro)
-                  sempre na posição para baixo.
                 </li>
               </ul>
             </div>
