@@ -7,7 +7,7 @@ import PropertyListView from '@/modules/property/view/PropertyListView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
-import { AppLayout } from '@/components/AppLayout';
+import { AppLayout } from '@/components/layout/AppLayout';
 
 export const router = createBrowserRouter([
   {
