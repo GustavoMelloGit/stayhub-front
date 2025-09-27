@@ -31,159 +31,159 @@ export const StayInstructionsView: FC = () => {
   const checkOutDate = dateFormatter.format(stay.check_out);
 
   return (
-    <div className='max-w-[40rem] space-y-4 leading-none'>
-      <img
-        src='/stay-image.jpeg'
-        alt='apartamento 201 - Praia dos Castelhanos'
-        className='sm:rounded-2xl'
-        width={764}
-        height={429}
-        loading='eager'
-      />
-      <div className='px-4 pb-10 space-y-4'>
-        <div className='space-y-1'>
-          <h1 className='text-xl font-bold'>Olá, {stay.tenant.name}</h1>
-          <h2 className='leading-tight'>
-            Que bom ter você com a gente! Para tornar sua estadia ainda mais
-            tranquila, reunimos aqui algumas informações importantes:
-          </h2>
-        </div>
+    <div className='bg-[#fbf4ed]'>
+      <div className='max-w-[40rem] mx-auto space-y-4 leading-none'>
+        <img
+          src='/stay-image.jpeg'
+          alt='apartamento 201 - Praia dos Castelhanos'
+          className='sm:rounded-2xl'
+          width={764}
+          height={429}
+          loading='eager'
+        />
+        <div className='px-4 pb-10 space-y-4'>
+          <div className='space-y-1'>
+            <h1 className='text-xl font-bold'>Olá, {stay.tenant.name}</h1>
+            <h2 className='leading-tight'>
+              Que bom ter você com a gente! Para tornar sua estadia ainda mais
+              tranquila, reunimos aqui algumas informações importantes:
+            </h2>
+          </div>
 
-        <div className='space-y-3 [&>section]:space-y-2 [&_h3]:font-semibold'>
-          <section>
-            <h3>COMO CHEGAR</h3>
-            <div className='flex gap-2'>
-              <MapPin size={20} className='min-w-5' />
-              <div className='space-y-1'>
-                <h4 className='font-semibold'>Endereço</h4>
-                <p>
-                  Rua Salma Souki Oliveira, S/N, Praia dos Castelhanos.
-                  <br />
-                  Ed. Bandeira Azul, Ap. 201
-                </p>
+          <div className='space-y-3 [&>section]:space-y-2 [&_h3]:font-semibold'>
+            <section>
+              <h3>COMO CHEGAR</h3>
+              <div className='flex gap-2'>
+                <MapPin size={20} className='min-w-5' />
+                <div className='space-y-1'>
+                  <h4 className='font-semibold'>Endereço</h4>
+                  <p>
+                    Rua Salma Souki Oliveira, S/N, Praia dos Castelhanos.
+                    <br />
+                    Ed. Bandeira Azul, Ap. 201
+                  </p>
+                </div>
               </div>
-            </div>
-            <Button
-              variant='outline'
-              className='border-cyan-600 w-full'
-              asChild
-            >
-              <a
-                href='https://maps.app.goo.gl/S5G5VZWHwgY7jZtR8'
-                target='_blank'
-                referrerPolicy='no-referrer'
-              >
-                Abrir no Google Maps
-              </a>
-            </Button>
-          </section>
-          <Separator />
-          <section>
-            <h3>CHECK-IN & CHECK-OUT</h3>
-
-            <div className='grid grid-cols-2 ring ring-neutral-300 border-neutral-300 rounded-lg [&>div]:p-2 [&>div]:space-y-0.5 [&_.value]:font-light [&_.label]:font-medium'>
-              <div className='border-b border-r border-inherit'>
-                <p className='label'>Após</p>
-                <span className='value'>{checkInDate}</span>
-              </div>
-              <div className='border-b border-inherit'>
-                <p className='label'>Até</p>
-                <span className='value'>{checkOutDate}</span>
-              </div>
-              <div className='border-r border-inherit'>
-                <p className='label'>Co-anfitrião</p>
-                <a className='underline value' href='tel:+5528999849054'>
-                  +55 28 99984-9054
+              <Button variant='default' className='w-full' asChild>
+                <a
+                  href='https://maps.app.goo.gl/S5G5VZWHwgY7jZtR8'
+                  target='_blank'
+                  referrerPolicy='no-referrer'
+                >
+                  Abrir no Google Maps
                 </a>
+              </Button>
+            </section>
+            <Separator />
+            <section>
+              <h3>CHECK-IN & CHECK-OUT</h3>
+
+              <div className='grid grid-cols-2 ring ring-neutral-300 border-neutral-300 rounded-lg [&>div]:p-2 [&>div]:space-y-0.5 [&_.value]:font-light [&_.label]:font-medium'>
+                <div className='border-b border-r border-inherit'>
+                  <p className='label'>Após</p>
+                  <span className='value'>{checkInDate}</span>
+                </div>
+                <div className='border-b border-inherit'>
+                  <p className='label'>Até</p>
+                  <span className='value'>{checkOutDate}</span>
+                </div>
+                <div className='border-r border-inherit'>
+                  <p className='label'>Co-anfitrião</p>
+                  <a className='underline value' href='tel:+5528999849054'>
+                    +55 28 99984-9054
+                  </a>
+                </div>
+                <div>
+                  <p className='label'>Senha</p>
+                  <span className='value'>{stay.entrance_code}</span>
+                </div>
               </div>
-              <div>
-                <p className='label'>Senha</p>
-                <span className='value'>{stay.entrance_code}</span>
+              <p>
+                O co-anfitrião acompanhará seu check-in e check-out. Por isso,{' '}
+                <strong>
+                  avise o horário da sua chegada com antecedência.
+                </strong>
+              </p>
+              <p>
+                Sua senha da fechadura eletrônica é:{' '}
+                <strong>{stay.entrance_code}</strong>. <br />
+                Ela é exclusiva da sua estadia e será desativada automaticamente
+                logo após o check-out.
+              </p>
+            </section>
+            <Separator />
+            <section>
+              <h3>WIFI</h3>
+              <div className='grid grid-cols-2 ring ring-neutral-300 border-neutral-300 rounded-lg [&>div]:p-2 [&>div]:space-y-0.5 [&_.value]:font-light [&_.label]:font-medium'>
+                <div className='border-r border-inherit'>
+                  <p className='label'>Nome</p>
+                  <span className='value'>WIFI_BANDEIRA</span>
+                </div>
+                <div>
+                  <p className='label'>Senha</p>
+                  <span className='value'>wmag2907</span>
+                </div>
               </div>
-            </div>
-            <p>
-              O co-anfitrião acompanhará seu check-in e check-out. Por isso,{' '}
-              <strong>avise o horário da sua chegada com antecedência.</strong>
-            </p>
-            <p>
-              Sua senha da fechadura eletrônica é:{' '}
-              <strong>{stay.entrance_code}</strong>. <br />
-              Ela é exclusiva da sua estadia e será desativada automaticamente
-              logo após o check-out.
-            </p>
-          </section>
-          <Separator />
-          <section>
-            <h3>WIFI</h3>
-            <div className='grid grid-cols-2 ring ring-neutral-300 border-neutral-300 rounded-lg [&>div]:p-2 [&>div]:space-y-0.5 [&_.value]:font-light [&_.label]:font-medium'>
-              <div className='border-r border-inherit'>
-                <p className='label'>Nome</p>
-                <span className='value'>WIFI_BANDEIRA</span>
-              </div>
-              <div>
-                <p className='label'>Senha</p>
-                <span className='value'>wmag2907</span>
-              </div>
-            </div>
-          </section>
-          <Separator />
-          <section>
-            <h3>REGRAS DA CASA</h3>
-            <ul className='[&>li]:flex [&>li]:gap-1  [&_svg]:min-w-5 space-y-2'>
-              <li>
-                <CarFront size={20} /> <span>Use apenas a vaga 201.</span>
-              </li>
-              <li>
-                <PawPrint size={20} />{' '}
-                <span>Pets só com autorização prévia do anfitrião.</span>
-              </li>
-              <li>
-                <Users size={20} />{' '}
-                <span>
-                  Apenas os hóspedes combinados devem permanecer no imóvel.
-                </span>
-              </li>
-              <li>
-                <DoorClosed size={20} />{' '}
-                <span>Mantenha as portas do condomínio sempre fechadas.</span>
-              </li>
-              <li>
-                <Wrench size={20} />{' '}
-                <span>
-                  Se algo estiver quebrado ou apresentar problemas, informe
-                  imediatamente.
-                </span>
-              </li>
-            </ul>
-          </section>
-          <Separator />
-          <section>
-            <h3>FECHADURA ELETRÔNICA</h3>
-            <div className='space-y-2'>
-              <ul className='space-y-2'>
+            </section>
+            <Separator />
+            <section>
+              <h3>REGRAS DA CASA</h3>
+              <ul className='[&>li]:flex [&>li]:gap-1  [&_svg]:min-w-5 space-y-2'>
                 <li>
-                  <b>Digite a senha:</b> toque na parte superior da fechadura
-                  até os números acenderem. Em seguida, insira sua senha e
-                  aperte &quot;#&quot;.
+                  <CarFront size={20} /> <span>Use apenas a vaga 201.</span>
                 </li>
                 <li>
-                  <b>Evite problemas:</b> mantenha o pequeno
-                  &quot;interruptor&quot; abaixo da maçaneta (lado de dentro)
-                  sempre na posição para baixo.
+                  <PawPrint size={20} />{' '}
+                  <span>Pets só com autorização prévia do anfitrião.</span>
                 </li>
                 <li>
-                  <iframe
-                    className='w-full aspect-video'
-                    src='https://www.youtube.com/embed/Y8eaU1zkkB8'
-                    title='Tuya APP WIFI Fechadura Digital de Sobrepor, Fechadura Eletronica Fechaduras Digital de Embutir'
-                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                    referrerPolicy='strict-origin-when-cross-origin'
-                    allowFullScreen
-                  ></iframe>
+                  <Users size={20} />{' '}
+                  <span>
+                    Apenas os hóspedes combinados devem permanecer no imóvel.
+                  </span>
+                </li>
+                <li>
+                  <DoorClosed size={20} />{' '}
+                  <span>Mantenha as portas do condomínio sempre fechadas.</span>
+                </li>
+                <li>
+                  <Wrench size={20} />{' '}
+                  <span>
+                    Se algo estiver quebrado ou apresentar problemas, informe
+                    imediatamente.
+                  </span>
                 </li>
               </ul>
-            </div>
-          </section>
+            </section>
+            <Separator />
+            <section>
+              <h3>FECHADURA ELETRÔNICA</h3>
+              <div className='space-y-2'>
+                <ul className='space-y-2'>
+                  <li>
+                    <b>Digite a senha:</b> toque na parte superior da fechadura
+                    até os números acenderem. Em seguida, insira sua senha e
+                    aperte &quot;#&quot;.
+                  </li>
+                  <li>
+                    <b>Evite problemas:</b> mantenha o pequeno
+                    &quot;interruptor&quot; abaixo da maçaneta (lado de dentro)
+                    sempre na posição para baixo.
+                  </li>
+                  <li>
+                    <iframe
+                      className='w-full aspect-video'
+                      src='https://www.youtube.com/embed/Y8eaU1zkkB8'
+                      title='Tuya APP WIFI Fechadura Digital de Sobrepor, Fechadura Eletronica Fechaduras Digital de Embutir'
+                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                      referrerPolicy='strict-origin-when-cross-origin'
+                      allowFullScreen
+                    ></iframe>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
