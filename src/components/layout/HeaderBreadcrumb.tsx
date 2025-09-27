@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { Fragment, type FC } from 'react';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -27,8 +27,8 @@ export const HeaderBreadcrumb: FC = () => {
         {breadcrumbItems.map((item, index) => {
           const isLast = index === breadcrumbItems.length - 1;
           return (
-            <>
-              <BreadcrumbItem key={item.href}>
+            <Fragment key={item.href}>
+              <BreadcrumbItem>
                 {isLast ? (
                   <BreadcrumbPage>{item.label}</BreadcrumbPage>
                 ) : (
@@ -36,7 +36,7 @@ export const HeaderBreadcrumb: FC = () => {
                 )}
               </BreadcrumbItem>
               {!isLast && <BreadcrumbSeparator />}
-            </>
+            </Fragment>
           );
         })}
       </BreadcrumbList>
