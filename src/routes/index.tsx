@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import DashboardView from '../modules/dashboard/view/DashboardView';
 import LoginView from '../modules/auth/view/LoginView';
 import SignupView from '../modules/auth/view/SignupView';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
 import { NotFoundView } from '@/modules/error/view/NotFoundView';
+import PropertyListView from '@/modules/property/view/PropertyListView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
@@ -15,7 +15,7 @@ import { ROUTES } from './routes';
  */
 export const router = createBrowserRouter([
   {
-    path: ROUTES.dashboard,
+    path: ROUTES.properties,
     element: (
       <ProtectedRoute>
         <App />
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardView />,
+        element: <PropertyListView />,
       },
     ],
   },
