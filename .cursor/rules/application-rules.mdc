@@ -4,11 +4,41 @@ globs:
 alwaysApply: true
 ---
 
+## Code style
+
+- **EVERY FILE** should be formatted with prettier.
+- **EVERY FILE** should be linted with eslint.
+- **EVERY FILE** should be type checked with typescript.
+- COMMENTS should not exist in the code created. You should always use the code to explain what you are doing, with good variable and function names, split of concerns, etc.
+- **EVERY** link should use the Link component from react-router-dom and use the ROUTES object to build the path.
+
 ## Components
 
 - When creating components, you should analyze if its a global or a local component.
 - If its a global component, you should create it in the `src/components` folder.
 - If its a local component, you should create it in the `src/modules/<module-name>/components` folder.
+- **EVERY REACT COMPONENT** should be a arrow function.
+- **EVERY REACT COMPONENT** should be typed as a FC. Similar to the following example:
+
+  ```tsx
+  import type { FC } from 'react';
+
+  const Component: FC = () => {
+    return <div>Component</div>;
+  };
+  ```
+
+  ```tsx
+  import type { FC } from 'react';
+
+  type Props = {
+    prop: string;
+  };
+
+  const Component: FC<Props> = ({ prop }) => {
+    return <div>Component</div>;
+  };
+  ```
 
 ## Modules
 
