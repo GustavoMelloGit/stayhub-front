@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import HomePage from '../pages/HomePage';
 import StayInstructionsPage from '../pages/StayInstructionsPage';
+import LoginPage from '../pages/LoginPage';
+import SignupPage from '../pages/SignupPage';
 
 /**
  * Configuração das rotas da aplicação StayHub
@@ -21,5 +23,13 @@ export const router = createBrowserRouter([
         element: <StayInstructionsPage />,
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignupPage />,
   },
 ]);
