@@ -4,6 +4,7 @@ import SignupView from '../modules/auth/view/SignupView';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
 import { NotFoundView } from '@/modules/error/view/NotFoundView';
 import PropertyListView from '@/modules/property/view/PropertyListView';
+import PropertyDetailView from '@/modules/property/view/PropertyDetailView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <PropertyListView />,
+      },
+      {
+        path: ROUTES.property(':property_id'),
+        element: <PropertyDetailView />,
       },
     ],
   },

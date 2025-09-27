@@ -1,7 +1,9 @@
 import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useUserProperties } from '../service/PropertyService.hooks';
 import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
+import { ROUTES } from '@/routes/routes';
 
 const PropertyListView: FC = () => {
   const { properties, isLoading, error } = useUserProperties();
@@ -120,9 +122,11 @@ const PropertyListView: FC = () => {
 
                 <div className='mt-4 pt-4 border-t border-gray-200'>
                   <div className='flex space-x-2'>
-                    <Button variant='outline' size='sm' className='flex-1'>
-                      Ver Detalhes
-                    </Button>
+                    <Link to={ROUTES.property(property.id)} className='flex-1'>
+                      <Button variant='outline' size='sm' className='w-full'>
+                        Ver Detalhes
+                      </Button>
+                    </Link>
                     <Button variant='outline' size='sm' className='flex-1'>
                       Gerenciar
                     </Button>
