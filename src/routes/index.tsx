@@ -1,5 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import LoginView from '../modules/auth/view/LoginView';
 import SignupView from '../modules/auth/view/SignupView';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
@@ -8,17 +7,16 @@ import PropertyListView from '@/modules/property/view/PropertyListView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
+import { AppLayout } from '@/components/AppLayout';
 
-/**
- * Configuração das rotas da aplicação StayHub
- * Define todas as rotas disponíveis e seus componentes correspondentes
- */
 export const router = createBrowserRouter([
   {
-    path: ROUTES.properties,
+    path: ROUTES.home,
     element: (
       <ProtectedRoute>
-        <App />
+        <AppLayout>
+          <Outlet />
+        </AppLayout>
       </ProtectedRoute>
     ),
     children: [
