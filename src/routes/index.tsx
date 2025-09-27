@@ -4,6 +4,9 @@ import DashboardView from '../modules/dashboard/view/DashboardView';
 import LoginView from '../modules/auth/view/LoginView';
 import SignupView from '../modules/auth/view/SignupView';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { PublicRoute } from '@/components/PublicRoute';
+import { ROUTES } from './routes';
 
 /**
  * Configuração das rotas da aplicação StayHub
@@ -11,25 +14,37 @@ import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
  */
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
+    path: ROUTES.dashboard,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
         element: <DashboardView />,
       },
-      {
-        path: ':stay_id',
-        element: <StayInstructionsView />,
-      },
     ],
   },
   {
-    path: '/login',
-    element: <LoginView />,
+    path: ROUTES.stayInstructions(':stay_id'),
+    element: <StayInstructionsView />,
   },
   {
-    path: '/signup',
-    element: <SignupView />,
+    path: ROUTES.login,
+    element: (
+      <PublicRoute>
+        <LoginView />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: ROUTES.signup,
+    element: (
+      <PublicRoute>
+        <SignupView />
+      </PublicRoute>
+    ),
   },
 ]);

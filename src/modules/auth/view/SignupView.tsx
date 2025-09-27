@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -13,11 +13,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  useAuthData,
-  useSignup,
-} from '@/modules/auth/service/AuthService.hooks';
+import { useSignup } from '@/modules/auth/service/AuthService.hooks';
 import { Alert } from '@/components/Alert';
+import { ROUTES } from '@/routes/routes';
 
 const signupSchema = z
   .object({
@@ -39,7 +37,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
  */
 const SignupView: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthData();
+  const location = useLocation();
   const { signup, isSignupLoading, signupError } = useSignup();
 
   const form = useForm<SignupFormData>({
@@ -52,13 +50,6 @@ const SignupView: React.FC = () => {
     },
   });
 
-  // Redireciona se já estiver autenticado
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
-
   /**
    * Manipula o envio do formulário
    */
@@ -68,7 +59,8 @@ const SignupView: React.FC = () => {
 
     signup(signupData, {
       onSuccess: () => {
-        navigate('/');
+        const from = location.state?.from?.pathname || ROUTES.dashboard;
+        navigate(from, { replace: true });
       },
       onError: (error) => {
         console.error('Erro no cadastro:', error);

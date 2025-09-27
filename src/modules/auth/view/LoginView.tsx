@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -13,11 +13,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  useAuthData,
-  useSignin,
-} from '@/modules/auth/service/AuthService.hooks';
+import { useSignin } from '@/modules/auth/service/AuthService.hooks';
 import { Alert } from '@/components/Alert';
+import { ROUTES } from '@/routes/routes';
 
 const loginSchema = z.object({
   email: z.email('Email inválido').min(1, 'Email é obrigatório'),
@@ -32,7 +30,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
  */
 const LoginView: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthData();
+  const location = useLocation();
   const { signin, isSigninLoading, signinError } = useSignin();
 
   const form = useForm<LoginFormData>({
@@ -43,20 +41,14 @@ const LoginView: React.FC = () => {
     },
   });
 
-  // Redireciona se já estiver autenticado
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
-
   /**
    * Manipula o envio do formulário
    */
   const onSubmit = (data: LoginFormData): void => {
     signin(data, {
       onSuccess: () => {
-        navigate('/');
+        const from = location.state?.from?.pathname || ROUTES.dashboard;
+        navigate(from, { replace: true });
       },
       onError: (error) => {
         console.error('Erro no login:', error);
