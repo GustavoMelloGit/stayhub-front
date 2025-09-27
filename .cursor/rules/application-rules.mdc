@@ -15,6 +15,9 @@ alwaysApply: true
 ## Components
 
 - When creating components, you should analyze if its a global or a local component.
+- Before creating a component, you should check if it already exists.
+- Before creating a component, you should prioritize components from shadcn/ui.
+- On creating a component, you should prioritize composition patterns.
 - If its a global component, you should create it in the `src/components` folder.
 - If its a local component, you should create it in the `src/modules/<module-name>/components` folder.
 - **EVERY REACT COMPONENT** should be a arrow function.
