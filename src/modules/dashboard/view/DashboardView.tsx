@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const HomePage: React.FC = () => {
+const DashboardView: React.FC = () => {
   return (
     <div className='min-h-screen bg-gray-50'>
       <div className='container mx-auto px-4 py-8'>
@@ -48,4 +48,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default DashboardView;

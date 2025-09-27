@@ -37,7 +37,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
  * Página de cadastro de usuário
  * Permite que novos usuários se registrem na aplicação
  */
-const SignupPage: React.FC = () => {
+const SignupView: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthData();
   const { signup, isSignupLoading, signupError } = useSignup();
@@ -218,4 +218,4 @@ const SignupPage: React.FC = () => {
   );
 };
 
-export default SignupPage;
+export default SignupView;

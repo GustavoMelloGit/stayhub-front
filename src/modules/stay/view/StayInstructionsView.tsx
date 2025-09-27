@@ -9,6 +9,8 @@ import {
   Users,
   Wrench,
 } from 'lucide-react';
+import { useGetPublicStay } from '../service/StayService.hooks';
+import { useParams } from 'react-router-dom';
 
 const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
@@ -19,22 +21,14 @@ const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   timeZone: 'America/Sao_Paulo',
 });
 
-type Stay = {
-  tenant: {
-    name: string;
-  };
-  entranceCode: string;
-  checkIn: Date;
-  checkOut: Date;
-};
+export const StayInstructionsView: FC = () => {
+  const { stay_id } = useParams<{ stay_id: string }>();
+  const { data: stay, isPending } = useGetPublicStay(stay_id || '');
 
-type Props = {
-  stay: Stay;
-};
+  if (!stay || isPending) return <div>Carregando...</div>;
 
-export const StayInstructionsView: FC<Props> = ({ stay }) => {
-  const checkInDate = dateFormatter.format(stay.checkIn);
-  const checkOutDate = dateFormatter.format(stay.checkOut);
+  const checkInDate = dateFormatter.format(stay.check_in);
+  const checkOutDate = dateFormatter.format(stay.check_out);
 
   return (
     <div className='max-w-[40rem] space-y-4 leading-none'>
@@ -104,7 +98,7 @@ export const StayInstructionsView: FC<Props> = ({ stay }) => {
               </div>
               <div>
                 <p className='label'>Senha</p>
-                <span className='value'>{stay.entranceCode}</span>
+                <span className='value'>{stay.entrance_code}</span>
               </div>
             </div>
             <p>
@@ -113,7 +107,7 @@ export const StayInstructionsView: FC<Props> = ({ stay }) => {
             </p>
             <p>
               Sua senha da fechadura eletrônica é:{' '}
-              <strong>{stay.entranceCode}</strong>. <br />
+              <strong>{stay.entrance_code}</strong>. <br />
               Ela é exclusiva da sua estadia e será desativada automaticamente
               logo após o check-out.
             </p>

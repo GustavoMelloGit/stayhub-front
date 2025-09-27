@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router-dom';
+import { Navigation } from './components/Navigation';
 
 const App: React.FC = () => {
   return (
-    <div className='min-h-screen'>
+    <>
+      <Navigation />
       <Outlet />
-    </div>
+    </>
   );
 };
 

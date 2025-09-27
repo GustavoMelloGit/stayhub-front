@@ -30,7 +30,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
  * Página de login do usuário
  * Permite que usuários existentes façam login na aplicação
  */
-const LoginPage: React.FC = () => {
+const LoginView: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthData();
   const { signin, isSigninLoading, signinError } = useSignin();
@@ -167,4 +167,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default LoginView;

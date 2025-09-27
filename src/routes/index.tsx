@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import HomePage from '../pages/HomePage';
-import StayInstructionsPage from '../pages/StayInstructionsPage';
-import LoginPage from '../pages/LoginPage';
-import SignupPage from '../pages/SignupPage';
+import DashboardView from '../modules/dashboard/view/DashboardView';
+import LoginView from '../modules/auth/view/LoginView';
+import SignupView from '../modules/auth/view/SignupView';
+import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
 
 /**
  * Configuração das rotas da aplicação StayHub
@@ -16,20 +16,20 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <DashboardView />,
       },
       {
         path: ':stay_id',
-        element: <StayInstructionsPage />,
+        element: <StayInstructionsView />,
       },
     ],
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <LoginView />,
   },
   {
     path: '/signup',
-    element: <SignupPage />,
+    element: <SignupView />,
   },
 ]);
