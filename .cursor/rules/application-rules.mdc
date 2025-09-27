@@ -1,0 +1,32 @@
+---
+description: Application rules
+globs:
+alwaysApply: true
+---
+
+## Components
+
+- When creating components, you should analyze if its a global or a local component.
+- If its a global component, you should create it in the `src/components` folder.
+- If its a local component, you should create it in the `src/modules/<module-name>/components` folder.
+
+## Modules
+
+- Modules represent a business area of the application and should be created in the `src/modules/<module-name>` folder.
+- When creating modules, you should analyze if existing modules can be reused.
+- If its a new module, you should create it in the `src/modules` folder.
+
+### View
+
+- Views are the components that are responsible for the presentation of the module. Basically every page is a view and should be created in the `src/modules/<module-name>/view` folder.
+
+### Service
+
+- Services are responsible for the api communication and should be created in the `src/modules/<module-name>/service` folder.
+- There are two types of services:
+  - Service: class with static methods that are responsible for the api communication. Created in the `src/modules/<module-name>/service/<module-name>Service.ts` folder.
+  - Service Hook: custom hooks that uses methods of the service class with tanstack query as a superset of those service methods. Created in the `src/modules/<module-name>/service/<module-name>Service.hooks.ts` folder.
+
+### Types
+
+- Types are responsible for the types of the module and should be created in the `src/modules/<module-name>/types` folder.
