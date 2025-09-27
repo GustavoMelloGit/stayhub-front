@@ -23,7 +23,7 @@ export class PropertyService {
    * @returns Promise com dados da propriedade
    */
   static async getPropertyById(id: string): Promise<Property> {
-    const response = await api.get<Property>(`/property/user/${id}`);
+    const response = await api.get<Property>(`/property/${id}`);
     return response.data;
   }
 
