@@ -4,6 +4,7 @@ import DashboardView from '../modules/dashboard/view/DashboardView';
 import LoginView from '../modules/auth/view/LoginView';
 import SignupView from '../modules/auth/view/SignupView';
 import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
+import { NotFoundView } from '@/modules/error/view/NotFoundView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
@@ -46,5 +47,9 @@ export const router = createBrowserRouter([
         <SignupView />
       </PublicRoute>
     ),
+  },
+  {
+    path: '*',
+    element: <NotFoundView />,
   },
 ]);
