@@ -3,6 +3,7 @@ import type {
   AuthResponse,
   LoginCredentials,
   SignupRequest,
+  User,
 } from '../types/AuthTypes';
 
 /**
@@ -52,20 +53,9 @@ export class AuthService {
    * Recupera dados de autenticação do localStorage
    * @returns Dados de autenticação ou null se não encontrados
    */
-  static getAuthData(): AuthResponse | null {
-    const token = localStorage.getItem('auth_token');
-    const userData = localStorage.getItem('user_data');
-
-    if (!token || !userData) {
-      return null;
-    }
-
-    try {
-      const user = JSON.parse(userData);
-      return { user, token };
-    } catch {
-      return null;
-    }
+  static async getAuthData(): Promise<User | null> {
+    const response = await api.get<User>('/auth/me');
+    return response.data;
   }
 
   /**

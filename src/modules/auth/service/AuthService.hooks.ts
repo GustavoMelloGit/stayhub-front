@@ -18,8 +18,7 @@ export const useAuthData = () => {
   });
 
   return {
-    user: authData?.user || null,
-    token: authData?.token || null,
+    user: authData || null,
     isAuthenticated: !!authData,
     isLoading,
   };
@@ -37,7 +36,7 @@ export const useSignin = () => {
       AuthService.login(credentials),
     onSuccess: (data: AuthResponse) => {
       AuthService.saveAuthData(data);
-      queryClient.setQueryData(['auth'], data);
+      queryClient.setQueryData(['auth'], data.user);
     },
   });
 
@@ -59,7 +58,7 @@ export const useSignup = () => {
     mutationFn: (credentials: SignupRequest) => AuthService.signup(credentials),
     onSuccess: (data: AuthResponse) => {
       AuthService.saveAuthData(data);
-      queryClient.setQueryData(['auth'], data);
+      queryClient.setQueryData(['auth'], data.user);
     },
   });
 
