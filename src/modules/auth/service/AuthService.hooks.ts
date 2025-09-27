@@ -15,6 +15,7 @@ export const useAuthData = () => {
     queryKey: ['auth'],
     queryFn: () => AuthService.getAuthData(),
     staleTime: 5 * 60 * 1000, // 5 minutos
+    enabled: AuthService.isAuthenticated(),
   });
 
   return {
