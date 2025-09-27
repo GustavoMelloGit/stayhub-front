@@ -19,7 +19,7 @@ export const NotFoundView: FC = () => {
 
         <div className='space-y-4'>
           <Button className='w-full' size='lg' asChild>
-            <Link to={ROUTES.dashboard}>Voltar ao Dashboard</Link>
+            <Link to={ROUTES.home}>Voltar ao Dashboard</Link>
           </Button>
 
           <Button variant='outline' className='w-full' size='lg' asChild>

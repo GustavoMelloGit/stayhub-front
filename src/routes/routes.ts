@@ -4,4 +4,4 @@ export const ROUTES = {
   signup: '/signup',
   home: '/',
   property: (property_id: string) => `/property/${property_id}`,
-};
+} as const;
