@@ -68,3 +68,5 @@ alwaysApply: true
 ### Types
 
 - Types are responsible for the types of the module and should be created in the `src/modules/<module-name>/types` folder.
+- **EVERY TYPE** should be a zod schema.
+- **FORM TYPES** should be created within the form component, following type rules.
