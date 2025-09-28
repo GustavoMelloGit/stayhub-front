@@ -1,4 +1,5 @@
 import api from '@/lib/api';
+import { buildUrlWithParams } from '@/lib/utils';
 import { propertySchema, type Property } from '../types/Property';
 import {
   staySchema,
@@ -37,12 +38,18 @@ export class PropertyService {
   /**
    * Resgata as estadias de uma propriedade
    * @param id - ID da propriedade
+   * @param filter - Filtros opcionais para as estadias
    * @returns Promise com array de estadias
    */
-  static async getPropertyStays(id: string): Promise<WithTenant<Stay>[]> {
-    const response = await api.get<{ stays: WithTenant<Stay>[] }>(
-      `/property/${id}/stays`
-    );
+  static async getPropertyStays(
+    id: string,
+    filter?: Partial<{
+      onlyIncomingStays: boolean;
+    }>
+  ): Promise<WithTenant<Stay>[]> {
+    const url = buildUrlWithParams(`/property/${id}/stays`, filter);
+
+    const response = await api.get<{ stays: WithTenant<Stay>[] }>(url);
     const stays = z
       .array(
         staySchema.extend({
