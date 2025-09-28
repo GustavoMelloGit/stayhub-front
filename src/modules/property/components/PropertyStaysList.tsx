@@ -15,6 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { CopyIcon } from 'lucide-react';
 
 const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
@@ -33,6 +35,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
   });
+  console.log(stays);
 
   return (
     <Card>
@@ -46,10 +49,12 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Hóspede</TableHead>
               <TableHead>Número de hóspedes</TableHead>
               <TableHead>Check-in</TableHead>
               <TableHead>Check-out</TableHead>
-              <TableHead>Código de entrada</TableHead>
+              <TableHead>Código</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -69,14 +74,27 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             )}
             {stays &&
               stays.map((stay) => {
+                const checkInDate = dateFormatter.format(stay.check_in);
+                const checkOutDate = dateFormatter.format(stay.check_out);
                 return (
                   <TableRow key={stay.id}>
+                    <TableCell>{stay.tenant.name}</TableCell>
                     <TableCell>{stay.guests}</TableCell>
-                    <TableCell>{dateFormatter.format(stay.check_in)}</TableCell>
-                    <TableCell>
-                      {dateFormatter.format(stay.check_out)}
-                    </TableCell>
+                    <TableCell>{checkInDate}</TableCell>
+                    <TableCell>{checkOutDate}</TableCell>
                     <TableCell>{stay.entrance_code}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='outline'
+                        size='icon'
+                        onClick={() => {
+                          const text = `${stay.tenant.name}\n${stay.tenant.phone}\n${checkInDate} - ${checkOutDate}\n${stay.guests} hóspedes`;
+                          navigator.clipboard.writeText(text);
+                        }}
+                      >
+                        <CopyIcon className='size-4' />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
