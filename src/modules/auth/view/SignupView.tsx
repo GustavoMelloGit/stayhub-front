@@ -59,7 +59,7 @@ const SignupView: React.FC = () => {
 
     signup(signupData, {
       onSuccess: () => {
-        const from = location.state?.from?.pathname || ROUTES.dashboard;
+        const from = location.state?.from?.pathname || ROUTES.home;
         navigate(from, { replace: true });
       },
       onError: (error) => {
