@@ -58,7 +58,7 @@ const PropertyDetailView: FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8 space-y-6'>
+    <div className='container mx-auto space-y-6'>
       <div>
         <Button variant='outline' className='mb-4' asChild>
           <Link to={ROUTES.home}>

@@ -4,6 +4,7 @@ import { useUserProperties } from '../service/PropertyService.hooks';
 import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { ROUTES } from '@/routes/routes';
+import { PageHeader } from '@/components/layout/PageHeader';
 
 const PropertyListView: FC = () => {
   const { properties, isLoading, error } = useUserProperties();
@@ -28,20 +29,12 @@ const PropertyListView: FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <div className='flex justify-between items-center mb-8'>
-        <div>
-          <h1 className='text-3xl font-bold text-gray-900'>
-            Minhas Propriedades
-          </h1>
-          <p className='text-gray-600 mt-2'>
-            Gerencie suas propriedades e visualize informações importantes
-          </p>
-        </div>
-        <Button className='bg-blue-600 hover:bg-blue-700'>
-          Adicionar Propriedade
-        </Button>
-      </div>
+    <div className='container mx-auto'>
+      <PageHeader
+        title='Minhas Propriedades'
+        description='Gerencie suas propriedades e visualize informações importantes'
+        actions={<Button>Adicionar Propriedade</Button>}
+      />
 
       {properties.length === 0 ? (
         <div className='text-center py-12'>
