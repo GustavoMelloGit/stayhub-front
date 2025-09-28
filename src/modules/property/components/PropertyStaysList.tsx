@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -45,7 +44,6 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
       </CardHeader>
       <CardContent>
         <Table>
-          <TableCaption>Lista de estadias</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Número de hóspedes</TableHead>
