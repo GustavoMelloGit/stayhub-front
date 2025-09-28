@@ -6,6 +6,7 @@ export const staySchema = z.object({
   check_out: z.coerce.date(),
   entrance_code: z.string(),
   guests: z.number(),
+  price: z.number(),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });

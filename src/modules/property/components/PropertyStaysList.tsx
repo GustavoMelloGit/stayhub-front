@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { CopyIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
+import { Currency } from '@/lib/currency';
 
 const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
@@ -63,10 +64,11 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
           <TableHeader>
             <TableRow>
               <TableHead>Hóspede</TableHead>
-              <TableHead>Número de hóspedes</TableHead>
+              <TableHead>Hóspedes</TableHead>
               <TableHead>Check-in</TableHead>
               <TableHead>Check-out</TableHead>
               <TableHead>Código</TableHead>
+              <TableHead>Valor</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -92,10 +94,13 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                 return (
                   <TableRow key={stay.id}>
                     <TableCell>{stay.tenant.name}</TableCell>
-                    <TableCell>{stay.guests}</TableCell>
+                    <TableCell className='text-right'>{stay.guests}</TableCell>
                     <TableCell>{checkInDate}</TableCell>
                     <TableCell>{checkOutDate}</TableCell>
                     <TableCell>{stay.entrance_code}</TableCell>
+                    <TableCell className='text-right'>
+                      {Currency.format(stay.price)}
+                    </TableCell>
                     <TableCell>
                       <Button
                         variant='outline'
