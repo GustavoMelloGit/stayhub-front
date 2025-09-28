@@ -1,20 +1,9 @@
 import api from '@/lib/api';
-import z from 'zod';
+import { publicStaySchema, type PublicStay } from '../types/Stay';
 
-const getPublicStaySchema = z.object({
-  check_in: z.coerce.date(),
-  check_out: z.coerce.date(),
-  entrance_code: z.string(),
-  tenant: z.object({
-    name: z.string(),
-  }),
-});
-
-export type GetPublicStayResponse = z.infer<typeof getPublicStaySchema>;
-
-export const StayService = {
-  getPublicStay: async (stayId: string) => {
+export class StayService {
+  static async getPublicStay(stayId: string): Promise<PublicStay> {
     const response = await api.get(`/public/stay/${stayId}`);
-    return getPublicStaySchema.parse(response.data);
-  },
-};
+    return publicStaySchema.parse(response.data);
+  }
+}

@@ -1,9 +1,10 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import { StayService, type GetPublicStayResponse } from './StayService';
+import { StayService } from './StayService';
+import type { PublicStay } from '../types/Stay';
 
 export const useGetPublicStay = (
   stayId: string,
-  options?: UseQueryOptions<GetPublicStayResponse>
+  options?: UseQueryOptions<PublicStay>
 ) => {
   return useQuery({
     ...options,
