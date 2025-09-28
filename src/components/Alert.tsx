@@ -7,7 +7,7 @@ const DEFAULT_VARIANT = 'destructive';
 const alertVariants = cva('rounded-md p-4 flex items-center gap-2', {
   variants: {
     variant: {
-      destructive: 'bg-red-50 text-red-700 text-sm',
+      destructive: 'bg-destructive text-destructive-foreground text-sm',
     },
     defaultVariants: {
       variant: DEFAULT_VARIANT,
