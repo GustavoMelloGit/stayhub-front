@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/routes/routes';
 
 const PropertyListView: FC = () => {
   const { properties, isLoading, error } = useUserProperties();
@@ -77,7 +79,9 @@ const PropertyListView: FC = () => {
                 </CardHeader>
                 <CardContent className='pt-2 px-4 space-y-4'>
                   <CardTitle>{property.name}</CardTitle>
-                  <Button className='w-full'>Ver detalhes</Button>
+                  <Button className='w-full' asChild>
+                    <Link to={ROUTES.property(property.id)}>Ver detalhes</Link>
+                  </Button>
                 </CardContent>
               </Card>
             );
