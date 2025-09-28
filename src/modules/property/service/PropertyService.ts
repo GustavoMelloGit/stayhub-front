@@ -2,8 +2,10 @@ import api from '@/lib/api';
 import { buildUrlWithParams } from '@/lib/utils';
 import { propertySchema, type Property } from '../types/Property';
 import {
+  externalStaySchema,
   staySchema,
   tenantSchema,
+  type ExternalStay,
   type Stay,
   type WithTenant,
 } from '../../stay/types/Stay';
@@ -59,6 +61,16 @@ export class PropertyService {
       .parse(response.data.stays);
 
     return stays;
+  }
+
+  /**
+   * Busca por estadias nos sites de hospedagem que ainda não foram cadastradas
+   */
+  static async reconcileExternalStays(): Promise<ExternalStay[]> {
+    const response = await api.get<ExternalStay[]>(
+      '/property/reconcile-external-booking'
+    );
+    return z.array(externalStaySchema).parse(response.data);
   }
 
   /**

@@ -24,6 +24,23 @@ export const useUserProperties = () => {
   };
 };
 
+export const useReconcileExternalStays = () => {
+  const {
+    data: stays,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['reconcileExternalStays'],
+    queryFn: () => PropertyService.reconcileExternalStays(),
+  });
+
+  return {
+    stays,
+    isLoading,
+    error,
+  };
+};
+
 export const usePropertyStays = (
   ...params: Parameters<typeof PropertyService.getPropertyStays>
 ) => {

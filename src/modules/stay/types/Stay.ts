@@ -25,3 +25,15 @@ export type Tenant = z.infer<typeof tenantSchema>;
 export type WithTenant<T> = T & {
   tenant: Tenant;
 };
+
+export const externalStaySchema = z.object({
+  start: z.coerce.date(),
+  end: z.coerce.date(),
+  sourcePlatform: z.enum(['BOOKING', 'AIRBNB']),
+  property: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+});
+
+export type ExternalStay = z.infer<typeof externalStaySchema>;
