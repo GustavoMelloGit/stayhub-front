@@ -1,6 +1,10 @@
 import api from '@/lib/api';
 import { buildUrlWithParams } from '@/lib/utils';
-import { propertySchema, type Property } from '../types/Property';
+import {
+  propertySchema,
+  type BookStayRequest,
+  type Property,
+} from '../types/Property';
 import {
   externalStaySchema,
   staySchema,
@@ -74,45 +78,16 @@ export class PropertyService {
   }
 
   /**
-   * Cria uma nova propriedade
-   * @param propertyData - Dados da propriedade a ser criada
-   * @returns Promise com dados da propriedade criada
+   * Reserva uma estadia
+   * @param stayData - Dados da estadia a ser reservada
+   * @returns Promise com dados da estadia cadastrada
    */
-  static async createProperty(
-    propertyData: Omit<
-      Property,
-      'id' | 'user_id' | 'created_at' | 'updated_at' | 'deleted_at'
-    >
-  ): Promise<Property> {
-    const response = await api.post<Property>('/property/user', propertyData);
-    return response.data;
-  }
-
-  /**
-   * Atualiza uma propriedade existente
-   * @param id - ID da propriedade
-   * @param propertyData - Dados atualizados da propriedade
-   * @returns Promise com dados da propriedade atualizada
-   */
-  static async updateProperty(
-    id: string,
-    propertyData: Partial<
-      Omit<
-        Property,
-        'id' | 'user_id' | 'created_at' | 'updated_at' | 'deleted_at'
-      >
-    >
-  ): Promise<Property> {
-    const response = await api.put<Property>(`/properties/${id}`, propertyData);
-    return response.data;
-  }
-
-  /**
-   * Exclui uma propriedade (soft delete)
-   * @param id - ID da propriedade
-   * @returns Promise vazia
-   */
-  static async deleteProperty(id: string): Promise<void> {
-    await api.delete(`/properties/${id}`);
+  static async bookStay(stayData: BookStayRequest): Promise<Stay> {
+    const { property, ...rest } = stayData;
+    const response = await api.post<{ message: string; data: Stay }>(
+      `/property/${property}/book`,
+      rest
+    );
+    return response.data.data;
   }
 }

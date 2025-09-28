@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { PropertyService } from './PropertyService';
-import type { Property } from '../types/Property';
+import type { BookStayRequest } from '../types/Property';
 
 /**
  * Hook para obter todas as propriedades do usuário
@@ -9,7 +9,7 @@ import type { Property } from '../types/Property';
 export const useUserProperties = () => {
   const {
     data: properties,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useQuery({
     queryKey: ['properties'],
@@ -27,7 +27,7 @@ export const useUserProperties = () => {
 export const useReconcileExternalStays = () => {
   const {
     data: stays,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useQuery({
     queryKey: ['reconcileExternalStays'],
@@ -41,12 +41,28 @@ export const useReconcileExternalStays = () => {
   };
 };
 
+export const useBookStay = () => {
+  const {
+    data: stay,
+    isPending: isLoading,
+    error,
+  } = useMutation({
+    mutationFn: (stayData: BookStayRequest) =>
+      PropertyService.bookStay(stayData),
+  });
+  return {
+    stay,
+    isLoading,
+    error,
+  };
+};
+
 export const usePropertyStays = (
   ...params: Parameters<typeof PropertyService.getPropertyStays>
 ) => {
   const {
     data: stays,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useQuery({
     queryKey: ['propertyStays', ...params],
@@ -68,7 +84,7 @@ export const usePropertyStays = (
 export const useProperty = (id: string) => {
   const {
     data: property,
-    isLoading,
+    isPending: isLoading,
     error,
   } = useQuery({
     queryKey: ['property', id],
@@ -81,88 +97,5 @@ export const useProperty = (id: string) => {
     property,
     isLoading,
     error,
-  };
-};
-
-/**
- * Hook para criar uma nova propriedade
- * Fornece função de criação e estados relacionados
- */
-export const useCreateProperty = () => {
-  const queryClient = useQueryClient();
-
-  const createMutation = useMutation({
-    mutationFn: (
-      propertyData: Omit<
-        Property,
-        'id' | 'user_id' | 'created_at' | 'updated_at' | 'deleted_at'
-      >
-    ) => PropertyService.createProperty(propertyData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['properties'] });
-    },
-  });
-
-  return {
-    createProperty: createMutation.mutate,
-    isCreating: createMutation.isPending,
-    createError: createMutation.error,
-  };
-};
-
-/**
- * Hook para atualizar uma propriedade existente
- * Fornece função de atualização e estados relacionados
- */
-export const useUpdateProperty = () => {
-  const queryClient = useQueryClient();
-
-  const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: string;
-      data: Partial<
-        Omit<
-          Property,
-          'id' | 'user_id' | 'created_at' | 'updated_at' | 'deleted_at'
-        >
-      >;
-    }) => PropertyService.updateProperty(id, data),
-    onSuccess: (updatedProperty) => {
-      queryClient.invalidateQueries({ queryKey: ['properties'] });
-      queryClient.setQueryData(
-        ['property', updatedProperty.id],
-        updatedProperty
-      );
-    },
-  });
-
-  return {
-    updateProperty: updateMutation.mutate,
-    isUpdating: updateMutation.isPending,
-    updateError: updateMutation.error,
-  };
-};
-
-/**
- * Hook para excluir uma propriedade
- * Fornece função de exclusão e estados relacionados
- */
-export const useDeleteProperty = () => {
-  const queryClient = useQueryClient();
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => PropertyService.deleteProperty(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['properties'] });
-    },
-  });
-
-  return {
-    deleteProperty: deleteMutation.mutate,
-    isDeleting: deleteMutation.isPending,
-    deleteError: deleteMutation.error,
   };
 };
