@@ -1,8 +1,12 @@
-export type Property = {
-  id: string;
-  name: string;
-  user_id: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-};
+import z from 'zod';
+
+export const propertySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  user_id: z.string(),
+  created_at: z.coerce.date(),
+  updated_at: z.coerce.date(),
+  deleted_at: z.coerce.date().nullable(),
+});
+
+export type Property = z.infer<typeof propertySchema>;
