@@ -21,18 +21,18 @@ const PropertyDetailView: FC = () => {
 
   if (error) {
     return (
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto'>
         <Alert variant='destructive' message='Erro ao carregar propriedade'>
           Não foi possível carregar os detalhes da propriedade. Tente novamente
           mais tarde.
         </Alert>
         <div className='mt-4'>
-          <Link to='/'>
-            <Button variant='outline'>
+          <Button variant='outline' asChild>
+            <Link to='/'>
               <ArrowLeft className='w-4 h-4 mr-2' />
               Voltar para início
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     );
@@ -46,12 +46,12 @@ const PropertyDetailView: FC = () => {
           para visualizá-la.
         </Alert>
         <div className='mt-4'>
-          <Link to='/'>
-            <Button variant='outline'>
+          <Button variant='outline' asChild>
+            <Link to='/'>
               <ArrowLeft className='w-4 h-4 mr-2' />
               Voltar para início
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     );
