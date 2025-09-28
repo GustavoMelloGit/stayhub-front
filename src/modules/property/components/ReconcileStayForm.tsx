@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { withMask } from 'use-mask-input';
 import {
   Form,
   FormControl,
@@ -69,18 +70,21 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
   });
 
   const handleSubmit = (data: ReconcileStayFormData): void => {
-    mutate({
+    const phone = data.tenant_phone.replace(/\D/g, '');
+    const payload = {
       check_in: externalStay.start.toISOString(),
       check_out: externalStay.end.toISOString(),
       entrance_code: data.entrance_code,
       tenant: {
         name: data.tenant_name,
-        phone: data.tenant_phone,
+        phone: phone,
         sex: data.tenant_sex,
       },
       guests: data.guests,
       property: externalStay.property.id,
-    });
+    };
+
+    mutate(payload);
   };
 
   const formatDate = (date: Date): string => {
@@ -178,7 +182,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Telefone do Hóspede</FormLabel>
-                  <FormControl>
+                  <FormControl ref={withMask('+55 (99) 99999-9999')}>
                     <Input
                       placeholder='Digite o telefone do hóspede'
                       {...field}
