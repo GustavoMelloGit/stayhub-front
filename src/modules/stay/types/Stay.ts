@@ -29,10 +29,13 @@ export type WithTenant<T> = T & {
   tenant: Tenant;
 };
 
+export const sourcePlatformSchema = z.enum(['BOOKING', 'AIRBNB']);
+export type SourcePlatform = z.infer<typeof sourcePlatformSchema>;
+
 export const externalStaySchema = z.object({
   start: z.coerce.date(),
   end: z.coerce.date(),
-  sourcePlatform: z.enum(['BOOKING', 'AIRBNB']),
+  sourcePlatform: sourcePlatformSchema,
   property: z.object({
     id: z.string(),
     name: z.string(),

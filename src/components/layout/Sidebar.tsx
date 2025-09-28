@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Building2, Calendar } from 'lucide-react';
+import { Home, Building2, Calendar, RefreshCw } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -21,6 +21,11 @@ const navigationItems = [
     title: 'Dashboard',
     url: ROUTES.home,
     icon: Home,
+  },
+  {
+    title: 'Reconciliar Estadias',
+    url: ROUTES.reconcileStays,
+    icon: RefreshCw,
   },
   {
     title: 'Calendário',

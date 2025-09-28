@@ -5,6 +5,7 @@ import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
 import { NotFoundView } from '@/modules/error/view/NotFoundView';
 import PropertyListView from '@/modules/property/view/PropertyListView';
 import PropertyDetailView from '@/modules/property/view/PropertyDetailView';
+import ReconcileStaysView from '@/modules/property/view/ReconcileStaysView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.property(':property_id'),
         element: <PropertyDetailView />,
+      },
+      {
+        path: ROUTES.reconcileStays,
+        element: <ReconcileStaysView />,
       },
     ],
   },
