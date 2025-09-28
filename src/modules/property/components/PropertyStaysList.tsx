@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { CopyIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 
 const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
@@ -36,7 +37,18 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
   });
-  console.log(stays);
+
+  const handleCopy = (stay: WithTenant<Stay>) => {
+    const data = [
+      stay.tenant.name,
+      stay.tenant.phone,
+      stay.check_in.toLocaleDateString(),
+      stay.check_out.toLocaleDateString(),
+      `${stay.guests} hóspedes`,
+    ];
+    navigator.clipboard.writeText(data.join('\n'));
+    toast.success('Copiado com sucesso');
+  };
 
   return (
     <Card>
@@ -88,11 +100,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                       <Button
                         variant='outline'
                         size='icon'
-                        onClick={() => {
-                          const text = `${stay.tenant.name}\n${stay.tenant.phone}\n${checkInDate} - ${checkOutDate}\n${stay.guests} hóspedes`;
-                          navigator.clipboard.writeText(text);
-                          toast.success('Copiado com sucesso');
-                        }}
+                        onClick={() => handleCopy(stay)}
                       >
                         <CopyIcon className='size-4' />
                       </Button>
