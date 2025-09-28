@@ -17,7 +17,7 @@ const Container: FC<ComponentProps<'main'>> = ({
 }) => {
   return (
     <main
-      className={cn('min-h-dvh w-full overflow-x-hidden space-y-8', className)}
+      className={cn('min-h-dvh w-full overflow-x-hidden space-y-8 ', className)}
       {...props}
     >
       {children}
@@ -98,7 +98,7 @@ const Content: FC<ComponentProps<'div'>> = ({
   return (
     <div
       className={cn(
-        'flex w-full items-center gap-1 px-4 lg:gap-2 md:px-6',
+        'flex w-full items-center gap-1 lg:gap-2 px-4 md:px-6 pb-12 md:pb-6',
         className
       )}
       {...props}
