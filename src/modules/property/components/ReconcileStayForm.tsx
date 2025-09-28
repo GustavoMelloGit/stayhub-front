@@ -37,6 +37,7 @@ export const reconcileStayFormSchema = z.object({
     message: 'Sexo do hóspede é obrigatório',
   }),
   guests: z.number().min(1, 'Número de hóspedes deve ser pelo menos 1'),
+  price: z.string().min(1, 'Preço da estadia é obrigatório'),
 });
 
 export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
@@ -66,11 +67,13 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
       tenant_phone: '',
       tenant_sex: undefined,
       guests: 1,
+      price: '',
     },
   });
 
   const handleSubmit = (data: ReconcileStayFormData): void => {
     const phone = data.tenant_phone.replace(/\D/g, '');
+    const price = Number(data.price.replace(/\D/g, ''));
     const payload = {
       check_in: externalStay.start.toISOString(),
       check_out: externalStay.end.toISOString(),
@@ -82,8 +85,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
       },
       guests: data.guests,
       property: externalStay.property.id,
+      price: price,
     };
-
     mutate(payload);
   };
 
@@ -238,6 +241,26 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
                     />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='price'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Preço da Estadia</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='number'
+                      min={0}
+                      step={0.01}
+                      placeholder='Digite o preço da estadia'
+                      inputMode='decimal'
+                      {...field}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
