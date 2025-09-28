@@ -24,15 +24,16 @@ export const useUserProperties = () => {
   };
 };
 
-export const usePropertyStays = (id: string) => {
+export const usePropertyStays = (
+  ...params: Parameters<typeof PropertyService.getPropertyStays>
+) => {
   const {
     data: stays,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['propertyStays', id],
-    queryFn: () => PropertyService.getPropertyStays(id),
-    enabled: !!id,
+    queryKey: ['propertyStays', ...params],
+    queryFn: () => PropertyService.getPropertyStays(...params),
     staleTime: 5 * 60 * 1000, // 5 minutos
   });
 

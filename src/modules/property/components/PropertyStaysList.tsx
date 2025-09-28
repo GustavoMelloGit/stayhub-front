@@ -31,7 +31,9 @@ type Props = {
 };
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
-  const { stays, isLoading, error } = usePropertyStays(propertyId);
+  const { stays, isLoading, error } = usePropertyStays(propertyId, {
+    onlyIncomingStays: true,
+  });
 
   return (
     <Card>
