@@ -101,6 +101,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                         variant='outline'
                         size='icon'
                         onClick={() => handleCopy(stay)}
+                        aria-label='Copiar informações da estadia'
                       >
                         <CopyIcon className='size-4' />
                       </Button>
