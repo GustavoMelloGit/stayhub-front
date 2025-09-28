@@ -1,5 +1,12 @@
 import api from '@/lib/api';
-import type { Property } from '../types/Property';
+import { propertySchema, type Property } from '../types/Property';
+import {
+  staySchema,
+  tenantSchema,
+  type Stay,
+  type WithTenant,
+} from '../../stay/types/Stay';
+import z from 'zod';
 
 /**
  * Serviço responsável por operações relacionadas a propriedades
@@ -24,7 +31,27 @@ export class PropertyService {
    */
   static async getPropertyById(id: string): Promise<Property> {
     const response = await api.get<Property>(`/property/${id}`);
-    return response.data;
+    return propertySchema.parse(response.data);
+  }
+
+  /**
+   * Resgata as estadias de uma propriedade
+   * @param id - ID da propriedade
+   * @returns Promise com array de estadias
+   */
+  static async getPropertyStays(id: string): Promise<WithTenant<Stay>[]> {
+    const response = await api.get<{ stays: WithTenant<Stay>[] }>(
+      `/property/${id}/stays`
+    );
+    const stays = z
+      .array(
+        staySchema.extend({
+          tenant: tenantSchema,
+        })
+      )
+      .parse(response.data.stays);
+
+    return stays;
   }
 
   /**

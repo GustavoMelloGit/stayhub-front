@@ -24,6 +24,25 @@ export const useUserProperties = () => {
   };
 };
 
+export const usePropertyStays = (id: string) => {
+  const {
+    data: stays,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['propertyStays', id],
+    queryFn: () => PropertyService.getPropertyStays(id),
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000, // 5 minutos
+  });
+
+  return {
+    stays,
+    isLoading,
+    error,
+  };
+};
+
 /**
  * Hook para obter uma propriedade específica por ID
  * @param id - ID da propriedade
