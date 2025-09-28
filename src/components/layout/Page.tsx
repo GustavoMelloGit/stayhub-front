@@ -46,7 +46,7 @@ const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
               <Fragment key={item.label}>
                 <BreadcrumbItem>
                   {item.to && (
-                    <BreadcrumbLink href={item.to}>{item.label}</BreadcrumbLink>
+                    <BreadcrumbLink to={item.to}>{item.label}</BreadcrumbLink>
                   )}
                   {!item.to && <BreadcrumbPage>{item.label}</BreadcrumbPage>}
                 </BreadcrumbItem>
