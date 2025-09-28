@@ -1,3 +1,4 @@
+import { tenantSexSchema } from '@/modules/stay/types/Stay';
 import z from 'zod';
 
 export const propertySchema = z.object({
@@ -15,7 +16,11 @@ export const bookStayRequestSchema = z.object({
   check_in: z.iso.datetime(),
   check_out: z.iso.datetime(),
   entrance_code: z.string(),
-  tenant: z.uuidv4(),
+  tenant: z.object({
+    name: z.string(),
+    phone: z.string(),
+    sex: tenantSexSchema,
+  }),
   guests: z.number(),
   property: z.uuidv4(),
 });

@@ -12,11 +12,14 @@ export const staySchema = z.object({
 
 export type Stay = z.infer<typeof staySchema>;
 
+export const tenantSexSchema = z.enum(['MALE', 'FEMALE', 'OTHER']);
+export type TenantSex = z.infer<typeof tenantSexSchema>;
+
 export const tenantSchema = z.object({
   id: z.string(),
   name: z.string(),
   phone: z.string(),
-  sex: z.enum(['MALE', 'FEMALE']),
+  sex: tenantSexSchema,
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });

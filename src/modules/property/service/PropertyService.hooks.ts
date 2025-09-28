@@ -53,6 +53,7 @@ export const useBookStay = (
     data: stay,
     isPending: isLoading,
     error,
+    mutate,
   } = useMutation({
     ...options,
     mutationFn: (stayData: BookStayRequest) =>
@@ -62,6 +63,7 @@ export const useBookStay = (
     stay,
     isLoading,
     error,
+    mutate,
   };
 };
 
