@@ -64,61 +64,58 @@ const ReconcileStaysView: FC = () => {
         description={`Encontradas ${externalStays?.length} estadias externas que ainda não foram cadastradas.`}
       />
       <Page.Content>
-        <div className='container mx-auto'>
-          {staysError && (
-            <Alert
-              variant='destructive'
-              title='Erro'
-              message={staysError.message}
-            />
-          )}
-          {isLoadingStays && <p className='text-center'>Carregando...</p>}
-          {(!externalStays || externalStays.length === 0) &&
-            !isLoadingStays && (
-              <p className='text-muted-foreground text-center'>
-                Não há estadias externas pendentes para reconciliar.
-              </p>
-            )}
-          {externalStays && externalStays.length > 0 && (
-            <div className='grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4'>
-              {externalStays.map((stay) => (
-                <Card
-                  key={`${stay.property.id}-${stay.start.toISOString()}`}
-                  className='gap-2'
-                >
-                  <CardHeader>
-                    <CardTitle className='flex justify-between items-start'>
-                      <span>{stay.property.name}</span>
-                      <span className='text-sm font-normal text-muted-foreground capitalize'>
-                        {stay.sourcePlatform}
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className='[&>div]:flex [&>div]:justify-between [&>div]:items-center [&>div]:gap-1'>
-                      <div>
-                        <p className='text-muted-foreground'>Check-in</p>
-                        <p className='font-medium'>{formatDate(stay.start)}</p>
-                      </div>
-                      <div>
-                        <p className='text-muted-foreground'>Check-out</p>
-                        <p className='font-medium'>{formatDate(stay.end)}</p>
-                      </div>
+        {staysError && (
+          <Alert
+            variant='destructive'
+            title='Erro'
+            message={staysError.message}
+          />
+        )}
+        {isLoadingStays && <p className='text-center'>Carregando...</p>}
+        {(!externalStays || externalStays.length === 0) && !isLoadingStays && (
+          <p className='text-muted-foreground text-center'>
+            Não há estadias externas pendentes para reconciliar.
+          </p>
+        )}
+        {externalStays && externalStays.length > 0 && (
+          <div className='grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4'>
+            {externalStays.map((stay) => (
+              <Card
+                key={`${stay.property.id}-${stay.start.toISOString()}`}
+                className='gap-2'
+              >
+                <CardHeader>
+                  <CardTitle className='flex justify-between items-start'>
+                    <span>{stay.property.name}</span>
+                    <span className='text-sm font-normal text-muted-foreground capitalize'>
+                      {stay.sourcePlatform}
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className='[&>div]:flex [&>div]:justify-between [&>div]:items-center [&>div]:gap-1'>
+                    <div>
+                      <p className='text-muted-foreground'>Check-in</p>
+                      <p className='font-medium'>{formatDate(stay.start)}</p>
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button
-                      onClick={() => setSelectedStay(stay)}
-                      className='w-full'
-                    >
-                      Cadastrar Estadia
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
+                    <div>
+                      <p className='text-muted-foreground'>Check-out</p>
+                      <p className='font-medium'>{formatDate(stay.end)}</p>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    onClick={() => setSelectedStay(stay)}
+                    className='w-full'
+                  >
+                    Cadastrar Estadia
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
       </Page.Content>
     </Page.Container>
   );

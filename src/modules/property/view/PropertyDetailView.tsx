@@ -72,9 +72,7 @@ const PropertyDetailView: FC = () => {
         actions={<Button>Editar</Button>}
       />
       <Page.Content>
-        <div className='container mx-auto space-y-6'>
-          {property_id && <PropertyStaysList propertyId={property_id} />}
-        </div>
+        {property_id && <PropertyStaysList propertyId={property_id} />}
       </Page.Content>
     </Page.Container>
   );

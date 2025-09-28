@@ -25,12 +25,12 @@ const Container: FC<ComponentProps<'main'>> = ({
   );
 };
 
-type TopbarProps = ComponentProps<'header'> & {
+type TopbarProps = ComponentProps<'nav'> & {
   nav?: Array<{ label: string; to?: string }>;
 };
 const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
   return (
-    <header
+    <nav
       className={cn(
         'flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)',
         'flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6',
@@ -56,7 +56,7 @@ const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
           </BreadcrumbList>
         </Breadcrumb>
       )}
-    </header>
+    </nav>
   );
 };
 
@@ -90,20 +90,18 @@ const Header: FC<HeaderProps> = ({
   );
 };
 
-const Content: FC<ComponentProps<'div'>> = ({
-  children,
-  className,
-  ...props
-}) => {
+type ContentProps = ComponentProps<'div'>;
+const Content: FC<ContentProps> = ({ children, className, ...props }) => {
   return (
     <div
-      className={cn(
-        'flex w-full items-center gap-1 lg:gap-2 px-4 md:px-6 pb-12 md:pb-6',
-        className
-      )}
+      className={
+        'flex w-full items-center gap-1 lg:gap-2 px-4 md:px-6 pb-12 md:pb-6'
+      }
       {...props}
     >
-      {children}
+      <div className={cn('container mx-auto space-y-6', className)}>
+        {children}
+      </div>
     </div>
   );
 };
