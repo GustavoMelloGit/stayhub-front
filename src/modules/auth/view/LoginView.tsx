@@ -64,7 +64,7 @@ const LoginView: React.FC = () => {
   };
 
   return (
-    <main className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+    <main className='min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8'>
       <Card className='max-w-sm w-full'>
         <CardHeader>
           <CardTitle>Entrar na sua conta</CardTitle>
@@ -135,7 +135,7 @@ const LoginView: React.FC = () => {
               </div>
 
               <div className='text-center'>
-                <span className='text-sm text-gray-600'>
+                <span className='text-sm text-muted-foreground'>
                   Não tem uma conta?{' '}
                   <Link
                     to='/signup'
