@@ -1,10 +1,9 @@
-import type { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { type FC } from 'react';
 import { useUserProperties } from '../service/PropertyService.hooks';
 import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
-import { ROUTES } from '@/routes/routes';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const PropertyListView: FC = () => {
   const { properties, isLoading, error } = useUserProperties();
@@ -65,69 +64,24 @@ const PropertyListView: FC = () => {
           </Button>
         </div>
       ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {properties.map((property) => (
-            <div
-              key={property.id}
-              className='bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-200'
-            >
-              <div className='p-6'>
-                <div className='flex justify-between items-start mb-4'>
-                  <h3 className='text-lg font-semibold text-gray-900'>
-                    {property.name}
-                  </h3>
-                  <div className='flex space-x-2'>
-                    <Button variant='outline' size='sm'>
-                      Editar
-                    </Button>
-                    <Button
-                      variant='outline'
-                      size='sm'
-                      className='text-red-600 hover:text-red-700'
-                    >
-                      Excluir
-                    </Button>
-                  </div>
-                </div>
-
-                <div className='space-y-2 text-sm text-gray-600'>
-                  <div className='flex justify-between'>
-                    <span>ID:</span>
-                    <span className='font-mono text-xs'>{property.id}</span>
-                  </div>
-                  <div className='flex justify-between'>
-                    <span>Criado em:</span>
-                    <span>
-                      {new Date(property.created_at).toLocaleDateString(
-                        'pt-BR'
-                      )}
-                    </span>
-                  </div>
-                  <div className='flex justify-between'>
-                    <span>Atualizado em:</span>
-                    <span>
-                      {new Date(property.updated_at).toLocaleDateString(
-                        'pt-BR'
-                      )}
-                    </span>
-                  </div>
-                </div>
-
-                <div className='mt-4 pt-4 border-t border-gray-200'>
-                  <div className='flex space-x-2'>
-                    <Link to={ROUTES.property(property.id)} className='flex-1'>
-                      <Button variant='outline' size='sm' className='w-full'>
-                        Ver Detalhes
-                      </Button>
-                    </Link>
-                    <Button variant='outline' size='sm' className='flex-1'>
-                      Gerenciar
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2'>
+          {properties.map((property) => {
+            return (
+              <Card className='pt-0 gap-0'>
+                <CardHeader className='p-0 rounded-[inherit]'>
+                  <img
+                    src='https://picsum.photos/200'
+                    alt=''
+                    className='rounded-[inherit] rounded-b-none w-full aspect-video object-cover'
+                  />
+                </CardHeader>
+                <CardContent className='pt-2 px-4 space-y-4'>
+                  <CardTitle>{property.name}</CardTitle>
+                  <Button className='w-full'>Ver detalhes</Button>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
