@@ -94,11 +94,13 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                 return (
                   <TableRow key={stay.id}>
                     <TableCell>{stay.tenant.name}</TableCell>
-                    <TableCell className='text-right'>{stay.guests}</TableCell>
+                    <TableCell className='text-right tabular-nums'>
+                      {stay.guests}
+                    </TableCell>
                     <TableCell>{checkInDate}</TableCell>
                     <TableCell>{checkOutDate}</TableCell>
                     <TableCell>{stay.entrance_code}</TableCell>
-                    <TableCell className='text-right'>
+                    <TableCell className='text-right tabular-nums'>
                       {Currency.format(stay.price)}
                     </TableCell>
                     <TableCell>
