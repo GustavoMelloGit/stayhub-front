@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { ArrowLeft, Calendar, Edit, Trash2, Home } from 'lucide-react';
 import { ROUTES } from '@/routes/routes';
+import { PropertyStaysList } from '../components/PropertyStaysList';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
@@ -57,8 +58,8 @@ const PropertyDetailView: FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <div className='mb-6'>
+    <div className='container mx-auto px-4 py-8 space-y-6'>
+      <div>
         <Button variant='outline' className='mb-4' asChild>
           <Link to={ROUTES.home}>
             <ArrowLeft className='size-4 mr-0.5' />
@@ -229,6 +230,7 @@ const PropertyDetailView: FC = () => {
           </div>
         </div>
       </div>
+      {property_id && <PropertyStaysList propertyId={property_id} />}
     </div>
   );
 };
