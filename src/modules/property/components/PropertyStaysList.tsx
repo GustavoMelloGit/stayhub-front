@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CopyIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 const dateFormatter = Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
@@ -90,6 +91,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                         onClick={() => {
                           const text = `${stay.tenant.name}\n${stay.tenant.phone}\n${checkInDate} - ${checkOutDate}\n${stay.guests} hóspedes`;
                           navigator.clipboard.writeText(text);
+                          toast.success('Copiado com sucesso');
                         }}
                       >
                         <CopyIcon className='size-4' />
