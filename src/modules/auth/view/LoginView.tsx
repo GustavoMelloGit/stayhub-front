@@ -16,6 +16,13 @@ import {
 import { useSignin } from '@/modules/auth/service/AuthService.hooks';
 import { Alert } from '@/components/Alert';
 import { ROUTES } from '@/routes/routes';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 const loginSchema = z.object({
   email: z.email('Email inválido').min(1, 'Email é obrigatório'),
@@ -47,7 +54,7 @@ const LoginView: React.FC = () => {
   const onSubmit = (data: LoginFormData): void => {
     signin(data, {
       onSuccess: () => {
-        const from = location.state?.from?.pathname || ROUTES.dashboard;
+        const from = location.state?.from?.pathname || ROUTES.home;
         navigate(from, { replace: true });
       },
       onError: (error) => {
@@ -58,103 +65,99 @@ const LoginView: React.FC = () => {
 
   return (
     <main className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-md w-full space-y-8'>
-        <div>
-          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-            Entrar na sua conta
-          </h2>
-          <p className='mt-2 text-center text-sm text-gray-600'>
+      <Card className='max-w-sm w-full'>
+        <CardHeader>
+          <CardTitle>Entrar na sua conta</CardTitle>
+          <CardDescription>
             Digite suas credenciais para acessar o StayHub
-          </p>
-        </div>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+              <div className='space-y-4'>
+                <FormField
+                  control={form.control}
+                  name='email'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='email'
+                          placeholder='seu@email.com'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className='mt-8 space-y-6'
-          >
-            <div className='space-y-4'>
-              <FormField
-                control={form.control}
-                name='email'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='email'
-                        placeholder='seu@email.com'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name='password'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='password'
+                          placeholder='Sua senha'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-              <FormField
-                control={form.control}
-                name='password'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Senha</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='password'
-                        placeholder='Sua senha'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+              {signinError && (
+                <Alert
+                  variant='destructive'
+                  message={
+                    signinError instanceof Error
+                      ? signinError.message
+                      : 'Erro ao fazer login. Verifique suas credenciais.'
+                  }
+                />
+              )}
 
-            {signinError && (
-              <Alert
-                variant='destructive'
-                message={
-                  signinError instanceof Error
-                    ? signinError.message
-                    : 'Erro ao fazer login. Verifique suas credenciais.'
-                }
-              />
-            )}
-
-            <div>
-              <Button
-                type='submit'
-                className='w-full'
-                disabled={isSigninLoading}
-              >
-                {isSigninLoading ? 'Carregando...' : 'Entrar'}
-              </Button>
-            </div>
-
-            <div className='text-center'>
-              <span className='text-sm text-gray-600'>
-                Não tem uma conta?{' '}
-                <Link
-                  to='/signup'
-                  className='font-medium text-blue-600 hover:text-blue-500'
+              <div>
+                <Button
+                  type='submit'
+                  className='w-full'
+                  disabled={isSigninLoading}
                 >
-                  Cadastre-se
-                </Link>
-              </span>
-            </div>
+                  {isSigninLoading ? 'Carregando...' : 'Entrar'}
+                </Button>
+              </div>
 
-            <div className='text-right'>
-              <Link
-                to='/forgot-password'
-                className='text-sm text-blue-600 hover:text-blue-500'
-              >
-                Esqueceu sua senha?
-              </Link>
-            </div>
-          </form>
-        </Form>
-      </div>
+              <div className='text-center'>
+                <span className='text-sm text-gray-600'>
+                  Não tem uma conta?{' '}
+                  <Link
+                    to='/signup'
+                    className='font-medium text-blue-600 hover:text-blue-500'
+                  >
+                    Cadastre-se
+                  </Link>
+                </span>
+              </div>
+
+              <div className='text-right'>
+                <Link
+                  to='/forgot-password'
+                  className='text-sm text-blue-600 hover:text-blue-500'
+                >
+                  Esqueceu sua senha?
+                </Link>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </main>
   );
 };
