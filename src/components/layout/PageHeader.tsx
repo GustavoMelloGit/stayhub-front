@@ -10,8 +10,8 @@ export const PageHeader: FC<Props> = ({ title, description, actions }) => {
   return (
     <div className='flex justify-between items-center mb-8'>
       <div>
-        <h1 className='text-3xl font-bold text-gray-900'>{title}</h1>
-        <p className='text-gray-600 mt-2'>{description}</p>
+        <h1 className='text-3xl font-bold text-foreground'>{title}</h1>
+        <p className='text-muted-foreground mt-2'>{description}</p>
       </div>
       {actions}
     </div>
