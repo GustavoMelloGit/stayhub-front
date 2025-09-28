@@ -1,6 +1,11 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQuery,
+  type UseMutationOptions,
+} from '@tanstack/react-query';
 import { PropertyService } from './PropertyService';
 import type { BookStayRequest } from '../types/Property';
+import type { Stay } from '@/modules/stay/types/Stay';
 
 /**
  * Hook para obter todas as propriedades do usuário
@@ -41,12 +46,15 @@ export const useReconcileExternalStays = () => {
   };
 };
 
-export const useBookStay = () => {
+export const useBookStay = (
+  options?: UseMutationOptions<Stay, Error, BookStayRequest>
+) => {
   const {
     data: stay,
     isPending: isLoading,
     error,
   } = useMutation({
+    ...options,
     mutationFn: (stayData: BookStayRequest) =>
       PropertyService.bookStay(stayData),
   });
