@@ -1,15 +1,17 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import LoginView from '../modules/auth/view/LoginView';
-import SignupView from '../modules/auth/view/SignupView';
-import { StayInstructionsView } from '@/modules/stay/view/StayInstructionsView';
-import { NotFoundView } from '@/modules/error/view/NotFoundView';
-import PropertyListView from '@/modules/property/view/PropertyListView';
-import PropertyDetailView from '@/modules/property/view/PropertyDetailView';
-import ReconcileStaysView from '@/modules/property/view/ReconcileStaysView';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { ROUTES } from './routes';
 import { AppLayout } from '@/components/layout';
+import {
+  LazyLoginView,
+  LazySignupView,
+  LazyStayInstructionsView,
+  LazyNotFoundView,
+  LazyPropertyListView,
+  LazyPropertyDetailView,
+  LazyReconcileStaysView,
+} from './lazyComponents';
 
 export const router = createBrowserRouter([
   {
@@ -24,27 +26,27 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <PropertyListView />,
+        element: <LazyPropertyListView />,
       },
       {
         path: ROUTES.property(':property_id'),
-        element: <PropertyDetailView />,
+        element: <LazyPropertyDetailView />,
       },
       {
         path: ROUTES.reconcileStays,
-        element: <ReconcileStaysView />,
+        element: <LazyReconcileStaysView />,
       },
     ],
   },
   {
     path: ROUTES.stayInstructions(':stay_id'),
-    element: <StayInstructionsView />,
+    element: <LazyStayInstructionsView />,
   },
   {
     path: ROUTES.login,
     element: (
       <PublicRoute>
-        <LoginView />
+        <LazyLoginView />
       </PublicRoute>
     ),
   },
@@ -52,12 +54,12 @@ export const router = createBrowserRouter([
     path: ROUTES.signup,
     element: (
       <PublicRoute>
-        <SignupView />
+        <LazySignupView />
       </PublicRoute>
     ),
   },
   {
     path: '*',
-    element: <NotFoundView />,
+    element: <LazyNotFoundView />,
   },
 ]);
