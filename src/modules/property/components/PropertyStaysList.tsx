@@ -21,15 +21,6 @@ import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
 
-const dateFormatter = Intl.DateTimeFormat('pt-BR', {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  timeZone: 'America/Sao_Paulo',
-});
-
 type Props = {
   propertyId: string;
 };
@@ -89,17 +80,21 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             )}
             {stays &&
               stays.map((stay) => {
-                const checkInDate = dateFormatter.format(stay.check_in);
-                const checkOutDate = dateFormatter.format(stay.check_out);
                 return (
                   <TableRow key={stay.id}>
                     <TableCell>{stay.tenant.name}</TableCell>
                     <TableCell className='text-right tabular-nums'>
                       {stay.guests}
                     </TableCell>
-                    <TableCell>{checkInDate}</TableCell>
-                    <TableCell>{checkOutDate}</TableCell>
-                    <TableCell>{stay.entrance_code}</TableCell>
+                    <TableCell>
+                      {stay.check_in.toLocaleDateString('pt-BR')}
+                    </TableCell>
+                    <TableCell>
+                      {stay.check_out.toLocaleDateString('pt-BR')}
+                    </TableCell>
+                    <TableCell className='tabular-nums'>
+                      {stay.entrance_code}
+                    </TableCell>
                     <TableCell className='text-right tabular-nums'>
                       {Currency.format(stay.price)}
                     </TableCell>
