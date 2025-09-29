@@ -27,6 +27,8 @@ import { queryClient } from '@/lib/query-client';
 import { WandSparkles } from 'lucide-react';
 import { useBookStay } from '../service/PropertyService.hooks';
 import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
+import { Page } from '@/components/layout/Page';
+import { ROUTES } from '@/routes/routes';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
@@ -48,10 +50,10 @@ export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
 
 type Props = {
   externalStay: ExternalStay;
-  onSuccess: () => void;
+  goBack: () => void;
 };
 
-const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
+const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
   const {
     mutate,
     isLoading: isSubmitting,
@@ -59,7 +61,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
   } = useBookStay({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reconcileExternalStays'] });
-      onSuccess();
+      goBack();
     },
   });
 
@@ -116,177 +118,202 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
   };
 
   return (
-    <Card className='w-full max-w-2xl'>
-      <CardHeader>
-        <CardTitle>Cadastrar Estadia Externa</CardTitle>
-        <div className='text-sm text-muted-foreground space-y-1'>
-          <p>
-            <strong>Propriedade:</strong> {externalStay.property.name}
-          </p>
-          <p>
-            <strong>Plataforma:</strong> {externalStay.sourcePlatform}
-          </p>
-          <p>
-            <strong>Check-in:</strong> {formatDate(externalStay.start)}
-          </p>
-          <p>
-            <strong>Check-out:</strong> {formatDate(externalStay.end)}
-          </p>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {error && (
-          <Alert
-            variant='destructive'
-            title='Erro'
-            message={error.message}
-            className='mb-4'
-          />
-        )}
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className='space-y-4'
-          >
-            <FormField
-              control={form.control}
-              name='entrance_code'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Código de Entrada</FormLabel>
-                  <FormControl>
-                    <div className='flex items-center gap-2'>
-                      <Input
-                        placeholder='Digite o código de entrada'
-                        maxLength={ENTRANCE_CODE_LENGTH}
-                        minLength={ENTRANCE_CODE_LENGTH}
-                        {...field}
-                      />
-                      <Button
-                        variant='outline'
-                        size='icon'
-                        aria-label='Gerar código de entrada aleatório'
-                        onClick={() => {
-                          // generate random number with ENTRANCE_CODE_LENGTH digits
-                          field.onChange(generateRandomEntranceCode());
-                        }}
+    <Page.Container>
+      <Page.Topbar
+        nav={[
+          {
+            label: 'Reconciliar Estadias Externas',
+            to: ROUTES.reconcileStays,
+            onClick: () => goBack(),
+          },
+          { label: 'Cadastrar Estadia Externa' },
+        ]}
+      />
+      <Page.Header
+        title='Cadastrar Estadia Externa'
+        description={`Cadastre a estadia externa da propriedade ${externalStay.property.name}.`}
+      />
+      <Page.Content>
+        <Card className='w-full max-w-2xl'>
+          <CardHeader>
+            <CardTitle>Cadastrar Estadia Externa</CardTitle>
+            <div className='text-sm text-muted-foreground space-y-1'>
+              <p>
+                <strong>Propriedade:</strong> {externalStay.property.name}
+              </p>
+              <p>
+                <strong>Plataforma:</strong> {externalStay.sourcePlatform}
+              </p>
+              <p>
+                <strong>Check-in:</strong> {formatDate(externalStay.start)}
+              </p>
+              <p>
+                <strong>Check-out:</strong> {formatDate(externalStay.end)}
+              </p>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {error && (
+              <Alert
+                variant='destructive'
+                title='Erro'
+                message={error.message}
+                className='mb-4'
+              />
+            )}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className='space-y-4'
+              >
+                <FormField
+                  control={form.control}
+                  name='entrance_code'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Código de Entrada</FormLabel>
+                      <FormControl>
+                        <div className='flex items-center gap-2'>
+                          <Input
+                            placeholder='Digite o código de entrada'
+                            maxLength={ENTRANCE_CODE_LENGTH}
+                            minLength={ENTRANCE_CODE_LENGTH}
+                            {...field}
+                          />
+                          <Button
+                            variant='outline'
+                            size='icon'
+                            aria-label='Gerar código de entrada aleatório'
+                            onClick={() => {
+                              // generate random number with ENTRANCE_CODE_LENGTH digits
+                              field.onChange(generateRandomEntranceCode());
+                            }}
+                          >
+                            <WandSparkles />
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='tenant_name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nome do Hóspede</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Digite o nome do hóspede'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='tenant_phone'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Telefone do Hóspede</FormLabel>
+                      <FormControl ref={withMask('+55 (99) 99999-9999')}>
+                        <Input
+                          placeholder='Digite o telefone do hóspede'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='tenant_sex'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sexo do Hóspede</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
                       >
-                        <WandSparkles />
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                        <FormControl>
+                          <SelectTrigger className='w-full'>
+                            <SelectValue placeholder='Selecione o sexo' />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value='MALE'>Masculino</SelectItem>
+                          <SelectItem value='FEMALE'>Feminino</SelectItem>
+                          <SelectItem value='OTHER'>Outro</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='tenant_name'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nome do Hóspede</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Digite o nome do hóspede' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name='guests'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Número de Hóspedes</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          max={7}
+                          min={1}
+                          placeholder='Digite o número de hóspedes'
+                          {...field}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value) || 1)
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='tenant_phone'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Telefone do Hóspede</FormLabel>
-                  <FormControl ref={withMask('+55 (99) 99999-9999')}>
-                    <Input
-                      placeholder='Digite o telefone do hóspede'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name='price'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Preço da Estadia</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='number'
+                          min={0}
+                          step={0.01}
+                          placeholder='Digite o preço da estadia'
+                          inputMode='decimal'
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name='tenant_sex'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sexo do Hóspede</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className='w-full'>
-                        <SelectValue placeholder='Selecione o sexo' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value='MALE'>Masculino</SelectItem>
-                      <SelectItem value='FEMALE'>Feminino</SelectItem>
-                      <SelectItem value='OTHER'>Outro</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name='guests'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Número de Hóspedes</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      max={7}
-                      min={1}
-                      placeholder='Digite o número de hóspedes'
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value) || 1)
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name='price'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Preço da Estadia</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      min={0}
-                      step={0.01}
-                      placeholder='Digite o preço da estadia'
-                      inputMode='decimal'
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <Button type='submit' className='w-full' disabled={isSubmitting}>
-              {isSubmitting ? 'Cadastrando...' : 'Cadastrar Estadia'}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+                <Button
+                  type='submit'
+                  className='w-full'
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Cadastrando...' : 'Cadastrar Estadia'}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </Page.Content>
+    </Page.Container>
   );
 };
 

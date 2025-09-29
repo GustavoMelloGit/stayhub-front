@@ -23,7 +23,7 @@ const ReconcileStaysView: FC = () => {
     error: staysError,
   } = useReconcileExternalStays();
 
-  const handleSuccess = (): void => {
+  const handleGoBack = (): void => {
     setSelectedStay(null);
   };
 
@@ -37,22 +37,7 @@ const ReconcileStaysView: FC = () => {
 
   if (selectedStay) {
     return (
-      <div className='container mx-auto p-6'>
-        <div className='mb-6'>
-          <Button
-            variant='outline'
-            onClick={() => setSelectedStay(null)}
-            className='mb-4'
-          >
-            ← Voltar para lista
-          </Button>
-          <h1 className='text-2xl font-bold'>Cadastrar Estadia Externa</h1>
-        </div>
-        <ReconcileStayForm
-          externalStay={selectedStay}
-          onSuccess={handleSuccess}
-        />
-      </div>
+      <ReconcileStayForm externalStay={selectedStay} goBack={handleGoBack} />
     );
   }
 
