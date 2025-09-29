@@ -25,8 +25,12 @@ const Container: FC<ComponentProps<'main'>> = ({
   );
 };
 
+type BaseNav = { label: string };
+type LinkNav = BaseNav & ComponentProps<typeof BreadcrumbLink> & { to: string };
+type PageNav = BaseNav & ComponentProps<typeof BreadcrumbPage> & { to?: never };
+
 type TopbarProps = ComponentProps<'nav'> & {
-  nav?: Array<{ label: string; to?: string }>;
+  nav?: Array<LinkNav | PageNav>;
 };
 const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
   return (
@@ -46,9 +50,11 @@ const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
               <Fragment key={item.label}>
                 <BreadcrumbItem>
                   {item.to && (
-                    <BreadcrumbLink to={item.to}>{item.label}</BreadcrumbLink>
+                    <BreadcrumbLink {...item}>{item.label}</BreadcrumbLink>
                   )}
-                  {!item.to && <BreadcrumbPage>{item.label}</BreadcrumbPage>}
+                  {!item.to && (
+                    <BreadcrumbPage {...item}>{item.label}</BreadcrumbPage>
+                  )}
                 </BreadcrumbItem>
                 {index < nav.length - 1 && <BreadcrumbSeparator />}
               </Fragment>
