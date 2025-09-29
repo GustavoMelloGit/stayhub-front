@@ -1,10 +1,11 @@
+import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 import z from 'zod';
 
 export const staySchema = z.object({
   id: z.string(),
   check_in: z.coerce.date(),
   check_out: z.coerce.date(),
-  entrance_code: z.string(),
+  entrance_code: z.string().length(ENTRANCE_CODE_LENGTH),
   guests: z.number(),
   price: z.number(),
   created_at: z.coerce.date(),
@@ -48,7 +49,7 @@ export type ExternalStay = z.infer<typeof externalStaySchema>;
 export const publicStaySchema = z.object({
   check_in: z.coerce.date(),
   check_out: z.coerce.date(),
-  entrance_code: z.string(),
+  entrance_code: z.string().length(ENTRANCE_CODE_LENGTH),
   tenant: z.object({
     name: z.string(),
   }),

@@ -26,11 +26,15 @@ import z from 'zod';
 import { queryClient } from '@/lib/query-client';
 import { WandSparkles } from 'lucide-react';
 import { useBookStay } from '../service/PropertyService.hooks';
+import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
     .string()
-    .min(7, 'O código de entrada deve ter pelo menos 7 dígitos'),
+    .min(
+      ENTRANCE_CODE_LENGTH,
+      `O código de entrada deve ter pelo menos ${ENTRANCE_CODE_LENGTH} dígitos`
+    ),
   tenant_name: z.string().min(1, 'Nome do hóspede é obrigatório'),
   tenant_phone: z.string().min(13, 'Telefone do hóspede é obrigatório'),
   tenant_sex: z.enum(['MALE', 'FEMALE', 'OTHER'], {
@@ -90,6 +94,19 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
     mutate(payload);
   };
 
+  const generateRandomEntranceCode = (): string => {
+    const size = ENTRANCE_CODE_LENGTH;
+    if (size < 1) {
+      throw new Error('O tamanho deve ser 1 ou maior.');
+    }
+
+    const min = Math.pow(10, size - 1);
+
+    const max = Math.pow(10, size) - 1;
+
+    return String(Math.floor(Math.random() * (max - min + 1)) + min);
+  };
+
   const formatDate = (date: Date): string => {
     return new Intl.DateTimeFormat('pt-BR', {
       day: '2-digit',
@@ -141,6 +158,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
                     <div className='flex items-center gap-2'>
                       <Input
                         placeholder='Digite o código de entrada'
+                        maxLength={ENTRANCE_CODE_LENGTH}
+                        minLength={ENTRANCE_CODE_LENGTH}
                         {...field}
                       />
                       <Button
@@ -148,12 +167,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, onSuccess }) => {
                         size='icon'
                         aria-label='Gerar código de entrada aleatório'
                         onClick={() => {
-                          // generate random number with 7 digits
-                          field.onChange(
-                            Math.floor(
-                              1000000 + Math.random() * 9999999
-                            ).toString()
-                          );
+                          // generate random number with ENTRANCE_CODE_LENGTH digits
+                          field.onChange(generateRandomEntranceCode());
                         }}
                       >
                         <WandSparkles />

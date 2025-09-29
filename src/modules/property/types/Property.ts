@@ -1,3 +1,4 @@
+import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 import { tenantSexSchema } from '@/modules/stay/types/Stay';
 import z from 'zod';
 
@@ -15,7 +16,7 @@ export type Property = z.infer<typeof propertySchema>;
 export const bookStayRequestSchema = z.object({
   check_in: z.iso.datetime(),
   check_out: z.iso.datetime(),
-  entrance_code: z.string(),
+  entrance_code: z.string().length(ENTRANCE_CODE_LENGTH),
   tenant: z.object({
     name: z.string(),
     phone: z.string(),
