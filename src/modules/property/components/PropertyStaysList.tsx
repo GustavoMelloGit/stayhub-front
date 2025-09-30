@@ -21,6 +21,14 @@ import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
 
+const formatDate = (date: Date): string => {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(date);
+};
+
 type Props = {
   propertyId: string;
 };
@@ -34,8 +42,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     const data = [
       stay.tenant.name,
       stay.tenant.phone,
-      stay.check_in.toLocaleDateString(),
-      stay.check_out.toLocaleDateString(),
+      `${formatDate(stay.check_in)} - ${formatDate(stay.check_out)}`,
       `${stay.guests} hóspedes`,
     ];
     navigator.clipboard.writeText(data.join('\n'));
@@ -86,12 +93,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                     <TableCell className='text-right tabular-nums'>
                       {stay.guests}
                     </TableCell>
-                    <TableCell>
-                      {stay.check_in.toLocaleDateString('pt-BR')}
-                    </TableCell>
-                    <TableCell>
-                      {stay.check_out.toLocaleDateString('pt-BR')}
-                    </TableCell>
+                    <TableCell>{formatDate(stay.check_in)}</TableCell>
+                    <TableCell>{formatDate(stay.check_out)}</TableCell>
                     <TableCell className='tabular-nums'>
                       {stay.entrance_code}
                     </TableCell>
