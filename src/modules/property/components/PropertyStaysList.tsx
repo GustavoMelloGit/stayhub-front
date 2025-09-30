@@ -20,6 +20,7 @@ import { CopyIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
+import { Phone } from '@/lib/phone';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -41,7 +42,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const handleCopy = (stay: WithTenant<Stay>) => {
     const data = [
       stay.tenant.name,
-      stay.tenant.phone,
+      Phone.toHumanReadable(stay.tenant.phone),
       `${formatDate(stay.check_in)} - ${formatDate(stay.check_out)}`,
       `${stay.guests} hóspedes`,
     ];
