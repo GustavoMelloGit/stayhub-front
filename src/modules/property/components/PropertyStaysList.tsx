@@ -8,12 +8,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CopyIcon } from 'lucide-react';
+import { CopyIcon, Link } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
 import { DataTable } from '@/components/Table/DataTable';
+import { ROUTES } from '@/routes/routes';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -32,15 +33,25 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     onlyIncomingStays: true,
   });
 
-  const handleCopy = (stay: WithTenant<Stay>) => {
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success('Copiado com sucesso');
+  };
+
+  const copyCohostData = (stay: WithTenant<Stay>) => {
     const data = [
       stay.tenant.name,
       Phone.toHumanReadable(stay.tenant.phone),
       `${formatDate(stay.check_in)} - ${formatDate(stay.check_out)}`,
       `${stay.guests} hóspedes`,
     ];
-    navigator.clipboard.writeText(data.join('\n'));
-    toast.success('Copiado com sucesso');
+    copyText(data.join('\n'));
+  };
+
+  const copyStayData = (stay: WithTenant<Stay>) => {
+    const stayUrl = ROUTES.stayInstructions(stay.id);
+    const url = new URL(stayUrl, location.origin);
+    copyText(url.toString());
   };
 
   return (
@@ -100,14 +111,24 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               header: 'Ações',
               accessorKey: 'actions',
               render: row => (
-                <Button
-                  variant='outline'
-                  size='icon'
-                  onClick={() => handleCopy(row)}
-                  aria-label='Copiar informações da estadia'
-                >
-                  <CopyIcon className='size-4' />
-                </Button>
+                <div className='flex gap-2'>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => copyCohostData(row)}
+                    aria-label='Copiar informações da estadia'
+                  >
+                    <CopyIcon className='size-4' />
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => copyStayData(row)}
+                    aria-label='Copiar informações da estadia'
+                  >
+                    <Link className='size-4' />
+                  </Button>
+                </div>
               ),
             },
           ]}
