@@ -57,7 +57,7 @@ const LoginView: React.FC = () => {
         const from = location.state?.from?.pathname || ROUTES.home;
         navigate(from, { replace: true });
       },
-      onError: (error) => {
+      onError: error => {
         console.error('Erro no login:', error);
       },
     });

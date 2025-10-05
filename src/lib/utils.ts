@@ -22,7 +22,7 @@ export function objectToQueryParams(filters: Record<string, unknown>): string {
     }
 
     if (Array.isArray(value)) {
-      value.forEach((item) => {
+      value.forEach(item => {
         if (item !== undefined && item !== null && item !== '') {
           params.append(key, String(item));
         }

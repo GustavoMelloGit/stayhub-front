@@ -8,8 +8,8 @@ export function DataTableMobile<T extends JsonDataTableRow>({
   error,
   isLoading,
 }: DataTableProps<T>) {
-  const headerColumn = columns.find((column) => column.mobile?.isHeader);
-  const restColumns = columns.filter((column) => !column.mobile?.isHeader);
+  const headerColumn = columns.find(column => column.mobile?.isHeader);
+  const restColumns = columns.filter(column => !column.mobile?.isHeader);
 
   if (error) {
     return <div>{error}</div>;
@@ -20,13 +20,13 @@ export function DataTableMobile<T extends JsonDataTableRow>({
 
   return (
     <div className='space-y-4'>
-      {data.map((row) => (
+      {data.map(row => (
         <Card key={row.id} className='gap-2'>
           <CardHeader>
             <CardTitle>{headerColumn?.render(row)}</CardTitle>
           </CardHeader>
           <CardContent>
-            {restColumns.map((column) => (
+            {restColumns.map(column => (
               <div
                 key={column.accessorKey}
                 {...column.cell}

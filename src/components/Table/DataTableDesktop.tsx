@@ -18,7 +18,7 @@ export function DataTableDesktop<T extends JsonDataTableRow>({
     <Table>
       <TableHeader>
         <TableRow>
-          {columns.map((column) => (
+          {columns.map(column => (
             <TableHead key={column.accessorKey}>{column.header}</TableHead>
           ))}
         </TableRow>
@@ -40,10 +40,10 @@ export function DataTableDesktop<T extends JsonDataTableRow>({
         )}
         {!isLoading &&
           !error &&
-          data.map((row) => {
+          data.map(row => {
             return (
               <TableRow key={row.id}>
-                {columns.map((column) => (
+                {columns.map(column => (
                   <TableCell key={column.accessorKey} {...column.cell}>
                     {column.render(row)}
                   </TableCell>

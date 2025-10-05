@@ -74,7 +74,7 @@ const PropertyListView: FC = () => {
           </div>
         ) : (
           <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2'>
-            {properties.map((property) => {
+            {properties.map(property => {
               return (
                 <Card className='pt-0 gap-0' key={property.id}>
                   <CardHeader className='p-0 rounded-[inherit]'>

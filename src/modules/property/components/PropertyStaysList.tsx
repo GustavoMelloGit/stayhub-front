@@ -60,7 +60,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             {
               header: 'Hóspede',
               accessorKey: 'tenant.name',
-              render: (row) => row.tenant.name,
+              render: row => row.tenant.name,
               mobile: {
                 isHeader: true,
               },
@@ -68,7 +68,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             {
               header: 'Hóspedes',
               accessorKey: 'guests',
-              render: (row) => row.guests,
+              render: row => row.guests,
               cell: {
                 className: 'text-right tabular-nums',
               },
@@ -76,22 +76,22 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             {
               header: 'Check-in',
               accessorKey: 'check_in',
-              render: (row) => formatDate(row.check_in),
+              render: row => formatDate(row.check_in),
             },
             {
               header: 'Check-out',
               accessorKey: 'check_out',
-              render: (row) => formatDate(row.check_out),
+              render: row => formatDate(row.check_out),
             },
             {
               header: 'Código',
               accessorKey: 'entrance_code',
-              render: (row) => row.entrance_code,
+              render: row => row.entrance_code,
             },
             {
               header: 'Valor',
               accessorKey: 'price',
-              render: (row) => Currency.format(row.price),
+              render: row => Currency.format(row.price),
               cell: {
                 className: 'text-right tabular-nums',
               },
@@ -99,7 +99,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
             {
               header: 'Ações',
               accessorKey: 'actions',
-              render: (row) => (
+              render: row => (
                 <Button
                   variant='outline'
                   size='icon'

@@ -17,14 +17,14 @@ const api = axios.create({
  * Interceptor para requisições - adiciona token de autenticação se disponível
  */
 api.interceptors.request.use(
-  (config) => {
+  config => {
     const token = localStorage.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
   }
 );
@@ -33,10 +33,10 @@ api.interceptors.request.use(
  * Interceptor para respostas - trata erros globais
  */
 api.interceptors.response.use(
-  (response) => {
+  response => {
     return response;
   },
-  (error) => {
+  error => {
     if (error.response?.status === 401) {
       // Token expirado ou inválido
       localStorage.removeItem('auth_token');

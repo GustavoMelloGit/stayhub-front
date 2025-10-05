@@ -31,7 +31,7 @@ const signupSchema = z
     password: z.string().min(8, 'Senha deve ter pelo menos 6 caracteres'),
     confirmPassword: z.string().min(1, 'Confirmação de senha é obrigatória'),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: 'Senhas não coincidem',
     path: ['confirmPassword'],
   });
@@ -69,7 +69,7 @@ const SignupView: React.FC = () => {
         const from = location.state?.from?.pathname || ROUTES.home;
         navigate(from, { replace: true });
       },
-      onError: (error) => {
+      onError: error => {
         console.error('Erro no cadastro:', error);
       },
     });

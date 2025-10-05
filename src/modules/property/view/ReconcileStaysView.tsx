@@ -64,7 +64,7 @@ const ReconcileStaysView: FC = () => {
         )}
         {externalStays && externalStays.length > 0 && (
           <div className='grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4'>
-            {externalStays.map((stay) => (
+            {externalStays.map(stay => (
               <Card
                 key={`${stay.property.id}-${stay.start.toISOString()}`}
                 className='gap-2'

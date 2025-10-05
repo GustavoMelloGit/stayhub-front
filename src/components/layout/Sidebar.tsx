@@ -58,7 +58,7 @@ export const AppSidebar: FC = () => {
           <SidebarGroupLabel>Navegação</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navigationItems.map((item) => {
+              {navigationItems.map(item => {
                 const Icon = item.icon;
                 const isActive =
                   location.pathname === item.url ||

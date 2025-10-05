@@ -271,7 +271,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           min={1}
                           placeholder='Digite o número de hóspedes'
                           {...field}
-                          onChange={(e) =>
+                          onChange={e =>
                             field.onChange(parseInt(e.target.value) || 1)
                           }
                         />

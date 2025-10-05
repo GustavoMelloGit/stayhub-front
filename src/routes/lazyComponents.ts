@@ -7,12 +7,12 @@ export const LazySignupView = lazy(
   () => import('@/modules/auth/view/SignupView')
 );
 export const LazyStayInstructionsView = lazy(() =>
-  import('@/modules/stay/view/StayInstructionsView').then((module) => ({
+  import('@/modules/stay/view/StayInstructionsView').then(module => ({
     default: module.StayInstructionsView,
   }))
 );
 export const LazyNotFoundView = lazy(() =>
-  import('@/modules/error/view/NotFoundView').then((module) => ({
+  import('@/modules/error/view/NotFoundView').then(module => ({
     default: module.NotFoundView,
   }))
 );
