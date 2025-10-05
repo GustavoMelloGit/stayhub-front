@@ -72,7 +72,7 @@ export const useSignup = () => {
 
 /**
  * Hook para realizar logout
- * Fornece função de logout
+ * Fornece função de logout que invalida todas as queries
  */
 export const useLogout = () => {
   const queryClient = useQueryClient();
@@ -80,6 +80,7 @@ export const useLogout = () => {
   const logout = () => {
     AuthService.logout();
     queryClient.setQueryData(['auth'], null);
+    queryClient.invalidateQueries();
   };
 
   return { logout };
