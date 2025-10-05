@@ -6,6 +6,7 @@ import {
 import { PropertyService } from './PropertyService';
 import type { BookStayRequest } from '../types/Property';
 import type { Stay } from '@/modules/stay/types/Stay';
+import type { AxiosError } from 'axios';
 
 /**
  * Hook para obter todas as propriedades do usuário
@@ -48,7 +49,7 @@ export const useReconcileExternalStays = () => {
 };
 
 export const useBookStay = (
-  options?: UseMutationOptions<Stay, Error, BookStayRequest>
+  options?: UseMutationOptions<Stay, AxiosError, BookStayRequest>
 ) => {
   const {
     data: stay,
