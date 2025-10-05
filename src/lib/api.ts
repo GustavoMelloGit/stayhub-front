@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { env } from './env';
 
 /**
@@ -41,6 +41,23 @@ api.interceptors.response.use(
       // Token expirado ou inválido
       localStorage.removeItem('auth_token');
       window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (
+      typeof error.response?.data === 'object' &&
+      error.response.data !== null &&
+      'message' in error.response.data &&
+      typeof error.response.data.message === 'string'
+    ) {
+      error.message = error.response.data.message;
     }
     return Promise.reject(error);
   }
