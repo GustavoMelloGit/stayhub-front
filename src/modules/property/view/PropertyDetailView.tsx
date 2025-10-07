@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProperty } from '../service/PropertyService.hooks';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { ArrowLeft, Link as LinkIcon } from 'lucide-react';
 import { PropertyStaysList } from '../components/PropertyStaysList';
@@ -31,12 +31,16 @@ const PropertyDetailView: FC = () => {
           mais tarde.
         </Alert>
         <div className='mt-4'>
-          <Button variant='outline' asChild>
-            <Link to='/'>
-              <ArrowLeft className='w-4 h-4 mr-2' />
-              Voltar para início
-            </Link>
-          </Button>
+          <Link
+            to='/'
+            className={buttonVariants({
+              variant: 'outline',
+              className: 'w-full',
+            })}
+          >
+            <ArrowLeft className='w-4 h-4 mr-2' />
+            Voltar para início
+          </Link>
         </div>
       </div>
     );
@@ -50,12 +54,16 @@ const PropertyDetailView: FC = () => {
           para visualizá-la.
         </Alert>
         <div className='mt-4'>
-          <Button variant='outline' asChild>
-            <Link to='/'>
-              <ArrowLeft className='w-4 h-4 mr-2' />
-              Voltar para início
-            </Link>
-          </Button>
+          <Link
+            to='/'
+            className={buttonVariants({
+              variant: 'outline',
+              className: 'w-full',
+            })}
+          >
+            <ArrowLeft className='w-4 h-4 mr-2' />
+            Voltar para início
+          </Link>
         </div>
       </div>
     );

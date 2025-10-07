@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
   CarFront,
@@ -64,15 +64,17 @@ export const StayInstructionsView: FC = () => {
                   </p>
                 </div>
               </div>
-              <Button variant='default' className='w-full' asChild>
-                <a
-                  href='https://maps.app.goo.gl/S5G5VZWHwgY7jZtR8'
-                  target='_blank'
-                  referrerPolicy='no-referrer'
-                >
-                  Abrir no Google Maps
-                </a>
-              </Button>
+              <a
+                href='https://maps.app.goo.gl/S5G5VZWHwgY7jZtR8'
+                target='_blank'
+                referrerPolicy='no-referrer'
+                className={buttonVariants({
+                  variant: 'default',
+                  className: 'w-full',
+                })}
+              >
+                Abrir no Google Maps
+              </a>
             </section>
             <Separator />
             <section>

@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { useUserProperties } from '../service/PropertyService.hooks';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -86,11 +86,15 @@ const PropertyListView: FC = () => {
                   </CardHeader>
                   <CardContent className='pt-2 px-4 space-y-4'>
                     <CardTitle>{property.name}</CardTitle>
-                    <Button className='w-full' asChild>
-                      <Link to={ROUTES.property(property.id)}>
-                        Ver detalhes
-                      </Link>
-                    </Button>
+                    <Link
+                      to={ROUTES.property(property.id)}
+                      className={buttonVariants({
+                        variant: 'default',
+                        className: 'w-full',
+                      })}
+                    >
+                      Ver detalhes
+                    </Link>
                   </CardContent>
                 </Card>
               );

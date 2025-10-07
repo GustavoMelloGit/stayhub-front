@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { ROUTES } from '@/routes/routes';
 import type { FC } from 'react';
 
@@ -18,13 +18,27 @@ export const NotFoundView: FC = () => {
         </div>
 
         <div className='space-y-4'>
-          <Button className='w-full' size='lg' asChild>
-            <Link to={ROUTES.home}>Voltar ao Dashboard</Link>
-          </Button>
+          <Link
+            to={ROUTES.home}
+            className={buttonVariants({
+              variant: 'outline',
+              className: 'w-full',
+              size: 'lg',
+            })}
+          >
+            Voltar ao Dashboard
+          </Link>
 
-          <Button variant='outline' className='w-full' size='lg' asChild>
-            <Link to={ROUTES.login}>Ir para Login</Link>
-          </Button>
+          <Link
+            to={ROUTES.login}
+            className={buttonVariants({
+              variant: 'outline',
+              className: 'w-full',
+              size: 'lg',
+            })}
+          >
+            Ir para Login
+          </Link>
         </div>
 
         <div className='mt-8 text-sm text-gray-500'>
