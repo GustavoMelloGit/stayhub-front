@@ -31,7 +31,7 @@ export const StayInstructionsView: FC = () => {
   const checkOutDate = dateFormatter.format(stay.check_out);
 
   return (
-    <div className='bg-[#fbf4ed]'>
+    <div className='bg-[#fbf4ed] text-neutral-800'>
       <div className='max-w-[40rem] mx-auto space-y-4 leading-none'>
         <img
           src='/stay-image.jpeg'
