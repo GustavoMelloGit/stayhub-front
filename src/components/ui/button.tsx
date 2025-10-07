@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
@@ -39,20 +38,16 @@ function Button({
   className,
   variant,
   size,
-  asChild = false,
   isLoading = false,
   children,
   disabled,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
     isLoading?: boolean;
   }) {
-  const Comp = asChild ? Slot : 'button';
-
   return (
-    <Comp
+    <button
       data-slot='button'
       type='button'
       data-loading={isLoading}
@@ -68,7 +63,7 @@ function Button({
     >
       {isLoading && <Spinner size='sm' />}
       {children}
-    </Comp>
+    </button>
   );
 }
 
