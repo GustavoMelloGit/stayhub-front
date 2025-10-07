@@ -61,6 +61,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
   } = useBookStay({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reconcileExternalStays'] });
+      queryClient.invalidateQueries({ queryKey: ['propertyStays'] });
       goBack();
     },
   });
