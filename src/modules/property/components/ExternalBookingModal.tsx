@@ -155,10 +155,10 @@ const ExternalBookingModal: FC<Props> = ({ propertyId, isOpen, onClose }) => {
                 </Button>
                 <Button
                   type='submit'
-                  disabled={isSubmitting}
+                  isLoading={isSubmitting}
                   className='flex-1'
                 >
-                  {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+                  Cadastrar
                 </Button>
               </div>
             </form>

@@ -176,9 +176,9 @@ const SignupView: React.FC = () => {
                 <Button
                   type='submit'
                   className='w-full'
-                  disabled={isSignupLoading}
+                  isLoading={isSignupLoading}
                 >
-                  {isSignupLoading ? 'Carregando...' : 'Cadastrar'}
+                  Cadastrar
                 </Button>
               </div>
 

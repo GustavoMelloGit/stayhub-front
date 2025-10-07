@@ -305,9 +305,9 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 <Button
                   type='submit'
                   className='w-full'
-                  disabled={isSubmitting}
+                  isLoading={isSubmitting}
                 >
-                  {isSubmitting ? 'Cadastrando...' : 'Cadastrar Estadia'}
+                  Cadastrar Estadia
                 </Button>
               </form>
             </Form>

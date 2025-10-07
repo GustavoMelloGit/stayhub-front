@@ -128,9 +128,9 @@ const LoginView: React.FC = () => {
                 <Button
                   type='submit'
                   className='w-full'
-                  disabled={isSigninLoading}
+                  isLoading={isSigninLoading}
                 >
-                  {isSigninLoading ? 'Carregando...' : 'Entrar'}
+                  Entrar
                 </Button>
               </div>
 
