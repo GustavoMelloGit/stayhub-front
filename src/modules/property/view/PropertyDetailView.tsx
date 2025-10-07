@@ -3,14 +3,17 @@ import { useParams, Link } from 'react-router-dom';
 import { useProperty } from '../service/PropertyService.hooks';
 import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Link as LinkIcon } from 'lucide-react';
 import { PropertyStaysList } from '../components/PropertyStaysList';
+import ExternalBookingModal from '../components/ExternalBookingModal';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
+import { useDisclosure } from '@/hooks/useDisclosure';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
   const { property, isLoading, error } = useProperty(property_id || '');
+  const { isOpen, open, close } = useDisclosure();
 
   if (isLoading) {
     return (
@@ -69,11 +72,27 @@ const PropertyDetailView: FC = () => {
       <Page.Header
         title={property.name}
         description='Detalhes da propriedade'
-        actions={<Button>Editar</Button>}
+        actions={
+          <div className='flex gap-2'>
+            <Button variant='outline' onClick={open}>
+              <LinkIcon className='w-4 h-4 mr-2' />
+              Adicionar Link
+            </Button>
+            <Button>Editar</Button>
+          </div>
+        }
       />
       <Page.Content>
         {property_id && <PropertyStaysList propertyId={property_id} />}
       </Page.Content>
+
+      {property_id && (
+        <ExternalBookingModal
+          propertyId={property_id}
+          isOpen={isOpen}
+          onClose={close}
+        />
+      )}
     </Page.Container>
   );
 };

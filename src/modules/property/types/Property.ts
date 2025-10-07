@@ -26,3 +26,16 @@ export const bookStayRequestSchema = z.object({
 });
 
 export type BookStayRequest = z.infer<typeof bookStayRequestSchema>;
+
+export const platformNameSchema = z.enum(['AIRBNB', 'BOOKING'], {
+  message: 'Plataforma deve ser AIRBNB ou BOOKING',
+});
+
+export const externalBookingRequestSchema = z.object({
+  platform_name: platformNameSchema,
+  sync_url: z.url('URL deve ser válida'),
+});
+
+export type ExternalBookingRequest = z.infer<
+  typeof externalBookingRequestSchema
+>;

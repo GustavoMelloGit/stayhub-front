@@ -4,7 +4,10 @@ import {
   type UseMutationOptions,
 } from '@tanstack/react-query';
 import { PropertyService } from './PropertyService';
-import type { BookStayRequest } from '../types/Property';
+import type {
+  BookStayRequest,
+  ExternalBookingRequest,
+} from '../types/Property';
 import type { Stay } from '@/modules/stay/types/Stay';
 import type { AxiosError } from 'axios';
 
@@ -109,5 +112,35 @@ export const useProperty = (id: string) => {
     property,
     isLoading,
     error,
+  };
+};
+
+/**
+ * Hook para cadastrar link de plataforma externa
+ * @param options - Opções de configuração da mutação
+ */
+export const useCreateExternalBooking = (
+  options?: UseMutationOptions<
+    { message: string },
+    AxiosError,
+    { propertyId: string; data: ExternalBookingRequest }
+  >
+) => {
+  const {
+    data: result,
+    isPending: isLoading,
+    error,
+    mutate,
+  } = useMutation({
+    ...options,
+    mutationFn: ({ propertyId, data }) =>
+      PropertyService.createExternalBooking(propertyId, data),
+  });
+
+  return {
+    result,
+    isLoading,
+    error,
+    mutate,
   };
 };

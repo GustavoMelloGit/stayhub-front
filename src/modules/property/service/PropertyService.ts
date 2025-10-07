@@ -4,6 +4,7 @@ import {
   propertySchema,
   type BookStayRequest,
   type Property,
+  type ExternalBookingRequest,
 } from '../types/Property';
 import {
   externalStaySchema,
@@ -89,5 +90,22 @@ export class PropertyService {
       rest
     );
     return response.data.data;
+  }
+
+  /**
+   * Cadastra um link de plataforma externa para sincronização
+   * @param propertyId - ID da propriedade
+   * @param externalBookingData - Dados do link de plataforma externa
+   * @returns Promise com resposta da API
+   */
+  static async createExternalBooking(
+    propertyId: string,
+    externalBookingData: ExternalBookingRequest
+  ): Promise<{ message: string }> {
+    const response = await api.post<{ message: string }>(
+      `/property/${propertyId}/external-booking`,
+      externalBookingData
+    );
+    return response.data;
   }
 }
