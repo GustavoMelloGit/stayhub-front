@@ -29,6 +29,7 @@ import { useBookStay } from '../service/PropertyService.hooks';
 import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
+import { CHECK_IN_HOUR, CHECK_OUT_HOUR } from '../types/Property';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
@@ -81,9 +82,14 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
   const handleSubmit = (data: ReconcileStayFormData): void => {
     const phone = data.tenant_phone.replace(/\D/g, '');
     const price = Number(data.price.replace(/\D/g, ''));
+    const checkIn = new Date(externalStay.start);
+    checkIn.setHours(CHECK_IN_HOUR, 0, 0, 0);
+    const checkOut = new Date(externalStay.end);
+    checkOut.setHours(CHECK_OUT_HOUR, 0, 0, 0);
+
     const payload = {
-      check_in: externalStay.start.toISOString(),
-      check_out: externalStay.end.toISOString(),
+      check_in: checkIn.toISOString(),
+      check_out: checkOut.toISOString(),
       entrance_code: data.entrance_code,
       tenant: {
         name: data.tenant_name,
@@ -94,6 +100,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       property: externalStay.property.id,
       price: price,
     };
+
     mutate(payload);
   };
 

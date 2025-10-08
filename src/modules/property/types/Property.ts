@@ -39,3 +39,6 @@ export const externalBookingRequestSchema = z.object({
 export type ExternalBookingRequest = z.infer<
   typeof externalBookingRequestSchema
 >;
+
+export const CHECK_IN_HOUR = 15;
+export const CHECK_OUT_HOUR = 9;
