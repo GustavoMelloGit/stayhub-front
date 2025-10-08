@@ -15,4 +15,8 @@ export class Currency {
       currency: 'BRL',
     }).format(options.isCents ? amount / 100 : amount);
   }
+
+  static toCents(amount: number): number {
+    return Math.round(amount * 100);
+  }
 }
