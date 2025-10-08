@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CopyIcon, Link } from 'lucide-react';
+import { CopyIcon, Link, MessageCirclePlus } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
@@ -52,6 +52,14 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     const stayUrl = ROUTES.stayInstructions(stay.id);
     const url = new URL(stayUrl, location.origin);
     copyText(url.toString());
+  };
+
+  const sendToTenantWhatsapp = (stay: WithTenant<Stay>) => {
+    const stayUrl = ROUTES.stayInstructions(stay.id);
+    const url = new URL(stayUrl, location.origin);
+    const text = `Olá ${stay.tenant.name}, como você está? Me chamo Gustavo, sou o host da sua estadia em Castelhanos. Por favor, Veja abaixo as instruções de check-in e check-out: ${url.toString()}`;
+    const whatsappHref = `https://wa.me/${Phone.toAPI(stay.tenant.phone)}?text=${encodeURIComponent(text)}`;
+    window.open(whatsappHref, '_blank');
   };
 
   return (
@@ -127,6 +135,14 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                     aria-label='Copiar informações da estadia'
                   >
                     <Link className='size-4' />
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => sendToTenantWhatsapp(row)}
+                    aria-label='Enviar para whatsapp'
+                  >
+                    <MessageCirclePlus className='size-4' />
                   </Button>
                 </div>
               ),
