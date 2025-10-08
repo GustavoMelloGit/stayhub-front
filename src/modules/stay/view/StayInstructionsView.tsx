@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
   CarFront,
@@ -68,11 +67,9 @@ export const StayInstructionsView: FC = () => {
                 href='https://maps.app.goo.gl/S5G5VZWHwgY7jZtR8'
                 target='_blank'
                 referrerPolicy='no-referrer'
-                className={buttonVariants({
-                  variant: 'default',
-                  className: 'w-full',
-                })}
+                className='w-full ring ring-neutral-800 rounded-sm p-2 flex items-center gap-2 justify-center'
               >
+                <MapPin size={20} className='size-5' />
                 Abrir no Google Maps
               </a>
             </section>
