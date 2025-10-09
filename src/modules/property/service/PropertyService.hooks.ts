@@ -7,6 +7,8 @@ import { PropertyService } from './PropertyService';
 import type {
   BookStayRequest,
   ExternalBookingRequest,
+  UpdatePropertyRequest,
+  Property,
 } from '../types/Property';
 import type { Stay } from '@/modules/stay/types/Stay';
 import type { AxiosError } from 'axios';
@@ -139,6 +141,36 @@ export const useCreateExternalBooking = (
 
   return {
     result,
+    isLoading,
+    error,
+    mutate,
+  };
+};
+
+/**
+ * Hook para atualizar propriedade
+ * @param options - Opções de configuração da mutação
+ */
+export const useUpdateProperty = (
+  options?: UseMutationOptions<
+    Property,
+    AxiosError,
+    { propertyId: string; data: UpdatePropertyRequest }
+  >
+) => {
+  const {
+    data: property,
+    isPending: isLoading,
+    error,
+    mutate,
+  } = useMutation({
+    ...options,
+    mutationFn: ({ propertyId, data }) =>
+      PropertyService.updateProperty(propertyId, data),
+  });
+
+  return {
+    property,
     isLoading,
     error,
     mutate,

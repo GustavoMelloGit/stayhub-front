@@ -40,5 +40,11 @@ export type ExternalBookingRequest = z.infer<
   typeof externalBookingRequestSchema
 >;
 
+export const updatePropertyRequestSchema = z.object({
+  name: z.string().min(1, 'Nome é obrigatório'),
+});
+
+export type UpdatePropertyRequest = z.infer<typeof updatePropertyRequestSchema>;
+
 export const CHECK_IN_HOUR = 15;
 export const CHECK_OUT_HOUR = 9;

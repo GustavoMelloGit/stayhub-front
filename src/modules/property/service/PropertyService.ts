@@ -5,6 +5,7 @@ import {
   type BookStayRequest,
   type Property,
   type ExternalBookingRequest,
+  type UpdatePropertyRequest,
 } from '../types/Property';
 import {
   externalStaySchema,
@@ -107,5 +108,22 @@ export class PropertyService {
       externalBookingData
     );
     return response.data;
+  }
+
+  /**
+   * Atualiza uma propriedade
+   * @param propertyId - ID da propriedade
+   * @param updateData - Dados para atualização da propriedade
+   * @returns Promise com dados da propriedade atualizada
+   */
+  static async updateProperty(
+    propertyId: string,
+    updateData: UpdatePropertyRequest
+  ): Promise<Property> {
+    const response = await api.patch<Property>(
+      `/property/${propertyId}`,
+      updateData
+    );
+    return propertySchema.parse(response.data);
   }
 }

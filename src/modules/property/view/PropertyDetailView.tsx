@@ -6,6 +6,7 @@ import { Alert } from '@/components/Alert';
 import { ArrowLeft, Link as LinkIcon } from 'lucide-react';
 import { PropertyStaysList } from '../components/PropertyStaysList';
 import ExternalBookingModal from '../components/ExternalBookingModal';
+import EditPropertyModal from '../components/EditPropertyModal';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { useDisclosure } from '@/hooks/useDisclosure';
@@ -14,6 +15,11 @@ const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
   const { property, isLoading, error } = useProperty(property_id || '');
   const { isOpen, open, close } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    open: openEdit,
+    close: closeEdit,
+  } = useDisclosure();
 
   if (isLoading) {
     return (
@@ -86,7 +92,7 @@ const PropertyDetailView: FC = () => {
               <LinkIcon className='w-4 h-4 mr-2' />
               Adicionar Link
             </Button>
-            <Button>Editar</Button>
+            <Button onClick={openEdit}>Editar</Button>
           </div>
         }
       />
@@ -99,6 +105,15 @@ const PropertyDetailView: FC = () => {
           propertyId={property_id}
           isOpen={isOpen}
           onClose={close}
+        />
+      )}
+
+      {property_id && property && (
+        <EditPropertyModal
+          propertyId={property_id}
+          propertyName={property.name}
+          isOpen={isEditOpen}
+          onClose={closeEdit}
         />
       )}
     </Page.Container>
