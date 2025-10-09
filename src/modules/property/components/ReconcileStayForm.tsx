@@ -30,6 +30,7 @@ import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { CHECK_IN_HOUR, CHECK_OUT_HOUR } from '../types/Property';
+import { Currency } from '@/lib/currency';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
@@ -81,7 +82,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
 
   const handleSubmit = (data: ReconcileStayFormData): void => {
     const phone = data.tenant_phone.replace(/\D/g, '');
-    const price = Number(data.price.replace(/\D/g, ''));
     const checkIn = new Date(externalStay.start);
     checkIn.setHours(CHECK_IN_HOUR, 0, 0, 0);
     const checkOut = new Date(externalStay.end);
@@ -98,7 +98,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       },
       guests: data.guests,
       property: externalStay.property.id,
-      price: price,
+      price: Currency.toCents(Number(data.price)),
     };
 
     mutate(payload);
@@ -279,9 +279,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           min={1}
                           placeholder='Digite o número de hóspedes'
                           {...field}
-                          onChange={e =>
-                            field.onChange(parseInt(e.target.value) || 1)
-                          }
                         />
                       </FormControl>
                       <FormMessage />
