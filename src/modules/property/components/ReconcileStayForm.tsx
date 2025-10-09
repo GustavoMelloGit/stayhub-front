@@ -45,7 +45,7 @@ export const reconcileStayFormSchema = z.object({
     message: 'Sexo do hóspede é obrigatório',
   }),
   guests: z.number().min(1, 'Número de hóspedes deve ser pelo menos 1'),
-  price: z.string().min(1, 'Preço da estadia é obrigatório'),
+  price: z.number().min(1, 'Preço da estadia é obrigatório'),
 });
 
 export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
@@ -76,7 +76,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       tenant_phone: '',
       tenant_sex: undefined,
       guests: 1,
-      price: '',
+      price: 0,
     },
   });
 
@@ -98,7 +98,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       },
       guests: data.guests,
       property: externalStay.property.id,
-      price: Currency.toCents(Number(data.price)),
+      price: Currency.toCents(data.price),
     };
 
     mutate(payload);
@@ -279,6 +279,9 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           min={1}
                           placeholder='Digite o número de hóspedes'
                           {...field}
+                          onChange={e =>
+                            field.onChange(parseInt(e.target.value) || 1)
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -300,6 +303,9 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
+                          onChange={e =>
+                            field.onChange(Number(e.target.value) || 1)
+                          }
                         />
                       </FormControl>
                     </FormItem>
