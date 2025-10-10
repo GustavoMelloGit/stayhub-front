@@ -44,8 +44,12 @@ export const reconcileStayFormSchema = z.object({
   tenant_sex: z.enum(['MALE', 'FEMALE', 'OTHER'], {
     message: 'Sexo do hóspede é obrigatório',
   }),
-  guests: z.number().min(1, 'Número de hóspedes deve ser pelo menos 1'),
-  price: z.number().min(1, 'Preço da estadia é obrigatório'),
+  guests: z.string().refine(value => Number(value) >= 1, {
+    message: 'Número de hóspedes deve ser pelo menos 1',
+  }),
+  price: z.string().refine(value => Number(value) >= 0, {
+    message: 'Preço da estadia é obrigatório',
+  }),
 });
 
 export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
@@ -75,8 +79,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       tenant_name: '',
       tenant_phone: '',
       tenant_sex: undefined,
-      guests: 1,
-      price: 0,
+      guests: '1',
+      price: '0',
     },
   });
 
@@ -96,11 +100,10 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
         phone: phone,
         sex: data.tenant_sex,
       },
-      guests: data.guests,
+      guests: Number(data.guests),
       property: externalStay.property.id,
-      price: Currency.toCents(data.price),
+      price: Currency.toCents(Number(data.price)),
     };
-
     mutate(payload);
   };
 
@@ -275,13 +278,9 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                       <FormControl>
                         <Input
                           type='number'
-                          max={7}
                           min={1}
                           placeholder='Digite o número de hóspedes'
                           {...field}
-                          onChange={e =>
-                            field.onChange(parseInt(e.target.value) || 1)
-                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -303,9 +302,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
-                          onChange={e =>
-                            field.onChange(Number(e.target.value) || 1)
-                          }
                         />
                       </FormControl>
                     </FormItem>
