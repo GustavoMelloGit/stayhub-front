@@ -79,8 +79,8 @@ const PropertyListView: FC = () => {
                 <Card className='pt-0 gap-0' key={property.id}>
                   <CardHeader className='p-0 rounded-[inherit]'>
                     <img
-                      src='https://picsum.photos/200'
-                      alt=''
+                      src='/apartment.webp'
+                      alt='Imagem da propriedade'
                       className='rounded-[inherit] rounded-b-none w-full aspect-video object-cover'
                     />
                   </CardHeader>
