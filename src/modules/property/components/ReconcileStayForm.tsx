@@ -31,6 +31,7 @@ import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { CHECK_IN_HOUR, CHECK_OUT_HOUR } from '../types/Property';
 import { Currency } from '@/lib/currency';
+import { Phone } from '@/lib/phone';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
@@ -40,7 +41,9 @@ export const reconcileStayFormSchema = z.object({
       `O código de entrada deve ter pelo menos ${ENTRANCE_CODE_LENGTH} dígitos`
     ),
   tenant_name: z.string().min(1, 'Nome do hóspede é obrigatório'),
-  tenant_phone: z.string().min(13, 'Telefone do hóspede é obrigatório'),
+  tenant_phone: z.string().refine(value => Phone.isValid(value), {
+    message: 'Telefone do hóspede é inválido',
+  }),
   tenant_sex: z.enum(['MALE', 'FEMALE', 'OTHER'], {
     message: 'Sexo do hóspede é obrigatório',
   }),
@@ -104,6 +107,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       property: externalStay.property.id,
       price: Currency.toCents(Number(data.price)),
     };
+
     mutate(payload);
   };
 
@@ -232,7 +236,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Telefone do Hóspede</FormLabel>
-                      <FormControl ref={withMask('+55 (99) 99999-9999')}>
+                      <FormControl ref={withMask(Phone.MASK)}>
                         <Input
                           placeholder='Digite o telefone do hóspede'
                           {...field}
