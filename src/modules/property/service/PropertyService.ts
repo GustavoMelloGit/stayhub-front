@@ -55,7 +55,7 @@ export class PropertyService {
       onlyIncomingStays: boolean;
     }>
   ): Promise<WithTenant<Stay>[]> {
-    const url = buildUrlWithParams(`/property/${id}/stays`, filter);
+    const url = buildUrlWithParams(`/booking/property/${id}/stays`, filter);
 
     const response = await api.get<{ stays: WithTenant<Stay>[] }>(url);
     const stays = z
@@ -74,7 +74,7 @@ export class PropertyService {
    */
   static async reconcileExternalStays(): Promise<ExternalStay[]> {
     const response = await api.get<ExternalStay[]>(
-      '/property/reconcile-external-booking'
+      '/booking/reconcile-external-booking'
     );
     return z.array(externalStaySchema).parse(response.data);
   }
@@ -87,7 +87,7 @@ export class PropertyService {
   static async bookStay(stayData: BookStayRequest): Promise<Stay> {
     const { property, ...rest } = stayData;
     const response = await api.post<{ message: string; data: Stay }>(
-      `/property/${property}/book`,
+      `/booking/property/${property}/book`,
       rest
     );
     return response.data.data;
@@ -104,7 +104,7 @@ export class PropertyService {
     externalBookingData: ExternalBookingRequest
   ): Promise<{ message: string }> {
     const response = await api.post<{ message: string }>(
-      `/property/${propertyId}/external-booking`,
+      `/booking/property/${propertyId}/external-booking`,
       externalBookingData
     );
     return response.data;
