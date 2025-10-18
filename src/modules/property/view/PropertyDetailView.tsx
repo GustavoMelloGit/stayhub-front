@@ -110,8 +110,7 @@ const PropertyDetailView: FC = () => {
 
       {property_id && property && (
         <EditPropertyModal
-          propertyId={property_id}
-          propertyName={property.name}
+          property={property}
           isOpen={isEditOpen}
           onClose={closeEdit}
         />

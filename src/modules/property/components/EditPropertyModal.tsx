@@ -19,50 +19,58 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Alert } from '@/components/Alert';
-import {
-  updatePropertyRequestSchema,
-  type UpdatePropertyRequest,
-} from '../types/Property';
+import { addressSchema, type Property } from '../types/Property';
 import { useUpdateProperty } from '../service/PropertyService.hooks';
 import { queryClient } from '@/lib/query-client';
 import { Edit } from 'lucide-react';
+import z from 'zod';
+
+const formSchema = z.object({
+  name: z.string().min(1, 'Nome é obrigatório'),
+  capacity: z.string().refine(value => Number(value) >= 1, {
+    message: 'Capacidade deve ser pelo menos 1',
+  }),
+  address: addressSchema,
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 type Props = {
-  propertyId: string;
-  propertyName: string;
+  property: Property;
   isOpen: boolean;
   onClose: () => void;
 };
 
-const EditPropertyModal: FC<Props> = ({
-  propertyId,
-  propertyName,
-  isOpen,
-  onClose,
-}) => {
+const EditPropertyModal: FC<Props> = ({ property, isOpen, onClose }) => {
   const {
     mutate,
     isLoading: isSubmitting,
     error,
   } = useUpdateProperty({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['property', propertyId] });
+      queryClient.invalidateQueries({ queryKey: ['property', property.id] });
       queryClient.invalidateQueries({ queryKey: ['properties'] });
       onClose();
     },
   });
 
-  const form = useForm<UpdatePropertyRequest>({
-    resolver: zodResolver(updatePropertyRequestSchema),
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      name: propertyName,
+      name: property.name,
+      capacity: property.capacity.toString(),
+      address: property.address,
     },
   });
 
-  const handleSubmit = (data: UpdatePropertyRequest): void => {
+  const handleSubmit = (data: FormData): void => {
     mutate({
-      propertyId,
-      data,
+      propertyId: property.id,
+      data: {
+        name: data.name,
+        capacity: Number(data.capacity),
+        address: data.address,
+      },
     });
   };
 
@@ -116,6 +124,26 @@ const EditPropertyModal: FC<Props> = ({
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name='capacity'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Capacidade</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        min={1}
+                        step={1}
+                        inputMode='numeric'
+                        placeholder='Digite a capacidade da propriedade'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className='flex gap-2 pt-4'>
                 <Button
                   type='button'

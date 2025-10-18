@@ -2,10 +2,25 @@ import { ENTRANCE_CODE_LENGTH } from '@/config/constants';
 import { tenantSexSchema } from '@/modules/stay/types/Stay';
 import z from 'zod';
 
+export const addressSchema = z.object({
+  street: z.string().min(1, 'Rua é obrigatória'),
+  number: z.string().min(1, 'Número é obrigatório'),
+  complement: z.string().optional(),
+  neighborhood: z.string().min(1, 'Bairro é obrigatório'),
+  city: z.string().min(1, 'Cidade é obrigatória'),
+  state: z.string().min(1, 'Estado é obrigatório'),
+  zip_code: z.string().min(1, 'CEP é obrigatório'),
+  country: z.string(),
+});
+
+export type Address = z.infer<typeof addressSchema>;
+
 export const propertySchema = z.object({
   id: z.string(),
   name: z.string(),
   user_id: z.string(),
+  capacity: z.number(),
+  address: addressSchema,
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });
@@ -42,6 +57,8 @@ export type ExternalBookingRequest = z.infer<
 
 export const updatePropertyRequestSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
+  capacity: z.number().min(1, 'Capacidade é obrigatória'),
+  address: addressSchema,
 });
 
 export type UpdatePropertyRequest = z.infer<typeof updatePropertyRequestSchema>;
