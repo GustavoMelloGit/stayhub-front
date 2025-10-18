@@ -6,4 +6,8 @@ export class StayService {
     const response = await api.get(`/public/booking/stay/${stayId}`);
     return publicStaySchema.parse(response.data);
   }
+
+  static async cancelStay(stayId: string): Promise<void> {
+    await api.delete(`/booking/stay/${stayId}`);
+  }
 }

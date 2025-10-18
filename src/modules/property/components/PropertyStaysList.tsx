@@ -8,13 +8,15 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CopyIcon, Link, MessageCirclePlus } from 'lucide-react';
+import { CircleX, CopyIcon, Link, MessageCirclePlus } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
 import { DataTable } from '@/components/Table/DataTable';
 import { ROUTES } from '@/routes/routes';
+import { useCancelStay } from '@/modules/stay/service/StayService.hooks';
+import { queryClient } from '@/lib/query-client';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -31,6 +33,15 @@ type Props = {
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
+  });
+  const { mutate: cancelStay, isPending: isCancelingStay } = useCancelStay({
+    onSuccess: () => {
+      toast.success('Estadia cancelada com sucesso');
+      queryClient.invalidateQueries({ queryKey: ['propertyStays'] });
+    },
+    onError: () => {
+      toast.error('Erro ao cancelar estadia');
+    },
   });
 
   const copyText = (text: string) => {
@@ -143,6 +154,15 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                     aria-label='Enviar para whatsapp'
                   >
                     <MessageCirclePlus className='size-4' />
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    isLoading={isCancelingStay}
+                    onClick={() => cancelStay({ stayId: row.id })}
+                    aria-label='Cancelar estadia'
+                  >
+                    <CircleX className='size-4' />
                   </Button>
                 </div>
               ),
