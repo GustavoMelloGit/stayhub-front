@@ -25,13 +25,13 @@ export function DataTableMobile<T extends JsonDataTableRow>({
           <CardHeader>
             <CardTitle>{headerColumn?.render(row)}</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className='space-y-1'>
             {restColumns.map(column => (
               <div
                 key={column.accessorKey}
                 {...column.cell}
                 className={cn(
-                  'flex items-center justify-between',
+                  'flex items-center justify-between gap-1 flex-wrap',
                   column.cell?.className
                 )}
               >
