@@ -10,7 +10,6 @@ export const NumberInput: FC<Props> = ({ onChange, ...props }) => {
     <Input
       type='text'
       inputMode='numeric'
-      pattern='[0-9]+([.][0-9]{1,2})?'
       {...props}
       onChange={e => {
         const value = e.target.value.replace(/,/g, '.');
