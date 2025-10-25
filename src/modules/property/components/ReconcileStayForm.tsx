@@ -32,6 +32,7 @@ import { ROUTES } from '@/routes/routes';
 import { CHECK_IN_HOUR, CHECK_OUT_HOUR } from '../types/Property';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
+import { NumberInput } from '@/components/ui/number-input';
 
 export const reconcileStayFormSchema = z.object({
   entrance_code: z
@@ -310,23 +311,16 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 <FormField
                   control={form.control}
                   name='price'
-                  render={({ field: { onChange, value, ...field } }) => (
+                  render={({ field }) => (
                     <FormItem>
                       <FormLabel>Preço da Estadia</FormLabel>
                       <FormControl>
-                        <Input
-                          type='number'
+                        <NumberInput
                           min={0}
                           step={0.01}
-                          pattern='[0-9]+([.][0-9]{1,2})?'
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
-                          onChange={e => {
-                            console.log(e.target.value);
-                            onChange(e.target.value);
-                          }}
-                          value={value}
                         />
                       </FormControl>
                     </FormItem>
