@@ -48,28 +48,8 @@ export const reconcileStayFormSchema = z.object({
   tenant_sex: z.enum(['MALE', 'FEMALE', 'OTHER'], {
     message: 'Sexo do hóspede é obrigatório',
   }),
-  guests: z.string().refine(
-    value => {
-      const parsedValue = value.replace(/,/g, '.');
-      const isNumber = !isNaN(Number(parsedValue));
-      const isPositive = Number(parsedValue) >= 1;
-      const isInteger = Number.isInteger(Number(parsedValue));
-      return isNumber && isPositive && isInteger;
-    },
-    {
-      message: 'Número de hóspedes deve ser pelo menos 1',
-    }
-  ),
-  price: z.string().refine(
-    value => {
-      const isNumber = !isNaN(Number(value));
-      const isPositive = Number(value) >= 0;
-      return isNumber && isPositive;
-    },
-    {
-      message: 'Preço da estadia é inválido',
-    }
-  ),
+  guests: z.int().positive().min(1, 'Número de hóspedes deve ser pelo menos 1'),
+  price: z.number().positive().min(0, 'Preço da estadia é obrigatório'),
 });
 
 export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
@@ -99,8 +79,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       tenant_name: '',
       tenant_phone: '',
       tenant_sex: undefined,
-      guests: '1',
-      price: '0',
+      guests: 1,
+      price: 0,
     },
   });
 
@@ -312,7 +292,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 <FormField
                   control={form.control}
                   name='price'
-                  render={({ field }) => (
+                  render={({ field: { onChange, value, ...field } }) => (
                     <FormItem>
                       <FormLabel>Preço da Estadia</FormLabel>
                       <FormControl>
@@ -322,6 +302,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
+                          onValueChange={onChange}
+                          value={value}
                         />
                       </FormControl>
                       <FormMessage />

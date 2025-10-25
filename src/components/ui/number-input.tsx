@@ -1,24 +1,35 @@
-import { type FC, type ComponentProps } from 'react';
+import { type FC, type ComponentProps, useState } from 'react';
 import { Input } from './input';
 
 type Props = ComponentProps<typeof Input> & {
   decimalPlaces?: number;
+  onValueChange?: (value: number) => void;
+  value?: number;
 };
 
-export const NumberInput: FC<Props> = ({ onChange, ...props }) => {
+export const NumberInput: FC<Props> = ({
+  onChange,
+  onValueChange,
+  ...props
+}) => {
+  const [innerValue, setInnerValue] = useState<string | undefined>(
+    props.value?.toString()
+  );
+
   return (
     <Input
-      type='text'
+      type='number'
       inputMode='numeric'
       {...props}
       onChange={e => {
-        const value = e.target.value.replace(/,/g, '.');
-
-        const isNumber = !isNaN(Number(value));
-        if (isNumber) {
-          onChange?.(e);
+        const value = e.target.value;
+        setInnerValue(value);
+        const isValidNumber = !isNaN(Number(value));
+        if (isValidNumber) {
+          onValueChange?.(Number(value));
         }
       }}
+      value={innerValue}
     />
   );
 };
