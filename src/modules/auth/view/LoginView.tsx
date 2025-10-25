@@ -64,7 +64,7 @@ const LoginView: React.FC = () => {
   };
 
   return (
-    <main className='min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8'>
+    <main className='min-h-dvh flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8'>
       <Card className='max-w-sm w-full'>
         <CardHeader>
           <CardTitle>Entrar na sua conta</CardTitle>
