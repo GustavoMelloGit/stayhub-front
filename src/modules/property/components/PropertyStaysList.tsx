@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { CircleX, CopyIcon, Link, MessageCirclePlus } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
@@ -65,12 +65,12 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     copyText(url.toString());
   };
 
-  const sendToTenantWhatsapp = (stay: WithTenant<Stay>) => {
+  const getWhatsAppHref = (stay: WithTenant<Stay>): string => {
     const stayUrl = ROUTES.stayInstructions(stay.id);
     const url = new URL(stayUrl, location.origin);
     const text = `Olá ${stay.tenant.name}, como você está? Me chamo Gustavo, sou o host da sua estadia em Castelhanos. Por favor, Veja abaixo as instruções de check-in e check-out: ${url.toString()}`;
     const whatsappHref = `https://wa.me/${Phone.toAPI(stay.tenant.phone)}?text=${encodeURIComponent(text)}`;
-    window.open(whatsappHref, '_blank');
+    return whatsappHref;
   };
 
   return (
@@ -147,14 +147,18 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                   >
                     <Link className='size-4' />
                   </Button>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => sendToTenantWhatsapp(row)}
+                  <a
+                    className={buttonVariants({
+                      variant: 'outline',
+                      size: 'icon',
+                    })}
+                    target='_blank'
+                    rel='noopener noreferrer'
                     aria-label='Enviar para whatsapp'
+                    href={getWhatsAppHref(row)}
                   >
                     <MessageCirclePlus className='size-4' />
-                  </Button>
+                  </a>
                   <Button
                     variant='outline'
                     size='icon'
