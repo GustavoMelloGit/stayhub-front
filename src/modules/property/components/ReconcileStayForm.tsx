@@ -50,9 +50,10 @@ export const reconcileStayFormSchema = z.object({
   }),
   guests: z.string().refine(
     value => {
-      const isNumber = !isNaN(Number(value));
-      const isPositive = Number(value) >= 1;
-      const isInteger = Number.isInteger(Number(value));
+      const parsedValue = value.replace(/,/g, '.');
+      const isNumber = !isNaN(Number(parsedValue));
+      const isPositive = Number(parsedValue) >= 1;
+      const isInteger = Number.isInteger(Number(parsedValue));
       return isNumber && isPositive && isInteger;
     },
     {
@@ -323,6 +324,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           {...field}
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
