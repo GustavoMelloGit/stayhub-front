@@ -277,9 +277,10 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                     <FormItem>
                       <FormLabel>Número de Hóspedes</FormLabel>
                       <FormControl>
-                        <Input
-                          type='number'
+                        <NumberInput
                           min={1}
+                          step={1}
+                          decimalPlaces={0}
                           placeholder='Digite o número de hóspedes'
                           {...field}
                         />

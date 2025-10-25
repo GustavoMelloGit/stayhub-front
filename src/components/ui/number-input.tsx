@@ -36,6 +36,10 @@ export const NumberInput: FC<Props> = ({
           value = value.slice(0, value.length - 1);
         }
 
+        if (decimalPlaces === 0) {
+          value = value.replace(/\./g, '');
+        }
+
         setInnerValue(value);
         const isValidNumber = !isNaN(Number(value));
         if (isValidNumber) {
