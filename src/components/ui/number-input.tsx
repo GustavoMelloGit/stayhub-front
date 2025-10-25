@@ -18,15 +18,23 @@ export const NumberInput: FC<Props> = ({
 
   return (
     <Input
-      type='number'
+      type='text'
       inputMode='numeric'
       {...props}
       onChange={e => {
-        const value = e.target.value.replace(/,/g, '.');
+        let value = e.target.value;
+
+        value = value.replace(/,/g, '.');
+
+        value = value.replace(/[^0-9.]/g, '');
+
+        value = value.replace(/(\..*)\./g, '$1');
+
         setInnerValue(value);
         const isValidNumber = !isNaN(Number(value));
+        console.log({ isValidNumber, value });
         if (isValidNumber) {
-          onValueChange?.(Number(value));
+          onValueChange?.(parseFloat(value));
         }
       }}
       value={innerValue}
