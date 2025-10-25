@@ -105,9 +105,7 @@ const Content: FC<ContentProps> = ({ children, className, ...props }) => {
       }
       {...props}
     >
-      <div className={cn('container mx-auto space-y-6', className)}>
-        {children}
-      </div>
+      <div className={cn('w-full space-y-6', className)}>{children}</div>
     </div>
   );
 };
