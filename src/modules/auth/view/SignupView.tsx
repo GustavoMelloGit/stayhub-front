@@ -133,7 +133,7 @@ const SignupView: React.FC = () => {
                       <FormControl>
                         <Input
                           type='password'
-                          placeholder='Mínimo 6 caracteres'
+                          placeholder='Mínimo 8 caracteres'
                           {...field}
                         />
                       </FormControl>
