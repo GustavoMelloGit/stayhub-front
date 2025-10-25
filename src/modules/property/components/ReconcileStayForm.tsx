@@ -47,12 +47,27 @@ export const reconcileStayFormSchema = z.object({
   tenant_sex: z.enum(['MALE', 'FEMALE', 'OTHER'], {
     message: 'Sexo do hóspede é obrigatório',
   }),
-  guests: z.string().refine(value => Number(value) >= 1, {
-    message: 'Número de hóspedes deve ser pelo menos 1',
-  }),
-  price: z.string().refine(value => Number(value) >= 0, {
-    message: 'Preço da estadia é obrigatório',
-  }),
+  guests: z.string().refine(
+    value => {
+      const isNumber = !isNaN(Number(value));
+      const isPositive = Number(value) >= 1;
+      const isInteger = Number.isInteger(Number(value));
+      return isNumber && isPositive && isInteger;
+    },
+    {
+      message: 'Número de hóspedes deve ser pelo menos 1',
+    }
+  ),
+  price: z.string().refine(
+    value => {
+      const isNumber = !isNaN(Number(value));
+      const isPositive = Number(value) >= 0;
+      return isNumber && isPositive;
+    },
+    {
+      message: 'Preço da estadia é inválido',
+    }
+  ),
 });
 
 export type ReconcileStayFormData = z.infer<typeof reconcileStayFormSchema>;
@@ -303,6 +318,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           type='number'
                           min={0}
                           step={0.01}
+                          pattern='[0-9]+([.][0-9]{1,2})?'
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
