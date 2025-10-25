@@ -273,16 +273,16 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 <FormField
                   control={form.control}
                   name='guests'
-                  render={({ field }) => (
+                  render={({ field: { onChange, value, ...field } }) => (
                     <FormItem>
                       <FormLabel>Número de Hóspedes</FormLabel>
                       <FormControl>
                         <NumberInput
-                          min={1}
-                          step={1}
                           decimalPlaces={0}
                           placeholder='Digite o número de hóspedes'
                           {...field}
+                          onValueChange={onChange}
+                          value={value}
                         />
                       </FormControl>
                       <FormMessage />
