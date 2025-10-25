@@ -310,7 +310,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 <FormField
                   control={form.control}
                   name='price'
-                  render={({ field }) => (
+                  render={({ field: { onChange, value, ...field } }) => (
                     <FormItem>
                       <FormLabel>Preço da Estadia</FormLabel>
                       <FormControl>
@@ -322,6 +322,11 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}
+                          onChange={e => {
+                            console.log(e.target.value);
+                            onChange(e.target.value);
+                          }}
+                          value={value}
                         />
                       </FormControl>
                     </FormItem>
