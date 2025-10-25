@@ -22,7 +22,7 @@ export const NumberInput: FC<Props> = ({
       inputMode='numeric'
       {...props}
       onChange={e => {
-        const value = e.target.value;
+        const value = e.target.value.replace(/,/g, '.');
         setInnerValue(value);
         const isValidNumber = !isNaN(Number(value));
         if (isValidNumber) {
