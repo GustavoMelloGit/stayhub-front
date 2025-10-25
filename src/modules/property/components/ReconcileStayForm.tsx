@@ -299,6 +299,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                         <NumberInput
                           min={0}
                           step={0.01}
+                          decimalPlaces={2}
                           placeholder='Digite o preço da estadia'
                           inputMode='decimal'
                           {...field}

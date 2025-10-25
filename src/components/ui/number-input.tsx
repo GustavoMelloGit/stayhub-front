@@ -10,6 +10,7 @@ type Props = ComponentProps<typeof Input> & {
 export const NumberInput: FC<Props> = ({
   onChange,
   onValueChange,
+  decimalPlaces = 2,
   ...props
 }) => {
   const [innerValue, setInnerValue] = useState<string | undefined>(
@@ -30,9 +31,13 @@ export const NumberInput: FC<Props> = ({
 
         value = value.replace(/(\..*)\./g, '$1');
 
+        const decimalPart = value.split('.')[1];
+        if (decimalPart && decimalPart.length > decimalPlaces) {
+          value = value.slice(0, value.length - 1);
+        }
+
         setInnerValue(value);
         const isValidNumber = !isNaN(Number(value));
-        console.log({ isValidNumber, value });
         if (isValidNumber) {
           onValueChange?.(parseFloat(value));
         }
