@@ -13,7 +13,8 @@ export const NumberInput: FC<Props> = ({ onChange, ...props }) => {
       pattern='[0-9]+([.][0-9]{1,2})?'
       {...props}
       onChange={e => {
-        const value = e.target.value;
+        const value = e.target.value.replace(/,/g, '.');
+
         const isNumber = !isNaN(Number(value));
         if (isNumber) {
           onChange?.(e);
