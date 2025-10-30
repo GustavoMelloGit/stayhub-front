@@ -188,6 +188,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                         <div className='flex items-center gap-2'>
                           <Input
                             placeholder='Digite o código de entrada'
+                            inputMode='numeric'
                             maxLength={ENTRANCE_CODE_LENGTH}
                             minLength={ENTRANCE_CODE_LENGTH}
                             {...field}
@@ -236,6 +237,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                       <FormControl ref={withMask(Phone.MASK)}>
                         <Input
                           placeholder='Digite o telefone do hóspede'
+                          inputMode='numeric'
                           {...field}
                         />
                       </FormControl>
