@@ -21,4 +21,7 @@ export type DataTableProps<T extends JsonDataTableRow> = {
       isHeader?: boolean;
     };
   }[];
+  enableRowSelection?: boolean;
+  selectedRows?: string[];
+  onSelectionChange?: (selectedIds: string[]) => void;
 };
