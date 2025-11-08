@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -8,7 +8,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { CircleX, CopyIcon, Link, MessageCirclePlus } from 'lucide-react';
+import {
+  CircleX,
+  CopyIcon,
+  Link,
+  MessageCirclePlus,
+  Pencil,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
@@ -17,6 +23,7 @@ import { DataTable } from '@/components/Table/DataTable';
 import { ROUTES } from '@/routes/routes';
 import { useCancelStay } from '@/modules/stay/service/StayService.hooks';
 import { queryClient } from '@/lib/query-client';
+import { UpdateStay } from '@/modules/stay/components/UpdateStay';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -31,6 +38,7 @@ type Props = {
 };
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
+  const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
   });
@@ -85,7 +93,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
         <DataTable
           isLoading={isLoading}
           error={error?.message}
-          data={stays ?? []}
+          data={stays?.data ?? []}
           columns={[
             {
               header: 'Hóspede',
@@ -168,11 +176,26 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                   >
                     <CircleX className='size-4' />
                   </Button>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => setSelectedStay(row)}
+                    aria-label='Editar estadia'
+                  >
+                    <Pencil className='size-4' />
+                  </Button>
                 </div>
               ),
             },
           ]}
         />
+        {selectedStay && (
+          <UpdateStay
+            stay={selectedStay}
+            isOpen={!!selectedStay}
+            onClose={() => setSelectedStay(null)}
+          />
+        )}
       </CardContent>
     </Card>
   );

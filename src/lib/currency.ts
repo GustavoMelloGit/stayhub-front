@@ -19,4 +19,8 @@ export class Currency {
   static toCents(amount: number): number {
     return Math.round(amount * 100);
   }
+
+  static fromCents(amount: number): number {
+    return amount / 100;
+  }
 }

@@ -16,6 +16,7 @@ import {
   type WithTenant,
 } from '../../stay/types/Stay';
 import z from 'zod';
+import { paginationSchema, type PaginatedResponse } from '@/types/api';
 
 /**
  * Serviço responsável por operações relacionadas a propriedades
@@ -54,19 +55,20 @@ export class PropertyService {
     filter?: Partial<{
       onlyIncomingStays: boolean;
     }>
-  ): Promise<WithTenant<Stay>[]> {
+  ): Promise<PaginatedResponse<WithTenant<Stay>>> {
     const url = buildUrlWithParams(`/booking/property/${id}/stays`, filter);
 
-    const response = await api.get<{ stays: WithTenant<Stay>[] }>(url);
-    const stays = z
-      .array(
+    const response = await api.get<PaginatedResponse<WithTenant<Stay>>>(url);
+    const parsedData = z.object({
+      data: z.array(
         staySchema.extend({
           tenant: tenantSchema,
         })
-      )
-      .parse(response.data.stays);
+      ),
+      pagination: paginationSchema,
+    });
 
-    return stays;
+    return parsedData.parse(response.data);
   }
 
   /**

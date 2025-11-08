@@ -1,11 +1,15 @@
+import z from 'zod';
+
+export const paginationSchema = z.object({
+  page: z.number(),
+  limit: z.number(),
+  total: z.number(),
+  total_pages: z.number(),
+  has_next: z.boolean(),
+  has_previous: z.boolean(),
+});
+
 export type PaginatedResponse<T> = {
   data: T[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-    hasNext: boolean;
-    hasPrevious: boolean;
-  };
+  pagination: z.infer<typeof paginationSchema>;
 };

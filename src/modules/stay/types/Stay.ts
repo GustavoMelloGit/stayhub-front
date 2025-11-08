@@ -58,8 +58,8 @@ export const publicStaySchema = z.object({
 export type PublicStay = z.infer<typeof publicStaySchema>;
 
 export const updateStayRequestSchema = z.object({
-  check_in: z.iso.datetime().optional(),
-  check_out: z.iso.datetime().optional(),
+  check_in: z.string().optional(),
+  check_out: z.string().optional(),
   guests: z.int().positive().optional(),
   price: z.int().positive().optional(),
 });
