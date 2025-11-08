@@ -56,3 +56,26 @@ export function buildUrlWithParams(
 
   return url.pathname + url.search;
 }
+
+/**
+ * Copia o texto para a área de transferência
+ * @param text - Texto a ser copiado
+ */
+export function toClipboard(text: string): void {
+  navigator.clipboard.writeText(text);
+}
+
+/**
+ * Retorna a palavra singular ou plural com base no número de itens
+ * @param count - Número de itens
+ * @param word - Palavra singular
+ * @param word - Palavra plural
+ * @returns Palavra singular ou plural com base no número de itens
+ */
+export function pluralize(
+  count: number,
+  word: string,
+  pluralWord: string
+): string {
+  return count === 1 ? word : pluralWord;
+}

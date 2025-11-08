@@ -14,6 +14,8 @@ import {
   Link,
   MessageCirclePlus,
   Pencil,
+  MoreHorizontal,
+  X,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
@@ -24,6 +26,13 @@ import { ROUTES } from '@/routes/routes';
 import { useCancelStay } from '@/modules/stay/service/StayService.hooks';
 import { queryClient } from '@/lib/query-client';
 import { UpdateStay } from '@/modules/stay/components/UpdateStay';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { pluralize, toClipboard } from '@/lib/utils';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -54,24 +63,36 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   });
 
   const copyText = (text: string) => {
-    navigator.clipboard.writeText(text);
+    toClipboard(text);
     toast.success('Copiado com sucesso');
   };
 
-  const copyCohostData = (stay: WithTenant<Stay>) => {
+  const getCohostData = (stay: WithTenant<Stay>): string => {
     const data = [
       stay.tenant.name,
       Phone.toHumanReadable(stay.tenant.phone),
       `${formatDate(stay.check_in)} - ${formatDate(stay.check_out)}`,
       `${stay.guests} hóspedes`,
     ];
-    copyText(data.join('\n'));
+    return data.join('\n');
   };
 
-  const copyStayData = (stay: WithTenant<Stay>) => {
+  const copyApartmentInstructionsUrl = (stay: WithTenant<Stay>) => {
     const stayUrl = ROUTES.stayInstructions(stay.id);
     const url = new URL(stayUrl, location.origin);
     copyText(url.toString());
+  };
+
+  const copySelectedCohostData = () => {
+    if (selectedStayIds.length === 0) return;
+
+    const selectedStays = (stays?.data ?? []).filter(stay =>
+      selectedStayIds.includes(stay.id)
+    );
+
+    const allData = selectedStays.map(getCohostData);
+
+    copyText(allData.join('\n\n'));
   };
 
   const getWhatsAppHref = (stay: WithTenant<Stay>): string => {
@@ -91,6 +112,45 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {selectedStayIds.length > 0 && (
+          <div className='mb-4 flex items-center flex-wrap gap-2 justify-between rounded-lg border bg-muted/50 p-3'>
+            <div className='flex items-center flex-wrap gap-2'>
+              <span className='text-sm font-medium'>
+                {selectedStayIds.length}{' '}
+                {pluralize(selectedStayIds.length, 'estadia', 'estadias')}{' '}
+                {pluralize(
+                  selectedStayIds.length,
+                  'selecionada',
+                  'selecionadas'
+                )}
+              </span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant='outline' size='sm'>
+                    <MoreHorizontal className='mr-2 size-4' />
+                    Ações
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end'>
+                  <DropdownMenuItem onClick={copySelectedCohostData}>
+                    <CopyIcon className='mr-2 size-4' />
+                    Copiar dados para coanfitrião
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button
+                variant='ghost'
+                size='sm'
+                onClick={() => setSelectedStayIds([])}
+              >
+                <X className='mr-2 size-4' />
+                Limpar seleção
+              </Button>
+            </div>
+          </div>
+        )}
         <DataTable
           isLoading={isLoading}
           error={error?.message}
@@ -146,7 +206,10 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                   <Button
                     variant='outline'
                     size='icon'
-                    onClick={() => copyCohostData(row)}
+                    onClick={() => {
+                      const text = getCohostData(row);
+                      copyText(text);
+                    }}
                     aria-label='Copiar informações da estadia'
                   >
                     <CopyIcon className='size-4' />
@@ -154,7 +217,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
                   <Button
                     variant='outline'
                     size='icon'
-                    onClick={() => copyStayData(row)}
+                    onClick={() => copyApartmentInstructionsUrl(row)}
                     aria-label='Copiar informações da estadia'
                   >
                     <Link className='size-4' />
