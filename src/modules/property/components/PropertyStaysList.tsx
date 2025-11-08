@@ -39,6 +39,7 @@ type Props = {
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
+  const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
   });
@@ -94,6 +95,9 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
           isLoading={isLoading}
           error={error?.message}
           data={stays?.data ?? []}
+          enableRowSelection
+          selectedRows={selectedStayIds}
+          onSelectionChange={setSelectedStayIds}
           columns={[
             {
               header: 'Hóspede',
