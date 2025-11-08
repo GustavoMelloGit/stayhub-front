@@ -8,23 +8,13 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
-import {
-  CircleX,
-  CopyIcon,
-  Link,
-  MessageCirclePlus,
-  Pencil,
-  MoreHorizontal,
-  X,
-} from 'lucide-react';
+import { CopyIcon, MoreHorizontal, X, EyeIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
 import { DataTable } from '@/components/Table/DataTable';
 import { ROUTES } from '@/routes/routes';
-import { useCancelStay } from '@/modules/stay/service/StayService.hooks';
-import { queryClient } from '@/lib/query-client';
 import { UpdateStay } from '@/modules/stay/components/UpdateStay';
 import {
   DropdownMenu,
@@ -33,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { pluralize, toClipboard } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -52,15 +43,6 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
   });
-  const { mutate: cancelStay, isPending: isCancelingStay } = useCancelStay({
-    onSuccess: () => {
-      toast.success('Estadia cancelada com sucesso');
-      queryClient.invalidateQueries({ queryKey: ['propertyStays'] });
-    },
-    onError: () => {
-      toast.error('Erro ao cancelar estadia');
-    },
-  });
 
   const copyText = (text: string) => {
     toClipboard(text);
@@ -77,12 +59,6 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     return data.join('\n');
   };
 
-  const copyApartmentInstructionsUrl = (stay: WithTenant<Stay>) => {
-    const stayUrl = ROUTES.stayInstructions(stay.id);
-    const url = new URL(stayUrl, location.origin);
-    copyText(url.toString());
-  };
-
   const copySelectedCohostData = () => {
     if (selectedStayIds.length === 0) return;
 
@@ -93,14 +69,6 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     const allData = selectedStays.map(getCohostData);
 
     copyText(allData.join('\n\n'));
-  };
-
-  const getWhatsAppHref = (stay: WithTenant<Stay>): string => {
-    const stayUrl = ROUTES.stayInstructions(stay.id);
-    const url = new URL(stayUrl, location.origin);
-    const text = `Olá ${stay.tenant.name}, como você está? Me chamo Gustavo, sou o host da sua estadia em Castelhanos. Por favor, Veja abaixo as instruções de check-in e check-out: ${url.toString()}`;
-    const whatsappHref = `https://wa.me/${Phone.toAPI(stay.tenant.phone)}?text=${encodeURIComponent(text)}`;
-    return whatsappHref;
   };
 
   return (
@@ -203,54 +171,15 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               accessorKey: 'actions',
               render: row => (
                 <div className='flex gap-2'>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => {
-                      const text = getCohostData(row);
-                      copyText(text);
-                    }}
-                    aria-label='Copiar informações da estadia'
-                  >
-                    <CopyIcon className='size-4' />
-                  </Button>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => copyApartmentInstructionsUrl(row)}
-                    aria-label='Copiar informações da estadia'
-                  >
-                    <Link className='size-4' />
-                  </Button>
-                  <a
+                  <Link
+                    to={ROUTES.stayDetail(row.id)}
                     className={buttonVariants({
                       variant: 'outline',
                       size: 'icon',
                     })}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label='Enviar para whatsapp'
-                    href={getWhatsAppHref(row)}
                   >
-                    <MessageCirclePlus className='size-4' />
-                  </a>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    isLoading={isCancelingStay}
-                    onClick={() => cancelStay({ stayId: row.id })}
-                    aria-label='Cancelar estadia'
-                  >
-                    <CircleX className='size-4' />
-                  </Button>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => setSelectedStay(row)}
-                    aria-label='Editar estadia'
-                  >
-                    <Pencil className='size-4' />
-                  </Button>
+                    <EyeIcon className='size-4' />
+                  </Link>
                 </div>
               ),
             },

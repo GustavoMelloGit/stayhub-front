@@ -11,6 +11,11 @@ export const LazyStayInstructionsView = lazy(() =>
     default: module.StayInstructionsView,
   }))
 );
+export const LazyStayDetailView = lazy(() =>
+  import('@/modules/stay/view/StayDetailView').then(module => ({
+    default: module.StayDetailView,
+  }))
+);
 export const LazyNotFoundView = lazy(() =>
   import('@/modules/error/view/NotFoundView').then(module => ({
     default: module.NotFoundView,

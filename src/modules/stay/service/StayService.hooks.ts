@@ -5,7 +5,12 @@ import {
   type UseQueryOptions,
 } from '@tanstack/react-query';
 import { StayService } from './StayService';
-import type { PublicStay, Stay, UpdateStayRequest } from '../types/Stay';
+import type {
+  PublicStay,
+  Stay,
+  UpdateStayRequest,
+  WithTenant,
+} from '../types/Stay';
 import type { AxiosError } from 'axios';
 
 export const useGetPublicStay = (
@@ -43,7 +48,7 @@ export const useUpdateStay = (
 
 export const useGetStay = (
   stayId: string,
-  options?: UseQueryOptions<Stay, AxiosError>
+  options?: UseQueryOptions<WithTenant<Stay>, AxiosError>
 ) => {
   return useQuery({
     ...options,

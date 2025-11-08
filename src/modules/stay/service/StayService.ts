@@ -2,9 +2,11 @@ import api from '@/lib/api';
 import {
   publicStaySchema,
   staySchema,
+  tenantSchema,
   type PublicStay,
   type Stay,
   type UpdateStayRequest,
+  type WithTenant,
 } from '../types/Stay';
 
 export class StayService {
@@ -25,8 +27,12 @@ export class StayService {
     return response.data;
   }
 
-  static async getStay(stayId: string): Promise<Stay> {
-    const response = await api.get<Stay>(`/booking/stay/${stayId}`);
-    return staySchema.parse(response.data);
+  static async getStay(stayId: string): Promise<WithTenant<Stay>> {
+    const response = await api.get<WithTenant<Stay>>(`/booking/stay/${stayId}`);
+    const parsedData = staySchema.extend({
+      tenant: tenantSchema,
+    });
+
+    return parsedData.parse(response.data);
   }
 }

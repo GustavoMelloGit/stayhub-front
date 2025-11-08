@@ -7,6 +7,7 @@ import {
   LazyLoginView,
   LazySignupView,
   LazyStayInstructionsView,
+  LazyStayDetailView,
   LazyNotFoundView,
   LazyPropertyListView,
   LazyPropertyDetailView,
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.reconcileStays,
         element: <LazyReconcileStaysView />,
+      },
+      {
+        path: ROUTES.stayDetail(':stay_id'),
+        element: <LazyStayDetailView />,
       },
     ],
   },
