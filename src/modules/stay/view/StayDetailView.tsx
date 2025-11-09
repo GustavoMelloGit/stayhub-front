@@ -6,7 +6,6 @@ import {
   CircleX,
   CopyIcon,
   Link as LinkIcon,
-  MessageCirclePlus,
   Pencil,
   ArrowLeft,
 } from 'lucide-react';
@@ -21,6 +20,7 @@ import { Page } from '@/components/layout/Page';
 import { Alert } from '@/components/Alert';
 import { toClipboard } from '@/lib/utils';
 import type { Stay } from '../types/Stay';
+import { WhatsApp } from '@/components/icons/WhatsApp';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -187,7 +187,7 @@ export const StayDetailView: FC = () => {
               aria-label='Enviar para whatsapp'
               href={getWhatsAppHref()}
             >
-              <MessageCirclePlus className='size-4' />
+              <WhatsApp className='size-4' />
             </a>
             <Button
               variant='outline'
@@ -214,28 +214,6 @@ export const StayDetailView: FC = () => {
       />
       <Page.Content>
         <div className='grid gap-4 md:grid-cols-2'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações do Hóspede</CardTitle>
-            </CardHeader>
-            <CardContent className='space-y-4'>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Nome
-                </p>
-                <p className='text-base'>{stay.tenant.name}</p>
-              </div>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Telefone
-                </p>
-                <p className='text-base'>
-                  {Phone.toHumanReadable(stay.tenant.phone)}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
           <Card>
             <CardHeader>
               <CardTitle>Informações da Estadia</CardTitle>
@@ -275,6 +253,35 @@ export const StayDetailView: FC = () => {
               </div>
             </CardContent>
           </Card>
+          <div className='grid gap-4 '>
+            <Card>
+              <CardHeader>
+                <CardTitle>Informações do Hóspede</CardTitle>
+              </CardHeader>
+              <CardContent className='space-y-4'>
+                <div>
+                  <p className='text-sm font-medium text-muted-foreground'>
+                    Nome
+                  </p>
+                  <p className='text-base'>{stay.tenant.name}</p>
+                </div>
+                <div>
+                  <p className='text-sm font-medium text-muted-foreground'>
+                    Telefone
+                  </p>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      copyText(Phone.toHumanReadable(stay.tenant.phone));
+                    }}
+                    className='text-base underline'
+                  >
+                    {Phone.toHumanReadable(stay.tenant.phone)}
+                  </button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </Page.Content>
       {selectedStay && (
