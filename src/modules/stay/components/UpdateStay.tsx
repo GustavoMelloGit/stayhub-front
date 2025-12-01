@@ -36,6 +36,7 @@ export const UpdateStay: FC<Props> = ({ stay, isOpen, onClose }) => {
       price: Currency.toCents(data.price),
     };
     await mutateAsync({ stayId: stay.id, data: payload });
+    onClose();
   };
 
   return (
