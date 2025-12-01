@@ -68,9 +68,7 @@ const PropertyListView: FC = () => {
               Comece adicionando sua primeira propriedade para gerenciar suas
               estadias.
             </p>
-            <Button className='bg-blue-600 hover:bg-blue-700'>
-              Adicionar Primeira Propriedade
-            </Button>
+            <Button>Adicionar Primeira Propriedade</Button>
           </div>
         ) : (
           <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2'>
