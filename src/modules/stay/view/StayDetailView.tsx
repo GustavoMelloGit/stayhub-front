@@ -38,6 +38,7 @@ export const StayDetailView: FC = () => {
     onSuccess: () => {
       toast.success('Estadia cancelada com sucesso');
       queryClient.invalidateQueries({ queryKey: ['stayWithTenant'] });
+      queryClient.invalidateQueries({ queryKey: ['propertyStays'] });
     },
     onError: () => {
       toast.error('Erro ao cancelar estadia');
