@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { usePropertyStays } from '../../service/PropertyService.hooks';
 import { CoHostChart } from './CoHostChart';
+import { IncomePerMonth } from './IncomePerMonth';
 import { PropertyNumbers } from './PropertyNumbers';
 
 type Props = {
@@ -16,6 +17,7 @@ export const PropertyDashboard: FC<Props> = ({ propertyId }) => {
     <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
       <CoHostChart stays={stays?.data ?? []} />
       <PropertyNumbers stays={stays?.data ?? []} />
+      <IncomePerMonth stays={stays?.data ?? []} />
     </div>
   );
 };
