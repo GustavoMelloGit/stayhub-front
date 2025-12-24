@@ -16,17 +16,37 @@ export const useFindAllFromProperty = (propertyId: string) => {
 export const useRecordExpense = (
   options?: UseMutationOptions<void, Error, RecordExpenseDto>
 ) => {
-  return useMutation({
+  const {
+    isPending: isLoading,
+    error,
+    mutate,
+  } = useMutation({
     ...options,
     mutationFn: (dto: RecordExpenseDto) => FinanceService.recordExpense(dto),
   });
+
+  return {
+    isLoading,
+    error,
+    mutate,
+  };
 };
 
 export const useRecordRevenue = (
   options?: UseMutationOptions<void, Error, RecordRevenueDto>
 ) => {
-  return useMutation({
+  const {
+    isPending: isLoading,
+    error,
+    mutate,
+  } = useMutation({
     ...options,
     mutationFn: (dto: RecordRevenueDto) => FinanceService.recordRevenue(dto),
   });
+
+  return {
+    isLoading,
+    error,
+    mutate,
+  };
 };
