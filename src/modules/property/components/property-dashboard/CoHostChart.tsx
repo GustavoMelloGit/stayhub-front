@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import {
   ChartContainer,
   ChartTooltip,
@@ -7,32 +7,73 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { Currency } from '@/lib/currency';
 import type { Stay } from '@/modules/stay/types/Stay';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type Props = {
   stays: Stay[];
 };
 
 export const CoHostChart: FC<Props> = ({ stays }) => {
-  const groupedStays = groupStaysByMonth(stays);
+  const availableYears = getAvailableYears(stays);
+  const currentYear = new Date().getFullYear();
+  const defaultYear =
+    availableYears.length > 0 ? Math.max(...availableYears) : currentYear;
+  const [selectedYear, setSelectedYear] = useState<string>(
+    defaultYear.toString()
+  );
+
+  const filteredStays = stays.filter(
+    stay => stay.check_in.getFullYear() === Number(selectedYear)
+  );
+  const groupedStays = groupStaysByMonth(filteredStays);
+
   return (
-    <ChartContainer
-      config={{
-        cohost_payment: {
-          label: 'Valor coanfitrião',
-          color: 'var(--chart-1)',
-        },
-      }}
-    >
-      <BarChart accessibilityLayer data={groupedStays}>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey='month' tickLine={false} axisLine={false} />
-        <ChartTooltip
-          content={<ChartTooltipContent />}
-          formatter={(value: number) => Currency.format(value)}
-        />
-        <Bar dataKey='cohost_payment' fill='var(--chart-1)' radius={4} />
-      </BarChart>
-    </ChartContainer>
+    <Card>
+      <CardHeader>
+        <div className='flex items-center justify-between'>
+          <CardTitle>Valor a pagar do coanfitrião</CardTitle>
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
+            <SelectTrigger className='w-[120px]'>
+              <SelectValue placeholder='Ano' />
+            </SelectTrigger>
+            <SelectContent>
+              {availableYears.map(year => (
+                <SelectItem key={year} value={year.toString()}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer
+          config={{
+            cohost_payment: {
+              label: 'Valor coanfitrião',
+              color: 'var(--chart-1)',
+            },
+          }}
+        >
+          <BarChart accessibilityLayer data={groupedStays}>
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey='month' tickLine={false} axisLine={false} />
+            <ChartTooltip
+              content={<ChartTooltipContent />}
+              formatter={(value: number) => Currency.format(value)}
+            />
+            <Bar dataKey='cohost_payment' fill='var(--chart-1)' radius={4} />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -64,4 +105,12 @@ function calculateCohostPayment(stay: Stay): number {
     return stay.price * 0.1;
   }
   return stay.price * 0.12;
+}
+
+function getAvailableYears(stays: Stay[]): number[] {
+  const years = new Set<number>();
+  stays.forEach(stay => {
+    years.add(stay.check_in.getFullYear());
+  });
+  return Array.from(years).sort((a, b) => b - a);
 }
