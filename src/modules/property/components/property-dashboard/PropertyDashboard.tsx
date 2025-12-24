@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { usePropertyStays } from '../../service/PropertyService.hooks';
 import { CoHostChart } from './CoHostChart';
+import { PropertyNumbers } from './PropertyNumbers';
 
 type Props = {
   propertyId: string;
@@ -14,6 +15,7 @@ export const PropertyDashboard: FC<Props> = ({ propertyId }) => {
   return (
     <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
       <CoHostChart stays={stays?.data ?? []} />
+      <PropertyNumbers stays={stays?.data ?? []} />
     </div>
   );
 };
