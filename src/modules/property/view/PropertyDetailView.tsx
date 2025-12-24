@@ -10,6 +10,7 @@ import EditPropertyModal from '../components/EditPropertyModal';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { useDisclosure } from '@/hooks/useDisclosure';
+import { PropertyDashboard } from '../components/property-dashboard/PropertyDashboard';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
@@ -97,6 +98,7 @@ const PropertyDetailView: FC = () => {
         }
       />
       <Page.Content>
+        <PropertyDashboard propertyId={property.id} />
         {property_id && <PropertyStaysList propertyId={property_id} />}
       </Page.Content>
 

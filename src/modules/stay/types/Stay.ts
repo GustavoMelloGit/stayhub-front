@@ -8,6 +8,7 @@ export const staySchema = z.object({
   entrance_code: z.string().length(ENTRANCE_CODE_LENGTH),
   guests: z.number(),
   price: z.number(),
+  source: z.enum(['BOOKING', 'AIRBNB', 'INTERNAL']),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 });
