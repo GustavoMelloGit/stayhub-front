@@ -78,7 +78,7 @@ export const IncomePerMonth: FC<Props> = ({ stays }) => {
 };
 
 type ChartData = {
-  month: number;
+  month: string;
   income: number;
   stays: number;
 };
@@ -89,8 +89,11 @@ function groupStaysByMonth(stays: Stay[]): ChartData[] {
     const thisMonthStays = stays.filter(
       stay => stay.check_in.getMonth() + 1 === month
     );
+    const monthName = new Date(0, month - 1).toLocaleString('pt-BR', {
+      month: 'short',
+    });
     return {
-      month,
+      month: monthName,
       income: thisMonthStays.reduce((acc, stay) => acc + stay.price, 0),
       stays: thisMonthStays.length,
     };

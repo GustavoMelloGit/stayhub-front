@@ -78,7 +78,7 @@ export const CoHostChart: FC<Props> = ({ stays }) => {
 };
 
 type ChartData = {
-  month: number;
+  month: string;
   cohost_payment: number;
   stays: number;
 };
@@ -89,8 +89,11 @@ function groupStaysByMonth(stays: Stay[]): ChartData[] {
     const thisMonthStays = stays.filter(
       stay => stay.check_in.getMonth() + 1 === month
     );
+    const monthName = new Date(0, month - 1).toLocaleString('pt-BR', {
+      month: 'short',
+    });
     return {
-      month,
+      month: monthName,
       cohost_payment: thisMonthStays.reduce(
         (acc, stay) => acc + calculateCohostPayment(stay),
         0
