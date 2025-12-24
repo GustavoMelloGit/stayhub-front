@@ -101,10 +101,14 @@ function groupStaysByMonth(stays: Stay[]): ChartData[] {
 }
 
 function calculateCohostPayment(stay: Stay): number {
-  if (stay.source === 'INTERNAL') {
-    return stay.price * 0.1;
-  }
-  return stay.price * 0.12;
+  const INTERNAL_COMMISSION = 0.1;
+  const EXTERNAL_COMMISSION = 0.12;
+  const CLEANING_FEE = 150_00; // R$ 150,00;
+  const commission =
+    stay.source === 'INTERNAL' ? INTERNAL_COMMISSION : EXTERNAL_COMMISSION;
+  const priceInCents = stay.price;
+
+  return (priceInCents - CLEANING_FEE) * commission;
 }
 
 function getAvailableYears(stays: Stay[]): number[] {
