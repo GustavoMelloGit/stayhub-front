@@ -9,7 +9,7 @@ type Props = {
 
 export const PropertyNumbers: FC<Props> = ({ stays }) => {
   const totalPriceInCents = stays.reduce((acc, stay) => acc + stay.price, 0);
-  const averagePriceInCents = totalPriceInCents / stays.length;
+  const medianPriceInCents = calculateMedianPrice(stays);
 
   return (
     <div className='flex flex-col justify-between gap-2'>
@@ -29,12 +29,19 @@ export const PropertyNumbers: FC<Props> = ({ stays }) => {
       </Card>
       <Card>
         <CardContent>
-          <p>Valor médio das estadias</p>
+          <p>Valor médio das estadias (mediana)</p>
           <p className='text-4xl font-bold'>
-            {Currency.format(averagePriceInCents)}
+            {Currency.format(medianPriceInCents)}
           </p>
         </CardContent>
       </Card>
     </div>
   );
 };
+
+function calculateMedianPrice(stays: Stay[]): number {
+  const priceArray = stays.map(stay => stay.price);
+  priceArray.sort((a, b) => a - b);
+  const middleIndex = Math.floor(priceArray.length / 2);
+  return priceArray[middleIndex];
+}
