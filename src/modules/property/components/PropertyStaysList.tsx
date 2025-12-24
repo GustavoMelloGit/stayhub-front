@@ -74,7 +74,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Lista de estadias</CardTitle>
+        <CardTitle>Listagem de estadias</CardTitle>
         <CardDescription>
           Essas são as stadias que estão por vir
         </CardDescription>

@@ -13,3 +13,8 @@ export type PaginatedResponse<T> = {
   data: T[];
   pagination: z.infer<typeof paginationSchema>;
 };
+
+export type PaginationParams = {
+  limit: number;
+  page: number;
+};

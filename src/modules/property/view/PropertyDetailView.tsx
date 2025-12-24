@@ -11,6 +11,7 @@ import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { PropertyDashboard } from '../components/property-dashboard/PropertyDashboard';
+import { PropertyMovementsList } from '../components/PropertyMovementsList';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
@@ -99,24 +100,21 @@ const PropertyDetailView: FC = () => {
       />
       <Page.Content>
         <PropertyDashboard propertyId={property.id} />
-        {property_id && <PropertyStaysList propertyId={property_id} />}
+        <PropertyStaysList propertyId={property.id} />
+        <PropertyMovementsList propertyId={property.id} />
       </Page.Content>
 
-      {property_id && (
-        <ExternalBookingModal
-          propertyId={property_id}
-          isOpen={isOpen}
-          onClose={close}
-        />
-      )}
+      <ExternalBookingModal
+        propertyId={property.id}
+        isOpen={isOpen}
+        onClose={close}
+      />
 
-      {property_id && property && (
-        <EditPropertyModal
-          property={property}
-          isOpen={isEditOpen}
-          onClose={closeEdit}
-        />
-      )}
+      <EditPropertyModal
+        property={property}
+        isOpen={isEditOpen}
+        onClose={closeEdit}
+      />
     </Page.Container>
   );
 };
