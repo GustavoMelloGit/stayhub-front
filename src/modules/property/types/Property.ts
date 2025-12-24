@@ -38,6 +38,7 @@ export const bookStayRequestSchema = z.object({
   }),
   guests: z.number(),
   property: z.uuidv4(),
+  source: z.string().max(100),
 });
 
 export type BookStayRequest = z.infer<typeof bookStayRequestSchema>;

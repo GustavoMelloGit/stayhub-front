@@ -103,6 +103,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       guests: Number(data.guests),
       property: externalStay.property.id,
       price: Currency.toCents(Number(data.price)),
+      source: externalStay.sourcePlatform,
     };
 
     mutate(payload);
