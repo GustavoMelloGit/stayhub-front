@@ -54,6 +54,8 @@ export class PropertyService {
     id: string,
     filter?: Partial<{
       onlyIncomingStays: boolean;
+      limit: number;
+      page: number;
     }>
   ): Promise<PaginatedResponse<WithTenant<Stay>>> {
     const url = buildUrlWithParams(`/booking/property/${id}/stays`, filter);

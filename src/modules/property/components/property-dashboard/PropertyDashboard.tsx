@@ -11,10 +11,12 @@ type Props = {
 export const PropertyDashboard: FC<Props> = ({ propertyId }) => {
   const { stays } = usePropertyStays(propertyId, {
     onlyIncomingStays: false,
+    limit: 100,
+    page: 1,
   });
 
   return (
-    <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+    <div className='grid gap-4 lg:grid-cols-3'>
       <CoHostChart stays={stays?.data ?? []} />
       <PropertyNumbers stays={stays?.data ?? []} />
       <IncomePerMonth stays={stays?.data ?? []} />
