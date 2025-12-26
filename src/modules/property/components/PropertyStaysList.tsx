@@ -172,7 +172,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               render: row => (
                 <div className='flex gap-2'>
                   <Link
-                    to={ROUTES.stayDetail(row.id)}
+                    to={ROUTES.stayDetail(propertyId, row.id)}
                     className={buttonVariants({
                       variant: 'outline',
                       size: 'icon',

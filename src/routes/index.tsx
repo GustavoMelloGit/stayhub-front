@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
         element: <LazyReconcileStaysView />,
       },
       {
-        path: ROUTES.stayDetail(':stay_id'),
+        path: ROUTES.stayDetail(':property_id', ':stay_id'),
         element: <LazyStayDetailView />,
       },
     ],
