@@ -1,5 +1,5 @@
 import { useState, type FC } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
@@ -31,14 +31,20 @@ const formatDate = (date: Date): string => {
 };
 
 export const StayDetailView: FC = () => {
-  const { stay_id } = useParams<{ stay_id: string }>();
+  const { stay_id, property_id } = useParams<{
+    stay_id: string;
+    property_id: string;
+  }>();
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
+  const navigate = useNavigate();
   const { data: stay, isLoading, error } = useGetStay(stay_id || '');
   const { mutate: cancelStay, isPending: isCancelingStay } = useCancelStay({
     onSuccess: () => {
       toast.success('Estadia cancelada com sucesso');
       queryClient.invalidateQueries({ queryKey: ['stayWithTenant'] });
       queryClient.invalidateQueries({ queryKey: ['propertyStays'] });
+      queryClient.invalidateQueries({ queryKey: ['finance-movements'] });
+      navigate(ROUTES.property(property_id || ''), { replace: true });
     },
     onError: () => {
       toast.error('Erro ao cancelar estadia');
