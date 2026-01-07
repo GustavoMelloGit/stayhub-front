@@ -12,6 +12,7 @@ import { ROUTES } from '@/routes/routes';
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { PropertyDashboard } from '../components/property-dashboard/PropertyDashboard';
 import { PropertyMovementsList } from '../components/PropertyMovementsList';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
@@ -100,8 +101,18 @@ const PropertyDetailView: FC = () => {
       />
       <Page.Content>
         <PropertyDashboard propertyId={property.id} />
-        <PropertyStaysList propertyId={property.id} />
-        <PropertyMovementsList propertyId={property.id} />
+        <Tabs defaultValue='stays'>
+          <TabsList>
+            <TabsTrigger value='stays'>Estadias</TabsTrigger>
+            <TabsTrigger value='movements'>Movimentações</TabsTrigger>
+          </TabsList>
+          <TabsContent value='stays'>
+            <PropertyStaysList propertyId={property.id} />
+          </TabsContent>
+          <TabsContent value='movements'>
+            <PropertyMovementsList propertyId={property.id} />
+          </TabsContent>
+        </Tabs>
       </Page.Content>
 
       <ExternalBookingModal
