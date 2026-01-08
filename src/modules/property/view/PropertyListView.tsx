@@ -7,15 +7,33 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
 import { Page } from '@/components/layout/Page';
 import { Plus } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PropertyListView: FC = () => {
   const { properties, isLoading, error } = useUserProperties();
 
   if (isLoading) {
     return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900'></div>
-      </div>
+      <Page.Container>
+        <Page.Topbar nav={[{ label: 'Minhas Propriedades' }]} />
+        <Page.Header
+          title='Minhas Propriedades'
+          description='Gerencie suas propriedades e visualize informações importantes'
+          actions={
+            <Button>
+              <Plus className='w-4 h-4' />
+              Nova Propriedade
+            </Button>
+          }
+        />
+        <Page.Content>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2'>
+            <Skeleton className='aspect-square w-full' />
+            <Skeleton className='aspect-square w-full' />
+            <Skeleton className='aspect-square w-full' />
+          </div>
+        </Page.Content>
+      </Page.Container>
     );
   }
 

@@ -21,6 +21,7 @@ import { Alert } from '@/components/Alert';
 import { toClipboard } from '@/lib/utils';
 import type { Stay } from '../types/Stay';
 import { WhatsApp } from '@/components/icons/WhatsApp';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -96,9 +97,20 @@ export const StayDetailView: FC = () => {
   if (isLoading) {
     return (
       <Page.Container>
+        <Page.Topbar
+          nav={[
+            { label: 'Minhas Propriedades', to: ROUTES.home },
+            { label: 'Detalhes da Estadia' },
+          ]}
+        />
+        <Page.Header
+          title='Detalhes da Estadia'
+          description='Informações completas sobre a estadia'
+        />
         <Page.Content>
-          <div className='flex items-center justify-center min-h-[400px]'>
-            <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900'></div>
+          <div className='grid gap-4 md:grid-cols-2'>
+            <Skeleton className='aspect-square w-full' />
+            <Skeleton className='aspect-square w-full' />
           </div>
         </Page.Content>
       </Page.Container>

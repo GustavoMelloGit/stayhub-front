@@ -13,6 +13,7 @@ import { useDisclosure } from '@/hooks/useDisclosure';
 import { PropertyDashboard } from '../components/property-dashboard/PropertyDashboard';
 import { PropertyMovementsList } from '../components/PropertyMovementsList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PropertyDetailView: FC = () => {
   const { property_id } = useParams<{ property_id: string }>();
@@ -26,9 +27,23 @@ const PropertyDetailView: FC = () => {
 
   if (isLoading) {
     return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900'></div>
-      </div>
+      <Page.Container>
+        <Page.Topbar
+          nav={[
+            { label: 'Minhas Propriedades', to: ROUTES.home },
+            { label: 'Carregando...' },
+          ]}
+        />
+        <Page.Header
+          title='Carregando...'
+          description='Detalhes da propriedade'
+        />
+        <Page.Content>
+          <Skeleton className='h-10 w-full' />
+          <Skeleton className='h-10 w-full' />
+          <Skeleton className='h-10 w-full' />
+        </Page.Content>
+      </Page.Container>
     );
   }
 
