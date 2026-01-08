@@ -37,7 +37,7 @@ export const CoHostChart: FC<Props> = ({ stays }) => {
   return (
     <Card>
       <CardHeader>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center gap-2 justify-between'>
           <CardTitle>Valor a pagar do coanfitrião</CardTitle>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className='w-[120px]'>

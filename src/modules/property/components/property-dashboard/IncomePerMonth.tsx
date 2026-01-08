@@ -37,7 +37,7 @@ export const IncomePerMonth: FC<Props> = ({ stays }) => {
   return (
     <Card>
       <CardHeader>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between gap-2'>
           <CardTitle>Receita por mês</CardTitle>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className='w-[120px]'>
