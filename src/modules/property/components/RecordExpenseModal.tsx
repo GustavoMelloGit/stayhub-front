@@ -90,6 +90,11 @@ export const RecordExpenseModal: FC<Props> = ({
     form.reset(defaultValues);
   };
 
+  const handleClose = (): void => {
+    resetForm();
+    onClose();
+  };
+
   const handleSubmit = (data: FormData): void => {
     mutate({
       property_id: propertyId,
@@ -97,12 +102,7 @@ export const RecordExpenseModal: FC<Props> = ({
       description: data.description || null,
       category: data.category.toUpperCase(),
     });
-    resetForm();
-  };
-
-  const handleClose = (): void => {
-    resetForm();
-    onClose();
+    handleClose();
   };
 
   return (
