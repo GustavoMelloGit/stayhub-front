@@ -84,8 +84,12 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
     },
   });
 
+  const formatPhone = (phone: string): string => {
+    return phone.replace(/\D/g, '');
+  };
+
   const handleSubmit = (data: ReconcileStayFormData): void => {
-    const phone = data.tenant_phone.replace(/\D/g, '');
+    const formattedPhone = formatPhone(data.tenant_phone);
     const checkIn = new Date(externalStay.start);
     checkIn.setHours(CHECK_IN_HOUR, 0, 0, 0);
     const checkOut = new Date(externalStay.end);
@@ -97,7 +101,7 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
       entrance_code: data.entrance_code,
       tenant: {
         name: data.tenant_name,
-        phone: phone,
+        phone: formattedPhone,
         sex: data.tenant_sex,
       },
       guests: Number(data.guests),
@@ -181,6 +185,50 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
               >
                 <FormField
                   control={form.control}
+                  name='tenant_name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nome do Hóspede</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='Digite o nome do hóspede'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='tenant_phone'
+                  render={({ field: { onBlur, ...field } }) => (
+                    <FormItem>
+                      <FormLabel>Telefone do Hóspede</FormLabel>
+                      <FormControl ref={withMask(Phone.MASK)}>
+                        <Input
+                          placeholder='Digite o telefone do hóspede'
+                          inputMode='numeric'
+                          {...field}
+                          onBlur={() => {
+                            onBlur();
+                            const formattedPhone = formatPhone(field.value);
+                            if (Phone.isValid(formattedPhone)) {
+                              const entranceCode =
+                                formattedPhone.slice(-ENTRANCE_CODE_LENGTH);
+                              form.setValue('entrance_code', entranceCode);
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name='entrance_code'
                   render={({ field }) => (
                     <FormItem>
@@ -206,41 +254,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                             <WandSparkles />
                           </Button>
                         </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='tenant_name'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome do Hóspede</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder='Digite o nome do hóspede'
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='tenant_phone'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Telefone do Hóspede</FormLabel>
-                      <FormControl ref={withMask(Phone.MASK)}>
-                        <Input
-                          placeholder='Digite o telefone do hóspede'
-                          inputMode='numeric'
-                          {...field}
-                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
