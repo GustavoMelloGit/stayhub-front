@@ -115,7 +115,7 @@ export const RecordExpenseModal: FC<Props> = ({
               <FormField
                 control={form.control}
                 name='amount'
-                render={({ field }) => (
+                render={({ field: { onChange, ...field } }) => (
                   <FormItem>
                     <FormLabel>Valor</FormLabel>
                     <FormControl>
@@ -123,8 +123,8 @@ export const RecordExpenseModal: FC<Props> = ({
                         decimalPlaces={2}
                         inputMode='decimal'
                         placeholder='0,00'
-                        onValueChange={field.onChange}
-                        value={field.value}
+                        onValueChange={onChange}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
