@@ -25,11 +25,32 @@ import { queryClient } from '@/lib/query-client';
 import { Currency } from '@/lib/currency';
 import { Minus } from 'lucide-react';
 import z from 'zod';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+const expenseCategories: Array<{ value: string; label: string }> = [
+  { value: 'MANUTENÇÃO', label: 'Manutenção' },
+  { value: 'ESTADIA', label: 'Estadia' },
+  { value: 'AQUISIÇÕES', label: 'Aquisições' },
+  { value: 'FINANCIAMENTO', label: 'Financiamento' },
+  { value: 'GASTOS_FIXOS', label: 'Gastos Fixos' },
+  { value: 'OUTROS', label: 'Outros' },
+];
 
 const formSchema = z.object({
   amount: z.number().positive('O valor deve ser maior que zero'),
   description: z.string().optional(),
-  category: z.string().min(1, 'É necessário informar a categoria'),
+  category: z.enum(
+    expenseCategories.map(category => category.value),
+    {
+      message: 'É necessário informar a categoria',
+    }
+  ),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -135,15 +156,26 @@ export const RecordExpenseModal: FC<Props> = ({
               <FormField
                 control={form.control}
                 name='category'
-                render={({ field }) => (
+                render={({ field: { onChange, value, ...field } }) => (
                   <FormItem>
                     <FormLabel>Categoria</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder='Ex: Manutenção, Limpeza, Impostos...'
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select onValueChange={onChange} defaultValue={value}>
+                      <FormControl>
+                        <SelectTrigger className='w-full' {...field}>
+                          <SelectValue placeholder='Selecione a categoria' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {expenseCategories.map(category => (
+                          <SelectItem
+                            key={category.value}
+                            value={category.value}
+                          >
+                            {category.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
