@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { pluralize, toClipboard } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { useFilters } from '@/hooks/useFilters';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -38,10 +39,15 @@ type Props = {
 };
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
+  const { filters, addFilter } = useFilters();
+  const currentPage = +filters.page || 1;
+
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
     onlyIncomingStays: true,
+    page: currentPage,
+    limit: 10,
   });
 
   const copyText = (text: string) => {
@@ -126,6 +132,13 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
           enableRowSelection
           selectedRows={selectedStayIds}
           onSelectionChange={setSelectedStayIds}
+          pagination={{
+            page: currentPage,
+            totalPages: stays?.pagination.total_pages ?? 1,
+            onPageChange: page => {
+              addFilter('page', page);
+            },
+          }}
           columns={[
             {
               header: 'Hóspede',
