@@ -8,6 +8,12 @@ export type JsonDataTableRow = Record<string, unknown>;
 
 export type DataTableRow<T extends JsonDataTableRow> = T & BaseDataTableRow;
 
+export type PaginationConfig = {
+  page: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+};
+
 export type DataTableProps<T extends JsonDataTableRow> = {
   isLoading?: boolean;
   error?: string;
@@ -24,4 +30,5 @@ export type DataTableProps<T extends JsonDataTableRow> = {
   enableRowSelection?: boolean;
   selectedRows?: string[];
   onSelectionChange?: (selectedIds: string[]) => void;
+  pagination?: PaginationConfig;
 };
