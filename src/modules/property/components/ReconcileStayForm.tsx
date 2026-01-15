@@ -33,8 +33,11 @@ import { CHECK_IN_HOUR, CHECK_OUT_HOUR } from '../types/Property';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
 import { NumberInput } from '@/components/ui/number-input';
+import { DateUtils } from '@/lib/date';
 
 export const reconcileStayFormSchema = z.object({
+  check_in: z.string().min(1, 'Data e hora de check-in é obrigatória'),
+  check_out: z.string().min(1, 'Data e hora de check-out é obrigatória'),
   entrance_code: z
     .string()
     .min(
@@ -72,9 +75,23 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
     },
   });
 
+  const getDefaultCheckIn = (): string => {
+    const checkIn = new Date(externalStay.start);
+    checkIn.setHours(CHECK_IN_HOUR, 0, 0, 0);
+    return DateUtils.isoToInputDateTimeLocal(checkIn);
+  };
+
+  const getDefaultCheckOut = (): string => {
+    const checkOut = new Date(externalStay.end);
+    checkOut.setHours(CHECK_OUT_HOUR, 0, 0, 0);
+    return DateUtils.isoToInputDateTimeLocal(checkOut);
+  };
+
   const form = useForm<ReconcileStayFormData>({
     resolver: zodResolver(reconcileStayFormSchema),
     defaultValues: {
+      check_in: getDefaultCheckIn(),
+      check_out: getDefaultCheckOut(),
       entrance_code: '',
       tenant_name: '',
       tenant_phone: '',
@@ -90,10 +107,8 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
 
   const handleSubmit = (data: ReconcileStayFormData): void => {
     const formattedPhone = formatPhone(data.tenant_phone);
-    const checkIn = new Date(externalStay.start);
-    checkIn.setHours(CHECK_IN_HOUR, 0, 0, 0);
-    const checkOut = new Date(externalStay.end);
-    checkOut.setHours(CHECK_OUT_HOUR, 0, 0, 0);
+    const checkIn = new Date(data.check_in);
+    const checkOut = new Date(data.check_out);
 
     const payload = {
       check_in: checkIn.toISOString(),
@@ -126,14 +141,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
     return String(Math.floor(Math.random() * (max - min + 1)) + min);
   };
 
-  const formatDate = (date: Date): string => {
-    return new Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }).format(date);
-  };
-
   return (
     <Page.Container>
       <Page.Topbar
@@ -161,12 +168,6 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
               <p>
                 <strong>Plataforma:</strong> {externalStay.sourcePlatform}
               </p>
-              <p>
-                <strong>Check-in:</strong> {formatDate(externalStay.start)}
-              </p>
-              <p>
-                <strong>Check-out:</strong> {formatDate(externalStay.end)}
-              </p>
             </div>
           </CardHeader>
           <CardContent>
@@ -183,6 +184,34 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className='space-y-4'
               >
+                <FormField
+                  control={form.control}
+                  name='check_in'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Check-in</FormLabel>
+                      <FormControl>
+                        <Input type='datetime-local' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='check_out'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Check-out</FormLabel>
+                      <FormControl>
+                        <Input type='datetime-local' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name='tenant_name'
