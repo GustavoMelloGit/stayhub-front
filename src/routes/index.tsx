@@ -12,6 +12,7 @@ import {
   LazyPropertyListView,
   LazyPropertyDetailView,
   LazyReconcileStaysView,
+  LazyCreatePropertyView,
 } from './lazyComponents';
 
 export const router = createBrowserRouter([
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <LazyPropertyListView />,
+      },
+      {
+        path: ROUTES.createProperty,
+        element: <LazyCreatePropertyView />,
       },
       {
         path: ROUTES.property(':property_id'),

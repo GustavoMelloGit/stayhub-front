@@ -30,3 +30,6 @@ export const LazyPropertyDetailView = lazy(
 export const LazyReconcileStaysView = lazy(
   () => import('@/modules/property/view/ReconcileStaysView')
 );
+export const LazyCreatePropertyView = lazy(
+  () => import('@/modules/property/view/CreatePropertyView')
+);

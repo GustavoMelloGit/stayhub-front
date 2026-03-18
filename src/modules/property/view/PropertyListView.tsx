@@ -3,13 +3,14 @@ import { useUserProperties } from '../service/PropertyService.hooks';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Alert } from '@/components/Alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
 import { Page } from '@/components/layout/Page';
 import { Plus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const PropertyListView: FC = () => {
+  const navigate = useNavigate();
   const { properties, isLoading, error } = useUserProperties();
 
   if (isLoading) {
@@ -20,7 +21,7 @@ const PropertyListView: FC = () => {
           title='Minhas Propriedades'
           description='Gerencie suas propriedades e visualize informações importantes'
           actions={
-            <Button>
+            <Button onClick={() => navigate(ROUTES.createProperty)}>
               <Plus className='w-4 h-4' />
               Nova Propriedade
             </Button>
@@ -55,7 +56,7 @@ const PropertyListView: FC = () => {
         title='Minhas Propriedades'
         description='Gerencie suas propriedades e visualize informações importantes'
         actions={
-          <Button>
+          <Button onClick={() => navigate(ROUTES.createProperty)}>
             <Plus className='w-4 h-4' />
             Nova Propriedade
           </Button>
@@ -86,7 +87,9 @@ const PropertyListView: FC = () => {
               Comece adicionando sua primeira propriedade para gerenciar suas
               estadias.
             </p>
-            <Button>Adicionar Primeira Propriedade</Button>
+            <Button onClick={() => navigate(ROUTES.createProperty)}>
+              Adicionar Primeira Propriedade
+            </Button>
           </div>
         ) : (
           <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2'>

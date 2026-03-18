@@ -7,4 +7,5 @@ export const ROUTES = {
   home: '/',
   property: (property_id: string) => `/property/${property_id}`,
   reconcileStays: '/reconcile-stays',
+  createProperty: '/property/new',
 } as const;

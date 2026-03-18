@@ -3,6 +3,7 @@ import { buildUrlWithParams } from '@/lib/utils';
 import {
   propertySchema,
   type BookStayRequest,
+  type CreatePropertyRequest,
   type Property,
   type ExternalBookingRequest,
   type UpdatePropertyRequest,
@@ -116,6 +117,11 @@ export class PropertyService {
       externalBookingData
     );
     return response.data;
+  }
+
+  static async createProperty(data: CreatePropertyRequest): Promise<Property> {
+    const response = await api.post<Property>('/property', data);
+    return propertySchema.parse(response.data);
   }
 
   /**

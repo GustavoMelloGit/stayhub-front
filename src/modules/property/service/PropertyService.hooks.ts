@@ -6,6 +6,7 @@ import {
 import { PropertyService } from './PropertyService';
 import type {
   BookStayRequest,
+  CreatePropertyRequest,
   ExternalBookingRequest,
   UpdatePropertyRequest,
   Property,
@@ -33,6 +34,23 @@ export const useUserProperties = () => {
     isLoading,
     error,
   };
+};
+
+export const useCreateProperty = (
+  options?: UseMutationOptions<Property, AxiosError, CreatePropertyRequest>
+) => {
+  const {
+    data: property,
+    isPending: isLoading,
+    error,
+    mutate,
+  } = useMutation({
+    ...options,
+    mutationFn: (data: CreatePropertyRequest) =>
+      PropertyService.createProperty(data),
+  });
+
+  return { property, isLoading, error, mutate };
 };
 
 export const useReconcileExternalStays = () => {

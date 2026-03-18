@@ -64,5 +64,18 @@ export const updatePropertyRequestSchema = z.object({
 
 export type UpdatePropertyRequest = z.infer<typeof updatePropertyRequestSchema>;
 
+export const createPropertyRequestSchema = z.object({
+  name: z.string().min(1, 'Nome é obrigatório'),
+  address: addressSchema.extend({
+    country: z.string().min(1, 'País é obrigatório'),
+  }),
+  images: z
+    .array(z.string().min(1))
+    .min(1, 'Pelo menos uma imagem é obrigatória'),
+  capacity: z.coerce.number().int().min(1, 'Capacidade deve ser pelo menos 1'),
+});
+
+export type CreatePropertyRequest = z.infer<typeof createPropertyRequestSchema>;
+
 export const CHECK_IN_HOUR = 15;
 export const CHECK_OUT_HOUR = 9;
