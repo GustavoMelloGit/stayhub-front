@@ -84,6 +84,7 @@ export const StayForm: FC<Props> = ({
                   inputMode='numeric'
                   placeholder='Digite o número de hóspedes'
                   {...field}
+                  onValueChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />
@@ -102,6 +103,7 @@ export const StayForm: FC<Props> = ({
                   inputMode='decimal'
                   placeholder='Digite o preço da estadia'
                   {...field}
+                  onValueChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />

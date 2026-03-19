@@ -13,8 +13,8 @@ export const NumberInput: FC<Props> = ({
   decimalPlaces = 2,
   ...props
 }) => {
-  const [innerValue, setInnerValue] = useState<string | undefined>(
-    props.value?.toString()
+  const [innerValue, setInnerValue] = useState<string>(
+    props.value?.toString() ?? ''
   );
 
   return (
