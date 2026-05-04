@@ -57,11 +57,7 @@ export class PropertyService {
    */
   static async getPropertyStays(
     id: string,
-    filter?: Partial<
-      PaginationParams & {
-        onlyIncomingStays: boolean;
-      }
-    >
+    filter?: { from?: string; to?: string } & Partial<PaginationParams>
   ): Promise<PaginatedResponse<WithTenant<Stay>>> {
     const url = buildUrlWithParams(`/booking/property/${id}/stays`, filter);
 

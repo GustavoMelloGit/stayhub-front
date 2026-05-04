@@ -1,4 +1,5 @@
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
+import { format, startOfYear, endOfYear } from 'date-fns';
 import { usePropertyStays } from '../../service/PropertyService.hooks';
 import { CoHostChart } from './CoHostChart';
 import { IncomePerMonth } from './IncomePerMonth';
@@ -9,8 +10,16 @@ type Props = {
 };
 
 export const PropertyDashboard: FC<Props> = ({ propertyId }) => {
+  const dateRange = useMemo(() => {
+    const today = new Date();
+    return {
+      from: format(startOfYear(today), 'yyyy-MM-dd'),
+      to: format(endOfYear(today), 'yyyy-MM-dd'),
+    };
+  }, []);
+
   const { stays } = usePropertyStays(propertyId, {
-    onlyIncomingStays: false,
+    ...dateRange,
     limit: 100,
     page: 1,
   });

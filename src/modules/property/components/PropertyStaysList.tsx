@@ -1,4 +1,5 @@
-import { useState, type FC } from 'react';
+import { useState, useMemo, type FC } from 'react';
+import { format, addMonths } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -44,8 +45,16 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
 
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
+  const dateRange = useMemo(() => {
+    const today = new Date();
+    return {
+      from: format(today, 'yyyy-MM-dd'),
+      to: format(addMonths(today, 6), 'yyyy-MM-dd'),
+    };
+  }, []);
+
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
-    onlyIncomingStays: true,
+    ...dateRange,
     page: currentPage,
     limit: 10,
   });
