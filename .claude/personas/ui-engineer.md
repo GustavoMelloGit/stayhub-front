@@ -137,6 +137,16 @@ Always prefer these over building from scratch:
 | `Separator`      | Horizontal or vertical divider.                                                                                    |
 | `Sonner/Toaster` | Theme-synced toast notifications.                                                                                  |
 
+### Missing components — use shadcn/ui
+
+If a needed component is not in `src/components/ui/`, install it from shadcn/ui before building from scratch:
+
+```bash
+npx shadcn@latest add <component-name>
+```
+
+The installed component will land in `src/components/ui/` already styled with the project's design tokens and Tailwind config. After installing, import and use it exactly like any other UI component. Never build a custom replacement for something shadcn/ui already provides.
+
 ### Page Layout (`src/components/layout/Page.tsx`)
 
 Every page **must** use this structure:
