@@ -1,5 +1,4 @@
-import { useState, useMemo, type FC } from 'react';
-import { format, addMonths } from 'date-fns';
+import { useState, type FC } from 'react';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -9,7 +8,15 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { CopyIcon, MoreHorizontal, X, EyeIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  CopyIcon,
+  MoreHorizontal,
+  X,
+  EyeIcon,
+  CalendarIcon,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import type { Stay, WithTenant } from '@/modules/stay/types/Stay';
 import { Currency } from '@/lib/currency';
@@ -40,21 +47,42 @@ type Props = {
 };
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
-  const { filters, addFilter } = useFilters();
+  const { filters, addFilter, removeFilter } = useFilters();
   const currentPage = +filters.page || 1;
+  const fromFilter =
+    typeof filters.from === 'string' ? filters.from : undefined;
+  const toFilter = typeof filters.to === 'string' ? filters.to : undefined;
 
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
-  const dateRange = useMemo(() => {
-    const today = new Date();
-    return {
-      from: format(today, 'yyyy-MM-dd'),
-      to: format(addMonths(today, 6), 'yyyy-MM-dd'),
-    };
-  }, []);
+
+  const handleFromChange = (value: string) => {
+    if (value) {
+      addFilter('from', value);
+    } else {
+      removeFilter('from');
+    }
+    addFilter('page', 1);
+  };
+
+  const handleToChange = (value: string) => {
+    if (value) {
+      addFilter('to', value);
+    } else {
+      removeFilter('to');
+    }
+    addFilter('page', 1);
+  };
+
+  const clearDateFilters = () => {
+    removeFilter('from');
+    removeFilter('to');
+    addFilter('page', 1);
+  };
 
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
-    ...dateRange,
+    from: fromFilter,
+    to: toFilter,
     page: currentPage,
     limit: 10,
   });
@@ -91,10 +119,53 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
       <CardHeader>
         <CardTitle>Listagem de estadias</CardTitle>
         <CardDescription>
-          Essas são as stadias que estão por vir
+          Filtre pelo período de check-in para encontrar estadias
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-end'>
+          <div className='flex flex-1 flex-col gap-3 sm:flex-row'>
+            <div className='flex flex-col gap-1.5'>
+              <Label
+                htmlFor='filter-from'
+                className='flex items-center gap-1.5'
+              >
+                <CalendarIcon className='size-3.5 text-muted-foreground' />
+                Check-in de
+              </Label>
+              <Input
+                id='filter-from'
+                type='date'
+                value={fromFilter ?? ''}
+                max={toFilter}
+                onChange={e => handleFromChange(e.target.value)}
+                className='w-full sm:w-44'
+              />
+            </div>
+            <div className='flex flex-col gap-1.5'>
+              <Label htmlFor='filter-to'>até</Label>
+              <Input
+                id='filter-to'
+                type='date'
+                value={toFilter ?? ''}
+                min={fromFilter}
+                onChange={e => handleToChange(e.target.value)}
+                className='w-full sm:w-44'
+              />
+            </div>
+          </div>
+          {(fromFilter || toFilter) && (
+            <Button
+              variant='ghost'
+              size='sm'
+              onClick={clearDateFilters}
+              className='self-end'
+            >
+              <X className='mr-2 size-4' />
+              Limpar filtro
+            </Button>
+          )}
+        </div>
         {selectedStayIds.length > 0 && (
           <div className='mb-4 flex items-center flex-wrap gap-2 justify-between rounded-lg border bg-muted/50 p-3'>
             <div className='flex items-center flex-wrap gap-2'>
