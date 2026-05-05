@@ -70,22 +70,14 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const debouncedTo = useDebounce(inputTo, 500);
 
   useEffect(() => {
-    if (debouncedFrom) {
-      addFilter('from', debouncedFrom);
-    } else {
-      removeFilter('from');
-    }
+    if (debouncedFrom) addFilter('from', debouncedFrom);
     addFilter('page', 1);
-  }, [debouncedFrom, addFilter, removeFilter]);
+  }, [debouncedFrom, addFilter]);
 
   useEffect(() => {
-    if (debouncedTo) {
-      addFilter('to', debouncedTo);
-    } else {
-      removeFilter('to');
-    }
+    if (debouncedTo) addFilter('to', debouncedTo);
     addFilter('page', 1);
-  }, [debouncedTo, addFilter, removeFilter]);
+  }, [debouncedTo, addFilter]);
 
   const clearDateFilters = () => {
     setInputFrom(defaults.from);
