@@ -35,10 +35,12 @@ Requires `VITE_API_URL` in `.env` (default: `http://localhost:3030`). Validated 
 
 ## Personas
 
-| When                                                  | Persona                           |
-| ----------------------------------------------------- | --------------------------------- |
-| Designing or clarifying a feature before writing code | `.claude/personas/architect.md`   |
-| Implementing UI screens or components                 | `.claude/personas/ui-engineer.md` |
+| When                                                        | Persona                                 |
+| ----------------------------------------------------------- | --------------------------------------- |
+| Clarifying scope, business rules, or domain logic           | `.claude/personas/architect.md`         |
+| Defining layout, visual hierarchy, or component choices     | `.claude/personas/designer.md`          |
+| Implementing UI screens or components                       | `.claude/personas/frontend-engineer.md` |
+| Auditing or implementing keyboard, ARIA, or contrast issues | `.claude/personas/accessibility.md`     |
 
 ## Patterns
 
