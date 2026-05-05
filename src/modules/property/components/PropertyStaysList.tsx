@@ -1,5 +1,5 @@
 import { useState, useMemo, type FC } from 'react';
-import { format, subMonths, endOfMonth } from 'date-fns';
+import { format, addMonths } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -57,8 +57,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const defaults = useMemo(() => {
     const today = new Date();
     return {
-      from: format(subMonths(today, 1), 'yyyy-MM-dd'),
-      to: format(endOfMonth(today), 'yyyy-MM-dd'),
+      from: format(today, 'yyyy-MM-dd'),
+      to: format(addMonths(today, 1), 'yyyy-MM-dd'),
     };
   }, []);
 
