@@ -1,15 +1,30 @@
-import { useState, type FC } from 'react';
+import { useState, type FC, type ReactNode } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  ArrowLeft,
+  Calendar,
   CircleX,
   CopyIcon,
+  KeyRound,
   Link as LinkIcon,
+  MoreHorizontal,
   Pencil,
-  ArrowLeft,
+  Phone as PhoneIcon,
+  Users,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import { Currency } from '@/lib/currency';
 import { Phone } from '@/lib/phone';
 import { ROUTES } from '@/routes/routes';
@@ -23,13 +38,57 @@ import type { Stay } from '../types/Stay';
 import { WhatsApp } from '@/components/icons/WhatsApp';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('pt-BR', {
+const formatDate = (date: Date): string =>
+  new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
   }).format(date);
+
+const getInitials = (name: string): string =>
+  name
+    .split(' ')
+    .slice(0, 2)
+    .map(n => n[0])
+    .join('')
+    .toUpperCase();
+
+const SOURCE_LABELS: Record<Stay['source'], string> = {
+  INTERNAL: 'Reserva direta',
+  AIRBNB: 'Airbnb',
+  BOOKING: 'Booking.com',
 };
+
+type MetricCardProps = {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  highlighted?: boolean;
+};
+
+const MetricCard: FC<MetricCardProps> = ({
+  icon,
+  label,
+  value,
+  highlighted,
+}) => (
+  <Card className={cn(highlighted && 'border-primary/20 bg-primary/5')}>
+    <CardContent className='pb-5 pt-5'>
+      <div className='mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
+        {icon}
+        {label}
+      </div>
+      <p
+        className={cn(
+          'text-lg font-semibold tabular-nums',
+          highlighted && 'text-primary'
+        )}
+      >
+        {value}
+      </p>
+    </CardContent>
+  </Card>
+);
 
 export const StayDetailView: FC = () => {
   const { stay_id, property_id } = useParams<{
@@ -59,34 +118,25 @@ export const StayDetailView: FC = () => {
 
   const getCohostData = (): string => {
     if (!stay) return '';
-    const data = [
+    return [
       stay.tenant.name,
       Phone.toHumanReadable(stay.tenant.phone),
       `${formatDate(stay.check_in)} - ${formatDate(stay.check_out)}`,
       `${stay.guests} hóspedes`,
-    ];
-    return data.join('\n');
-  };
-
-  const copyCohostData = () => {
-    const text = getCohostData();
-    copyText(text);
+    ].join('\n');
   };
 
   const copyApartmentInstructionsUrl = () => {
     if (!stay) return;
-    const stayUrl = ROUTES.stayInstructions(stay.id);
-    const url = new URL(stayUrl, location.origin);
+    const url = new URL(ROUTES.stayInstructions(stay.id), location.origin);
     copyText(url.toString());
   };
 
   const getWhatsAppHref = (): string => {
     if (!stay) return '';
-    const stayUrl = ROUTES.stayInstructions(stay.id);
-    const url = new URL(stayUrl, location.origin);
+    const url = new URL(ROUTES.stayInstructions(stay.id), location.origin);
     const text = `Olá ${stay.tenant.name}, como você está? Me chamo Gustavo, sou o host da sua estadia em Castelhanos. Por favor, Veja abaixo as instruções de check-in e check-out: ${url.toString()}`;
-    const whatsappHref = `https://wa.me/${Phone.toAPI(stay.tenant.phone)}?text=${encodeURIComponent(text)}`;
-    return whatsappHref;
+    return `https://wa.me/${Phone.toAPI(stay.tenant.phone)}?text=${encodeURIComponent(text)}`;
   };
 
   const handleCancelStay = () => {
@@ -103,27 +153,41 @@ export const StayDetailView: FC = () => {
             { label: 'Detalhes da Estadia' },
           ]}
         />
-        <Page.Header
-          title='Detalhes da Estadia'
-          description='Informações completas sobre a estadia'
+        <Page.Header title='Carregando...' description='Detalhes da estadia' />
+        <Page.Content>
+          <div className='grid grid-cols-2 gap-3 md:grid-cols-4'>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className='h-24 w-full' />
+            ))}
+          </div>
+          <div className='grid gap-4 md:grid-cols-3'>
+            <Skeleton className='h-48 md:col-span-2' />
+            <Skeleton className='h-48' />
+          </div>
+        </Page.Content>
+      </Page.Container>
+    );
+  }
+
+  if (error || !stay) {
+    return (
+      <Page.Container>
+        <Page.Topbar
+          nav={[
+            { label: 'Minhas Propriedades', to: ROUTES.home },
+            { label: 'Detalhes da Estadia' },
+          ]}
         />
         <Page.Content>
-          <div className='grid gap-4 md:grid-cols-2'>
-            <Skeleton className='aspect-square w-full' />
-            <Skeleton className='aspect-square w-full' />
-          </div>
-        </Page.Content>
-      </Page.Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Page.Container>
-        <Page.Content>
-          <Alert variant='destructive' message='Erro ao carregar estadia'>
-            Não foi possível carregar os detalhes da estadia. Tente novamente
-            mais tarde.
+          <Alert
+            variant='destructive'
+            message={
+              error ? 'Erro ao carregar estadia' : 'Estadia não encontrada'
+            }
+          >
+            {error
+              ? 'Não foi possível carregar os detalhes da estadia. Tente novamente mais tarde.'
+              : 'A estadia solicitada não foi encontrada ou você não tem permissão para visualizá-la.'}
           </Alert>
           <div className='mt-4'>
             <Link
@@ -133,32 +197,7 @@ export const StayDetailView: FC = () => {
                 className: 'w-full',
               })}
             >
-              <ArrowLeft className='w-4 h-4 mr-2' />
-              Voltar para início
-            </Link>
-          </div>
-        </Page.Content>
-      </Page.Container>
-    );
-  }
-
-  if (!stay) {
-    return (
-      <Page.Container>
-        <Page.Content>
-          <Alert variant='destructive' message='Estadia não encontrada'>
-            A estadia solicitada não foi encontrada ou você não tem permissão
-            para visualizá-la.
-          </Alert>
-          <div className='mt-4'>
-            <Link
-              to={ROUTES.home}
-              className={buttonVariants({
-                variant: 'outline',
-                className: 'w-full',
-              })}
-            >
-              <ArrowLeft className='w-4 h-4 mr-2' />
+              <ArrowLeft className='mr-2 size-4' />
               Voltar para início
             </Link>
           </div>
@@ -172,137 +211,188 @@ export const StayDetailView: FC = () => {
       <Page.Topbar
         nav={[
           { label: 'Minhas Propriedades', to: ROUTES.home },
-          { label: 'Detalhes da Estadia' },
+          { label: stay.tenant.name },
         ]}
       />
       <Page.Header
-        title='Detalhes da Estadia'
-        description='Informações completas sobre a estadia'
+        title={stay.tenant.name}
+        description={`${formatDate(stay.check_in)} → ${formatDate(stay.check_out)}`}
         actions={
-          <div className='flex gap-2'>
+          <div className='flex items-center gap-2'>
             <Button
               variant='outline'
-              size='icon'
-              onClick={copyCohostData}
-              aria-label='Copiar dados para coanfitrião'
-            >
-              <CopyIcon className='size-4' />
-            </Button>
-            <Button
-              variant='outline'
-              size='icon'
-              onClick={copyApartmentInstructionsUrl}
-              aria-label='Copiar link das instruções'
-            >
-              <LinkIcon className='size-4' />
-            </Button>
-            <a
-              className={buttonVariants({
-                variant: 'outline',
-                size: 'icon',
-              })}
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label='Enviar para whatsapp'
-              href={getWhatsAppHref()}
-            >
-              <WhatsApp className='size-4' />
-            </a>
-            <Button
-              variant='outline'
-              size='icon'
-              isLoading={isCancelingStay}
-              onClick={handleCancelStay}
-              aria-label='Cancelar estadia'
-            >
-              <CircleX className='size-4' />
-            </Button>
-            <Button
-              variant='outline'
-              size='icon'
               onClick={() => {
                 const { tenant, ...stayWithoutTenant } = stay;
                 setSelectedStay(stayWithoutTenant);
               }}
-              aria-label='Editar estadia'
             >
-              <Pencil className='size-4' />
+              <Pencil className='mr-2 size-4' />
+              Editar
             </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline' size='icon' aria-label='Mais ações'>
+                  <MoreHorizontal className='size-4' />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end'>
+                <DropdownMenuItem onClick={() => copyText(getCohostData())}>
+                  <CopyIcon className='mr-2 size-4' />
+                  Copiar dados para coanfitrião
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={copyApartmentInstructionsUrl}>
+                  <LinkIcon className='mr-2 size-4' />
+                  Copiar link das instruções
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a
+                    href={getWhatsAppHref()}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <WhatsApp className='mr-2 size-4' />
+                    Enviar pelo WhatsApp
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleCancelStay}
+                  disabled={isCancelingStay}
+                  className='text-destructive focus:text-destructive'
+                >
+                  <CircleX className='mr-2 size-4' />
+                  {isCancelingStay ? 'Cancelando...' : 'Cancelar estadia'}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         }
       />
+
       <Page.Content>
-        <div className='grid gap-4 md:grid-cols-2'>
-          <Card>
+        {/* Key metrics */}
+        <div className='grid grid-cols-2 gap-3 md:grid-cols-4'>
+          <MetricCard
+            icon={<Calendar className='size-3.5' />}
+            label='Check-in'
+            value={formatDate(stay.check_in)}
+          />
+          <MetricCard
+            icon={<Calendar className='size-3.5' />}
+            label='Check-out'
+            value={formatDate(stay.check_out)}
+          />
+          <MetricCard
+            icon={<Users className='size-3.5' />}
+            label='Hóspedes'
+            value={String(stay.guests)}
+          />
+          <MetricCard
+            icon={null}
+            label='Valor total'
+            value={Currency.format(stay.price)}
+            highlighted
+          />
+        </div>
+
+        {/* Detail cards */}
+        <div className='grid gap-4 md:grid-cols-3'>
+          {/* Stay details — 2 cols */}
+          <Card className='md:col-span-2'>
             <CardHeader>
-              <CardTitle>Informações da Estadia</CardTitle>
+              <CardTitle>Detalhes da Estadia</CardTitle>
             </CardHeader>
             <CardContent className='space-y-4'>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Check-in
+              <div className='space-y-1.5'>
+                <p className='flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
+                  <KeyRound className='size-3.5' />
+                  Código de entrada
                 </p>
-                <p className='text-base'>{formatDate(stay.check_in)}</p>
+                <div className='flex items-center gap-2'>
+                  <code className='flex-1 rounded-md bg-muted px-3 py-2 font-mono text-sm'>
+                    {stay.entrance_code}
+                  </code>
+                  <Button
+                    variant='ghost'
+                    size='icon'
+                    onClick={() => copyText(stay.entrance_code)}
+                    aria-label='Copiar código de entrada'
+                  >
+                    <CopyIcon className='size-4' />
+                  </Button>
+                </div>
               </div>
+
+              <Separator />
+
               <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Check-out
+                <p className='mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
+                  Origem da reserva
                 </p>
-                <p className='text-base'>{formatDate(stay.check_out)}</p>
-              </div>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Hóspedes
-                </p>
-                <p className='text-base'>{stay.guests}</p>
-              </div>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Código de Entrada
-                </p>
-                <p className='text-base font-mono'>{stay.entrance_code}</p>
-              </div>
-              <div>
-                <p className='text-sm font-medium text-muted-foreground'>
-                  Valor
-                </p>
-                <p className='text-base tabular-nums'>
-                  {Currency.format(stay.price)}
+                <p className='text-sm font-medium'>
+                  {SOURCE_LABELS[stay.source]}
                 </p>
               </div>
             </CardContent>
           </Card>
-          <div className='grid gap-4 '>
-            <Card>
-              <CardHeader>
-                <CardTitle>Informações do Hóspede</CardTitle>
-              </CardHeader>
-              <CardContent className='space-y-4'>
-                <div>
-                  <p className='text-sm font-medium text-muted-foreground'>
-                    Nome
-                  </p>
-                  <p className='text-base'>{stay.tenant.name}</p>
-                </div>
-                <div>
-                  <p className='text-sm font-medium text-muted-foreground'>
-                    Telefone
-                  </p>
-                  <button
-                    type='button'
-                    onClick={() => {
-                      copyText(Phone.toHumanReadable(stay.tenant.phone));
-                    }}
-                    className='text-base underline'
-                  >
+
+          {/* Guest card — 1 col */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Hóspede</CardTitle>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <div className='flex items-center gap-3'>
+                <Avatar>
+                  <AvatarFallback>
+                    {getInitials(stay.tenant.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <p className='min-w-0 truncate font-medium'>
+                  {stay.tenant.name}
+                </p>
+              </div>
+
+              <Separator />
+
+              <div className='flex items-center justify-between gap-2'>
+                <div className='flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground'>
+                  <PhoneIcon className='size-3.5 shrink-0' />
+                  <span className='truncate'>
                     {Phone.toHumanReadable(stay.tenant.phone)}
-                  </button>
+                  </span>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  className='shrink-0'
+                  onClick={() =>
+                    copyText(Phone.toHumanReadable(stay.tenant.phone))
+                  }
+                  aria-label='Copiar telefone'
+                >
+                  <CopyIcon className='size-3.5' />
+                </Button>
+              </div>
+
+              <a
+                href={getWhatsAppHref()}
+                target='_blank'
+                rel='noopener noreferrer'
+                className={buttonVariants({
+                  variant: 'outline',
+                  size: 'sm',
+                  className: 'w-full',
+                })}
+              >
+                <WhatsApp className='mr-2 size-4' />
+                Enviar pelo WhatsApp
+              </a>
+            </CardContent>
+          </Card>
         </div>
       </Page.Content>
+
       {selectedStay && (
         <UpdateStay
           stay={selectedStay}
