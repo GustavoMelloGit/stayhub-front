@@ -35,12 +35,17 @@ Requires `VITE_API_URL` in `.env` (default: `http://localhost:3030`). Validated 
 
 ## Personas
 
-| When                                                        | Persona                                 |
-| ----------------------------------------------------------- | --------------------------------------- |
-| Clarifying scope, business rules, or domain logic           | `.claude/personas/architect.md`         |
-| Defining layout, visual hierarchy, or component choices     | `.claude/personas/designer.md`          |
-| Implementing UI screens or components                       | `.claude/personas/frontend-engineer.md` |
-| Auditing or implementing keyboard, ARIA, or contrast issues | `.claude/personas/accessibility.md`     |
+**Default entry point for any non-trivial task:** `.claude/personas/maestro.md`
+
+The Maestro dispatches the other personas in the correct order. Only invoke a persona directly when the Maestro has already determined the workflow and you are executing a specific step.
+
+| Persona               | File                                    | When to invoke directly                        |
+| --------------------- | --------------------------------------- | ---------------------------------------------- |
+| **Maestro**           | `.claude/personas/maestro.md`           | Any new feature, screen, or multi-step task    |
+| **Architect**         | `.claude/personas/architect.md`         | Business rule or domain clarification only     |
+| **Designer**          | `.claude/personas/designer.md`          | Purely visual task with settled business logic |
+| **Accessibility**     | `.claude/personas/accessibility.md`     | Accessibility audit of an existing screen      |
+| **Frontend Engineer** | `.claude/personas/frontend-engineer.md` | Implementation when design spec already exists |
 
 ## Patterns
 
