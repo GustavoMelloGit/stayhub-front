@@ -73,7 +73,7 @@ const MetricCard: FC<MetricCardProps> = ({
   highlighted,
 }) => (
   <Card className={cn('py-0', highlighted && 'border-primary/20 bg-primary/5')}>
-    <CardContent className='px-4 py-3'>
+    <CardContent className='px-4 py-4'>
       <div className='mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
         {icon}
         {label}
