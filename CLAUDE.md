@@ -40,12 +40,22 @@ When implementing UI screens or components, read and follow the persona defined 
 
 ## Patterns
 
-When implementing features, read and follow **all** pattern files in `.claude/patterns/`.
+Patterns are **task-specific references** — read the relevant pattern file when you are about to implement something it covers. You do not need to load all patterns at once; load the one(s) that apply to the task at hand.
+
+Pattern files live in `.claude/patterns/`. Examples of when to load them:
+
+| Task                                     | Pattern to read                           |
+| ---------------------------------------- | ----------------------------------------- |
+| Adding an API endpoint or HTTP call      | `http-client.md`                          |
+| Adding a query or mutation               | `data-fetching.md`                        |
+| Adding a form                            | `forms.md`                                |
+| Adding a filter that drives an API query | `debounced-filters.md`, `client-state.md` |
+| Styling a component                      | `styling.md`                              |
+| Accessing the current user               | `authentication.md`                       |
+| Writing an import path                   | `path-alias.md`                           |
 
 ## Rules
 
-Read and follow **all** rule files in `.claude/rules/`.
+Rules are **always active** — internalize them and apply them to every task without being reminded. Rule files live in `.claude/rules/`; read them all at the start of each session.
 
-- **EVERY** time you finish adding ou updating code, you should run `npm run lint -- --fix` to find and fix any linting errors.
-- **EVERY** page created should be made mobile first and responsive for bigger screens.
-- **NEVER** use eslint disable comments in the code. If you are in doubt, ask me first.
+Current rules: `commit.md`, `linting.md`, `mobile-first.md`.
