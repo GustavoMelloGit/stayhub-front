@@ -33,10 +33,12 @@ No test framework is configured in this project.
 
 Requires `VITE_API_URL` in `.env` (default: `http://localhost:3030`). Validated at startup via Zod in `lib/env.ts`.
 
-## UI Persona
+## Personas
 
-When implementing UI screens or components, read and follow the persona defined in
-`.claude/personas/ui-engineer.md`.
+| When                                                  | Persona                           |
+| ----------------------------------------------------- | --------------------------------- |
+| Designing or clarifying a feature before writing code | `.claude/personas/architect.md`   |
+| Implementing UI screens or components                 | `.claude/personas/ui-engineer.md` |
 
 ## Patterns
 
