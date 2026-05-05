@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Fragment, type ComponentProps, type FC, type ReactNode } from 'react';
 import { SidebarTrigger } from '../ui/sidebar';
+import { ChevronLeft } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -45,14 +46,36 @@ const Topbar: FC<TopbarProps> = ({ children, className, nav, ...props }) => {
       <SidebarTrigger className='-ml-1' />
       {nav && (
         <Breadcrumb>
-          <BreadcrumbList>
+          {/* Mobile: back link to the immediate parent only */}
+          {nav.length > 1 &&
+            (() => {
+              const parent = nav[nav.length - 2];
+              return parent.to ? (
+                <BreadcrumbList className='md:hidden'>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink
+                      to={parent.to}
+                      className='flex items-center gap-1 truncate max-w-[200px]'
+                    >
+                      <ChevronLeft
+                        className='size-4 shrink-0'
+                        aria-hidden='true'
+                      />
+                      {parent.label}
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              ) : null;
+            })()}
+
+          {/* Desktop: full breadcrumb path */}
+          <BreadcrumbList className='hidden md:flex'>
             {nav.map((item, index) => (
               <Fragment key={item.label}>
                 <BreadcrumbItem>
-                  {item.to && (
+                  {item.to ? (
                     <BreadcrumbLink {...item}>{item.label}</BreadcrumbLink>
-                  )}
-                  {!item.to && (
+                  ) : (
                     <BreadcrumbPage {...item}>{item.label}</BreadcrumbPage>
                   )}
                 </BreadcrumbItem>
