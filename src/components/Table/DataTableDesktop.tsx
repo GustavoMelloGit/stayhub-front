@@ -1,3 +1,5 @@
+import { AlertCircle, CalendarX } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { DataTableProps, JsonDataTableRow } from './types';
 import {
   Table,
@@ -9,6 +11,8 @@ import {
 } from '@/components/ui/table';
 import { Checkbox } from '../ui/checkbox';
 import { useDataTableSelection } from './useDataTableSelection';
+
+const SKELETON_ROWS = 5;
 
 export function DataTableDesktop<T extends JsonDataTableRow>({
   columns,
@@ -29,7 +33,10 @@ export function DataTableDesktop<T extends JsonDataTableRow>({
   const colSpan = enableRowSelection ? columns.length + 1 : columns.length;
 
   return (
-    <Table>
+    <Table
+      aria-busy={isLoading}
+      aria-label={isLoading ? 'Carregando estadias' : undefined}
+    >
       <TableHeader>
         <TableRow>
           {enableRowSelection && (
@@ -38,6 +45,7 @@ export function DataTableDesktop<T extends JsonDataTableRow>({
                 checked={allSelected}
                 onCheckedChange={handleSelectAll}
                 aria-label='Selecionar todas as linhas'
+                disabled={isLoading || !!error}
               />
             </TableHead>
           )}
@@ -47,20 +55,66 @@ export function DataTableDesktop<T extends JsonDataTableRow>({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {isLoading && (
-          <TableRow>
-            <TableCell colSpan={colSpan} className='h-24 text-center'>
-              Carregando...
-            </TableCell>
-          </TableRow>
-        )}
+        {isLoading &&
+          Array.from({ length: SKELETON_ROWS }).map((_, rowIndex) => (
+            <TableRow key={rowIndex} aria-hidden='true'>
+              {enableRowSelection && (
+                <TableCell>
+                  <Skeleton className='h-4 w-4 rounded' />
+                </TableCell>
+              )}
+              {columns.map((column, colIndex) => (
+                <TableCell key={column.accessorKey}>
+                  <Skeleton
+                    className='h-4'
+                    style={{
+                      width:
+                        colIndex === 0
+                          ? '60%'
+                          : colIndex === columns.length - 1
+                            ? '40%'
+                            : '80%',
+                    }}
+                  />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+
         {error && (
           <TableRow>
-            <TableCell colSpan={colSpan} className='h-24 text-center'>
-              {error}
+            <TableCell colSpan={colSpan}>
+              <div
+                className='flex flex-col items-center gap-2 py-10 text-center'
+                role='alert'
+              >
+                <AlertCircle className='size-8 text-destructive' />
+                <p className='font-medium text-destructive'>
+                  Erro ao carregar estadias
+                </p>
+                <p className='text-sm text-muted-foreground'>{error}</p>
+              </div>
             </TableCell>
           </TableRow>
         )}
+
+        {!isLoading && !error && data.length === 0 && (
+          <TableRow>
+            <TableCell colSpan={colSpan}>
+              <div
+                className='flex flex-col items-center gap-2 py-10 text-center'
+                role='status'
+              >
+                <CalendarX className='size-8 text-muted-foreground' />
+                <p className='font-medium'>Nenhuma estadia encontrada</p>
+                <p className='text-sm text-muted-foreground'>
+                  Tente ajustar o período de check-in.
+                </p>
+              </div>
+            </TableCell>
+          </TableRow>
+        )}
+
         {!isLoading &&
           !error &&
           data.map(row => {
