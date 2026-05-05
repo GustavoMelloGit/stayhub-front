@@ -1,4 +1,5 @@
-import { useState, type FC } from 'react';
+import { useState, useMemo, type FC } from 'react';
+import { format, subDays, startOfMonth, endOfMonth } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -53,6 +54,17 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     typeof filters.from === 'string' ? filters.from : undefined;
   const toFilter = typeof filters.to === 'string' ? filters.to : undefined;
 
+  const defaults = useMemo(() => {
+    const today = new Date();
+    return {
+      from: format(subDays(startOfMonth(today), 1), 'yyyy-MM-dd'),
+      to: format(endOfMonth(today), 'yyyy-MM-dd'),
+    };
+  }, []);
+
+  const effectiveFrom = fromFilter ?? defaults.from;
+  const effectiveTo = toFilter ?? defaults.to;
+
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
 
@@ -81,8 +93,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   };
 
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
-    from: fromFilter,
-    to: toFilter,
+    from: effectiveFrom,
+    to: effectiveTo,
     page: currentPage,
     limit: 10,
   });
@@ -136,8 +148,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-from'
                 type='date'
-                value={fromFilter ?? ''}
-                max={toFilter}
+                value={effectiveFrom}
+                max={effectiveTo}
                 onChange={e => handleFromChange(e.target.value)}
                 className='w-full sm:w-44'
               />
@@ -147,8 +159,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-to'
                 type='date'
-                value={toFilter ?? ''}
-                min={fromFilter}
+                value={effectiveTo}
+                min={effectiveFrom}
                 onChange={e => handleToChange(e.target.value)}
                 className='w-full sm:w-44'
               />
