@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 import {
   ChartContainer,
   ChartTooltip,
@@ -8,50 +8,18 @@ import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { Currency } from '@/lib/currency';
 import type { Stay } from '@/modules/stay/types/Stay';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 type Props = {
   stays: Stay[];
 };
 
 export const CoHostChart: FC<Props> = ({ stays }) => {
-  const availableYears = getAvailableYears(stays);
-  const currentYear = new Date().getFullYear();
-  const defaultYear =
-    availableYears.length > 0 ? Math.max(...availableYears) : currentYear;
-  const [selectedYear, setSelectedYear] = useState<string>(
-    defaultYear.toString()
-  );
-
-  const filteredStays = stays.filter(
-    stay => stay.check_in.getFullYear() === Number(selectedYear)
-  );
-  const groupedStays = groupStaysByMonth(filteredStays);
+  const groupedStays = groupStaysByMonth(stays);
 
   return (
     <Card>
       <CardHeader>
-        <div className='flex items-center gap-2 justify-between'>
-          <CardTitle>Valor a pagar do coanfitrião</CardTitle>
-          <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className='w-[120px]'>
-              <SelectValue placeholder='Ano' />
-            </SelectTrigger>
-            <SelectContent>
-              {availableYears.map(year => (
-                <SelectItem key={year} value={year.toString()}>
-                  {year}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <CardTitle>Valor a pagar do coanfitrião</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -112,12 +80,4 @@ function calculateCohostPayment(stay: Stay): number {
   const priceInCents = stay.price;
 
   return (priceInCents - CLEANING_FEE) * commission;
-}
-
-function getAvailableYears(stays: Stay[]): number[] {
-  const years = new Set<number>();
-  stays.forEach(stay => {
-    years.add(stay.check_in.getFullYear());
-  });
-  return Array.from(years).sort((a, b) => b - a);
 }
