@@ -1,4 +1,4 @@
-import { useState, useMemo, type FC } from 'react';
+import { useState, useMemo, useEffect, type FC } from 'react';
 import { format, addMonths } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
@@ -34,6 +34,7 @@ import {
 import { pluralize, toClipboard } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { useFilters } from '@/hooks/useFilters';
+import { useDebounce } from '@/hooks/useDebounce';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -62,39 +63,44 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     };
   }, []);
 
-  const effectiveFrom = fromFilter ?? defaults.from;
-  const effectiveTo = toFilter ?? defaults.to;
+  const [inputFrom, setInputFrom] = useState(fromFilter ?? defaults.from);
+  const [inputTo, setInputTo] = useState(toFilter ?? defaults.to);
 
-  const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
-  const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
+  const debouncedFrom = useDebounce(inputFrom, 500);
+  const debouncedTo = useDebounce(inputTo, 500);
 
-  const handleFromChange = (value: string) => {
-    if (value) {
-      addFilter('from', value);
+  useEffect(() => {
+    if (debouncedFrom) {
+      addFilter('from', debouncedFrom);
     } else {
       removeFilter('from');
     }
     addFilter('page', 1);
-  };
+  }, [debouncedFrom, addFilter, removeFilter]);
 
-  const handleToChange = (value: string) => {
-    if (value) {
-      addFilter('to', value);
+  useEffect(() => {
+    if (debouncedTo) {
+      addFilter('to', debouncedTo);
     } else {
       removeFilter('to');
     }
     addFilter('page', 1);
-  };
+  }, [debouncedTo, addFilter, removeFilter]);
 
   const clearDateFilters = () => {
+    setInputFrom(defaults.from);
+    setInputTo(defaults.to);
     removeFilter('from');
     removeFilter('to');
     addFilter('page', 1);
   };
 
+  const [selectedStay, setSelectedStay] = useState<Stay | null>(null);
+  const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
+
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
-    from: effectiveFrom,
-    to: effectiveTo,
+    from: debouncedFrom || defaults.from,
+    to: debouncedTo || defaults.to,
     page: currentPage,
     limit: 10,
   });
@@ -148,9 +154,9 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-from'
                 type='date'
-                value={effectiveFrom}
-                max={effectiveTo}
-                onChange={e => handleFromChange(e.target.value)}
+                value={inputFrom}
+                max={inputTo}
+                onChange={e => setInputFrom(e.target.value)}
                 className='w-full sm:w-44'
               />
             </div>
@@ -159,14 +165,14 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-to'
                 type='date'
-                value={effectiveTo}
-                min={effectiveFrom}
-                onChange={e => handleToChange(e.target.value)}
+                value={inputTo}
+                min={inputFrom}
+                onChange={e => setInputTo(e.target.value)}
                 className='w-full sm:w-44'
               />
             </div>
           </div>
-          {(fromFilter || toFilter) && (
+          {(inputFrom !== defaults.from || inputTo !== defaults.to) && (
             <Button
               variant='ghost'
               size='sm'
