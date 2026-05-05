@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, type FC } from 'react';
+import { useState, useMemo, type FC } from 'react';
 import { format, addMonths } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
@@ -63,25 +63,23 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     };
   }, []);
 
-  const [inputFrom, setInputFrom] = useState(fromFilter ?? defaults.from);
-  const [inputTo, setInputTo] = useState(toFilter ?? defaults.to);
+  const effectiveFrom = fromFilter ?? defaults.from;
+  const effectiveTo = toFilter ?? defaults.to;
 
-  const debouncedFrom = useDebounce(inputFrom, 500);
-  const debouncedTo = useDebounce(inputTo, 500);
+  const debouncedFrom = useDebounce(effectiveFrom, 500);
+  const debouncedTo = useDebounce(effectiveTo, 500);
 
-  useEffect(() => {
-    if (debouncedFrom) addFilter('from', debouncedFrom);
+  const handleFromChange = (value: string) => {
+    if (value) addFilter('from', value);
     addFilter('page', 1);
-  }, [debouncedFrom, addFilter]);
+  };
 
-  useEffect(() => {
-    if (debouncedTo) addFilter('to', debouncedTo);
+  const handleToChange = (value: string) => {
+    if (value) addFilter('to', value);
     addFilter('page', 1);
-  }, [debouncedTo, addFilter]);
+  };
 
   const clearDateFilters = () => {
-    setInputFrom(defaults.from);
-    setInputTo(defaults.to);
     removeFilter('from');
     removeFilter('to');
     addFilter('page', 1);
@@ -91,8 +89,8 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
   const [selectedStayIds, setSelectedStayIds] = useState<string[]>([]);
 
   const { stays, isLoading, error } = usePropertyStays(propertyId, {
-    from: debouncedFrom || defaults.from,
-    to: debouncedTo || defaults.to,
+    from: debouncedFrom,
+    to: debouncedTo,
     page: currentPage,
     limit: 10,
   });
@@ -146,9 +144,9 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-from'
                 type='date'
-                value={inputFrom}
-                max={inputTo}
-                onChange={e => setInputFrom(e.target.value)}
+                value={effectiveFrom}
+                max={effectiveTo}
+                onChange={e => handleFromChange(e.target.value)}
                 className='w-full sm:w-44'
               />
             </div>
@@ -157,14 +155,14 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
               <Input
                 id='filter-to'
                 type='date'
-                value={inputTo}
-                min={inputFrom}
-                onChange={e => setInputTo(e.target.value)}
+                value={effectiveTo}
+                min={effectiveFrom}
+                onChange={e => handleToChange(e.target.value)}
                 className='w-full sm:w-44'
               />
             </div>
           </div>
-          {(inputFrom !== defaults.from || inputTo !== defaults.to) && (
+          {(fromFilter || toFilter) && (
             <Button
               variant='ghost'
               size='sm'
