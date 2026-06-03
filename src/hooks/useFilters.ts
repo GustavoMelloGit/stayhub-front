@@ -8,12 +8,11 @@ import {
 const hashStorage: StateStorage = {
   getItem: (key): string => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
-    const storedValue = searchParams.get(key) ?? '';
-    return JSON.parse(storedValue);
+    return searchParams.get(key) ?? '';
   },
   setItem: (key, newValue): void => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
-    searchParams.set(key, JSON.stringify(newValue));
+    searchParams.set(key, newValue);
     location.hash = searchParams.toString();
   },
   removeItem: (key): void => {
@@ -49,7 +48,7 @@ export const useFilters = create<FilterStoreState>()(
       },
     }),
     {
-      name: 'filters',
+      name: 'f',
       storage: createJSONStorage(() => hashStorage),
     }
   )
