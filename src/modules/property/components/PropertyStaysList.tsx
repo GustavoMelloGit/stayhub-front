@@ -33,7 +33,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { pluralize, toClipboard } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import { useFilters } from '@/hooks/useFilters';
+import { useNamespacedFilters } from '@/hooks/useNamespacedFilters';
 import { useDebounce } from '@/hooks/useDebounce';
 
 const formatDate = (date: Date): string => {
@@ -49,7 +49,7 @@ type Props = {
 };
 
 export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
-  const { filters, addFilter, removeFilter } = useFilters();
+  const { filters, addFilter, removeFilter } = useNamespacedFilters('stays');
   const currentPage = +filters.page || 1;
   const fromFilter =
     typeof filters.from === 'string' ? filters.from : undefined;

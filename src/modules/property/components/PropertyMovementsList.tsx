@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 import { useFindAllFromProperty } from '@/modules/finance/service/FinanceService.hooks';
 import {
   Card,
@@ -13,6 +13,7 @@ import { Currency } from '@/lib/currency';
 import type { FinanceMovement } from '@/modules/finance/types/Movement';
 import { RecordExpenseModal } from './RecordExpenseModal';
 import { useDisclosure } from '@/hooks/useDisclosure';
+import { useNamespacedFilters } from '@/hooks/useNamespacedFilters';
 import { Plus } from 'lucide-react';
 
 const formatDate = (date: Date): string => {
@@ -30,9 +31,11 @@ type Props = {
 const PAGE_SIZE = 10;
 
 export const PropertyMovementsList: FC<Props> = ({ propertyId }) => {
-  const [page, setPage] = useState(1);
+  const { filters, addFilter } = useNamespacedFilters('movements');
+  const currentPage = +filters.page || 1;
+
   const { data, isLoading, error } = useFindAllFromProperty(propertyId, {
-    page,
+    page: currentPage,
     limit: PAGE_SIZE,
   });
   const { isOpen, open, close } = useDisclosure();
@@ -59,9 +62,9 @@ export const PropertyMovementsList: FC<Props> = ({ propertyId }) => {
           error={error?.message}
           data={data?.data ?? []}
           pagination={{
-            page,
+            page: currentPage,
             totalPages: data?.pagination.total_pages ?? 1,
-            onPageChange: setPage,
+            onPageChange: page => addFilter('page', page),
           }}
           columns={[
             {
