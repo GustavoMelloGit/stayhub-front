@@ -99,18 +99,20 @@ export function DataTableMobile<T extends JsonDataTableRow>({
                 />
               )}
             </CardHeader>
-            <CardContent className='space-y-1'>
+            <CardContent className='divide-y divide-border pb-2'>
               {restColumns.map(column => (
                 <div
                   key={column.accessorKey}
                   {...column.cell}
                   className={cn(
-                    'flex items-center justify-between gap-1 flex-wrap',
+                    'flex items-center justify-between gap-2 flex-wrap py-2',
                     column.cell?.className
                   )}
                 >
-                  <span className='font-medium'>{column.header}:</span>
-                  {column.render(row)}
+                  <span className='text-sm text-muted-foreground'>
+                    {column.header}
+                  </span>
+                  <span className='font-medium'>{column.render(row)}</span>
                 </div>
               ))}
             </CardContent>
