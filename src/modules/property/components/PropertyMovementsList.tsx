@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { useFindAllFromProperty } from '@/modules/finance/service/FinanceService.hooks';
 import {
   Card,
@@ -27,8 +27,14 @@ type Props = {
   propertyId: string;
 };
 
+const PAGE_SIZE = 10;
+
 export const PropertyMovementsList: FC<Props> = ({ propertyId }) => {
-  const { data, isLoading, error } = useFindAllFromProperty(propertyId);
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error } = useFindAllFromProperty(propertyId, {
+    page,
+    limit: PAGE_SIZE,
+  });
   const { isOpen, open, close } = useDisclosure();
 
   return (
@@ -52,6 +58,11 @@ export const PropertyMovementsList: FC<Props> = ({ propertyId }) => {
           isLoading={isLoading}
           error={error?.message}
           data={data?.data ?? []}
+          pagination={{
+            page,
+            totalPages: data?.pagination.total_pages ?? 1,
+            onPageChange: setPage,
+          }}
           columns={[
             {
               header: 'Descrição',

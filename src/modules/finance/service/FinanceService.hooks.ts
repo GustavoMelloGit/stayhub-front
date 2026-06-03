@@ -5,11 +5,16 @@ import {
 } from '@tanstack/react-query';
 import { FinanceService } from './FinanceService';
 import type { RecordExpenseDto, RecordRevenueDto } from './FinanceService.dto';
+import type { PaginationParams } from '@/types/api';
 
-export const useFindAllFromProperty = (propertyId: string) => {
+export const useFindAllFromProperty = (
+  propertyId: string,
+  pagination?: Partial<PaginationParams>
+) => {
   return useQuery({
-    queryKey: ['finance-movements', propertyId],
-    queryFn: () => FinanceService.findAllFromProperty(propertyId),
+    queryKey: ['finance-movements', propertyId, pagination],
+    queryFn: () => FinanceService.findAllFromProperty(propertyId, pagination),
+    staleTime: 5 * 60 * 1000,
   });
 };
 
