@@ -1,4 +1,9 @@
 import type { PaginatedResponse, PaginationParams } from '@/types/api';
+
+export type FindMovementsParams = Partial<PaginationParams> & {
+  start_date?: string;
+  end_date?: string;
+};
 import { financeMovementSchema, type FinanceMovement } from '../types/Movement';
 import api from '@/lib/api';
 import {
@@ -12,7 +17,7 @@ import { buildUrlWithParams } from '@/lib/utils';
 export class FinanceService {
   static async findAllFromProperty(
     propertyId: string,
-    filter?: Partial<PaginationParams>
+    filter?: FindMovementsParams
   ): Promise<PaginatedResponse<FinanceMovement>> {
     const url = buildUrlWithParams(
       `/finance/properties/${propertyId}/movements`,
