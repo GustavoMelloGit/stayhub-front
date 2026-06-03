@@ -18,6 +18,7 @@ import { useDisclosure } from '@/hooks/useDisclosure';
 import { useNamespacedFilters } from '@/hooks/useNamespacedFilters';
 import { useDebounce } from '@/hooks/useDebounce';
 import { CalendarIcon, Plus, X } from 'lucide-react';
+import { capitalize } from '@/lib/string';
 
 const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat('pt-BR', {
@@ -152,7 +153,7 @@ export const PropertyMovementsList: FC<Props> = ({ propertyId }) => {
             {
               header: 'Categoria',
               accessorKey: 'category',
-              render: (row: FinanceMovement) => row.category,
+              render: (row: FinanceMovement) => capitalize(row.category),
             },
             {
               header: 'Valor',
