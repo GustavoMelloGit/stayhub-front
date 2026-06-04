@@ -11,31 +11,15 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { Currency } from '@/lib/currency';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useUserProperties } from '../service/PropertyService.hooks';
 
-// --- MOCK DATA (remover quando integrar com o backend) ---
-const MOCK_PROPERTIES = [
-  {
-    id: '1',
-    name: 'Apto Centro SP',
-    address: { city: 'São Paulo', state: 'SP' },
-  },
-  {
-    id: '2',
-    name: 'Casa Praia Floripa',
-    address: { city: 'Florianópolis', state: 'SC' },
-  },
-  {
-    id: '3',
-    name: 'Chalé Campos do Jordão',
-    address: { city: 'Campos do Jordão', state: 'SP' },
-  },
-];
-
+// --- MOCK DATA — remover após integrar /dashboard/overview ---
 const MOCK_UPCOMING_STAYS = [
   {
     id: 's1',
@@ -67,8 +51,8 @@ const MOCK_UPCOMING_STAYS = [
   },
 ];
 
+// activeStays, upcomingCheckIns e monthlyRevenue: aguardando GET /dashboard/overview
 const MOCK_KPIS = {
-  totalProperties: MOCK_PROPERTIES.length,
   activeStays: 1,
   upcomingCheckIns: 3,
   monthlyRevenue: 847500,
@@ -133,7 +117,7 @@ const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
 );
 
 const DashboardView: FC = () => {
-  const properties = MOCK_PROPERTIES;
+  const { properties, isLoading: propertiesLoading } = useUserProperties();
   const upcomingStays = MOCK_UPCOMING_STAYS;
   const kpis = MOCK_KPIS;
   const today = new Date();
@@ -161,7 +145,7 @@ const DashboardView: FC = () => {
         <div className='grid grid-cols-2 gap-3 lg:grid-cols-4'>
           <KpiCard
             title='Propriedades'
-            value={kpis.totalProperties.toString()}
+            value={propertiesLoading ? '—' : properties.length.toString()}
             icon={Building2}
             cardClass='bg-gradient-to-br from-teal-500 to-teal-700'
           />
@@ -242,38 +226,54 @@ const DashboardView: FC = () => {
               </Link>
             </CardHeader>
             <CardContent className='space-y-2'>
-              {properties.map((p, i) => (
-                <Link
-                  key={p.id}
-                  to={ROUTES.property(p.id)}
-                  className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3 text-sm transition-all duration-150 hover:border-border/70 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
-                  aria-label={`Ver detalhes de ${p.name}`}
-                >
-                  <div
-                    className={cn(
-                      'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
-                      PROPERTY_ICON_STYLES[i % PROPERTY_ICON_STYLES.length]
-                    )}
-                  >
-                    <Building2 className='h-4 w-4' aria-hidden='true' />
-                  </div>
-                  <div className='min-w-0 flex-1'>
-                    <p className='truncate font-medium text-foreground'>
-                      {p.name}
-                    </p>
-                    <div className='flex items-center gap-1 text-xs text-muted-foreground'>
-                      <MapPin className='h-3 w-3 shrink-0' aria-hidden='true' />
-                      <span className='truncate'>
-                        {p.address.city}, {p.address.state}
-                      </span>
+              {propertiesLoading
+                ? Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3'
+                    >
+                      <Skeleton className='h-9 w-9 shrink-0 rounded-lg' />
+                      <div className='flex-1 space-y-1.5'>
+                        <Skeleton className='h-3.5 w-36 rounded' />
+                        <Skeleton className='h-3 w-24 rounded' />
+                      </div>
                     </div>
-                  </div>
-                  <ChevronRight
-                    className='h-4 w-4 shrink-0 text-muted-foreground/40'
-                    aria-hidden='true'
-                  />
-                </Link>
-              ))}
+                  ))
+                : properties.map((p, i) => (
+                    <Link
+                      key={p.id}
+                      to={ROUTES.property(p.id)}
+                      className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3 text-sm transition-all duration-150 hover:border-border/70 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+                      aria-label={`Ver detalhes de ${p.name}`}
+                    >
+                      <div
+                        className={cn(
+                          'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
+                          PROPERTY_ICON_STYLES[i % PROPERTY_ICON_STYLES.length]
+                        )}
+                      >
+                        <Building2 className='h-4 w-4' aria-hidden='true' />
+                      </div>
+                      <div className='min-w-0 flex-1'>
+                        <p className='truncate font-medium text-foreground'>
+                          {p.name}
+                        </p>
+                        <div className='flex items-center gap-1 text-xs text-muted-foreground'>
+                          <MapPin
+                            className='h-3 w-3 shrink-0'
+                            aria-hidden='true'
+                          />
+                          <span className='truncate'>
+                            {p.address.city}, {p.address.state}
+                          </span>
+                        </div>
+                      </div>
+                      <ChevronRight
+                        className='h-4 w-4 shrink-0 text-muted-foreground/40'
+                        aria-hidden='true'
+                      />
+                    </Link>
+                  ))}
             </CardContent>
           </Card>
         </div>
