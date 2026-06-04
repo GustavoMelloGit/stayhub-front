@@ -94,22 +94,24 @@ type KpiCardProps = {
 const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
   <div
     className={cn(
-      'relative overflow-hidden rounded-2xl p-6 transition-all duration-200 hover:-translate-y-1 hover:brightness-110',
+      'relative overflow-hidden rounded-2xl p-4 sm:p-6 transition-all duration-200 hover:-translate-y-1 hover:brightness-110',
       cardClass
     )}
   >
     {/* Ícone decorativo de fundo */}
     <Icon
-      className='absolute -right-3 -bottom-2 h-28 w-28 text-white/10'
+      className='absolute -right-2 -bottom-1 h-20 w-20 sm:h-28 sm:w-28 text-white/10'
       aria-hidden='true'
     />
     {/* Ícone funcional */}
-    <div className='flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
-      <Icon className='h-5 w-5 text-white' aria-hidden='true' />
+    <div className='flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
+      <Icon className='h-4 w-4 sm:h-5 sm:w-5 text-white' aria-hidden='true' />
     </div>
-    <div className='relative mt-5'>
-      <p className='text-3xl font-bold tracking-tight text-white'>{value}</p>
-      <p className='mt-1 text-xs font-semibold uppercase tracking-widest text-white/60'>
+    <div className='relative mt-4 sm:mt-5'>
+      <p className='text-xl sm:text-3xl font-bold leading-tight tracking-tight text-white'>
+        {value}
+      </p>
+      <p className='mt-1 text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/60'>
         {title}
       </p>
     </div>
