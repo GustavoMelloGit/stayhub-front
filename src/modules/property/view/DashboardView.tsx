@@ -94,24 +94,24 @@ type KpiCardProps = {
 const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
   <div
     className={cn(
-      'relative overflow-hidden rounded-2xl p-4 sm:p-6 transition-all duration-200 hover:-translate-y-1 hover:brightness-110',
+      'relative overflow-hidden rounded-2xl p-4 xl:p-6 transition-all duration-200 hover:-translate-y-1 hover:brightness-110',
       cardClass
     )}
   >
     {/* Ícone decorativo de fundo */}
     <Icon
-      className='absolute -right-2 -bottom-1 h-20 w-20 sm:h-28 sm:w-28 text-white/10'
+      className='absolute -right-2 -bottom-1 h-20 w-20 xl:h-28 xl:w-28 text-white/10'
       aria-hidden='true'
     />
     {/* Ícone funcional */}
-    <div className='flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
-      <Icon className='h-4 w-4 sm:h-5 sm:w-5 text-white' aria-hidden='true' />
+    <div className='flex h-9 w-9 xl:h-11 xl:w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
+      <Icon className='h-4 w-4 xl:h-5 xl:w-5 text-white' aria-hidden='true' />
     </div>
-    <div className='relative mt-4 sm:mt-5'>
-      <p className='text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl'>
+    <div className='relative mt-4'>
+      <p className='text-lg sm:text-2xl lg:text-lg xl:text-2xl font-bold leading-tight tracking-tight text-white'>
         {value}
       </p>
-      <p className='mt-1 text-[10px] font-semibold uppercase tracking-widest text-white/60 sm:text-xs'>
+      <p className='mt-1 text-[10px] font-semibold uppercase tracking-widest text-white/60 xl:text-xs'>
         {title}
       </p>
     </div>
@@ -143,8 +143,8 @@ const DashboardView: FC = () => {
           </p>
         </div>
 
-        {/* KPIs — grid-cols-2 no mobile; auto-fill com mínimo de 200px acima de sm */}
-        <div className='grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]'>
+        {/* KPIs */}
+        <div className='grid grid-cols-2 gap-3 lg:grid-cols-4'>
           <KpiCard
             title='Propriedades'
             value={propertiesLoading ? '—' : properties.length.toString()}
