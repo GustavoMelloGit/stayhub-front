@@ -1,5 +1,5 @@
-import { type FC, type ElementType } from 'react';
-import { format } from 'date-fns';
+import { type FC, type ElementType, useState } from 'react';
+import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import {
   Building2,
@@ -8,15 +8,24 @@ import {
   TrendingUp,
   ChevronRight,
   MapPin,
+  CalendarIcon,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Page } from '@/components/layout/Page';
 import { ROUTES } from '@/routes/routes';
 import { Currency } from '@/lib/currency';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useFilters } from '@/hooks/useFilters';
 import { useUserProperties } from '../service/PropertyService.hooks';
 
 // --- MOCK DATA — remover após integrar /dashboard/overview ---
@@ -119,28 +128,60 @@ const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
 );
 
 const DashboardView: FC = () => {
+  const { filters, addFilter } = useFilters();
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
+  const todayStr = format(new Date(), 'yyyy-MM-dd');
+  const dateStr =
+    typeof filters.dashboard_date === 'string'
+      ? filters.dashboard_date
+      : todayStr;
+  const selectedDate = parseISO(dateStr);
+
   const { properties, isLoading: propertiesLoading } = useUserProperties();
   const upcomingStays = MOCK_UPCOMING_STAYS;
   const kpis = MOCK_KPIS;
-  const today = new Date();
 
   return (
     <Page.Container>
       <Page.Topbar nav={[{ label: 'Dashboard' }]} />
       <Page.Content>
-        {/* Cabeçalho com data */}
-        <div className='flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between'>
+        {/* Cabeçalho com date picker */}
+        <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
           <div>
             <h1 className='text-2xl font-bold text-foreground'>Dashboard</h1>
             <p className='mt-1 text-sm text-muted-foreground'>
               Visão geral das suas propriedades
             </p>
           </div>
-          <p className='text-sm text-muted-foreground'>
-            {format(today, "EEEE, d 'de' MMMM 'de' yyyy", {
-              locale: ptBR,
-            }).replace(/^\w/, c => c.toUpperCase())}
-          </p>
+          <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant='outline'
+                className='w-full justify-start gap-2 sm:w-auto'
+              >
+                <CalendarIcon className='h-4 w-4 shrink-0 text-muted-foreground' />
+                <span>
+                  {format(selectedDate, "d 'de' MMMM 'de' yyyy", {
+                    locale: ptBR,
+                  }).replace(/^\w/, c => c.toUpperCase())}
+                </span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className='w-auto p-0' align='end'>
+              <Calendar
+                mode='single'
+                selected={selectedDate}
+                onSelect={date => {
+                  if (date) {
+                    addFilter('dashboard_date', format(date, 'yyyy-MM-dd'));
+                  }
+                  setCalendarOpen(false);
+                }}
+                locale={ptBR}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* KPIs */}
