@@ -21,6 +21,9 @@ export const LazyNotFoundView = lazy(() =>
     default: module.NotFoundView,
   }))
 );
+export const LazyDashboardView = lazy(
+  () => import('@/modules/property/view/DashboardView')
+);
 export const LazyPropertyListView = lazy(
   () => import('@/modules/property/view/PropertyListView')
 );

@@ -16,7 +16,12 @@ const PropertyListView: FC = () => {
   if (isLoading) {
     return (
       <Page.Container>
-        <Page.Topbar nav={[{ label: 'Minhas Propriedades' }]} />
+        <Page.Topbar
+          nav={[
+            { label: 'Dashboard', to: ROUTES.home },
+            { label: 'Propriedades' },
+          ]}
+        />
         <Page.Header
           title='Minhas Propriedades'
           description='Gerencie suas propriedades e visualize informações importantes'
@@ -51,7 +56,12 @@ const PropertyListView: FC = () => {
 
   return (
     <Page.Container>
-      <Page.Topbar nav={[{ label: 'Minhas Propriedades' }]} />
+      <Page.Topbar
+        nav={[
+          { label: 'Dashboard', to: ROUTES.home },
+          { label: 'Propriedades' },
+        ]}
+      />
       <Page.Header
         title='Minhas Propriedades'
         description='Gerencie suas propriedades e visualize informações importantes'

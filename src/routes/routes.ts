@@ -5,6 +5,7 @@ export const ROUTES = {
   login: '/login',
   signup: '/signup',
   home: '/',
+  properties: '/properties',
   property: (property_id: string) => `/property/${property_id}`,
   reconcileStays: '/reconcile-stays',
   createProperty: '/property/new',

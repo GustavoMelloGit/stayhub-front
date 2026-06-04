@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Building2, Calendar, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, Building2, RefreshCw } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -16,21 +16,32 @@ import {
 import { ROUTES } from '@/routes/routes';
 import { SidebarUser } from './SidebarUser';
 
-const navigationItems = [
+type NavItem = {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+  isActive: (pathname: string) => boolean;
+};
+
+const navigationItems: NavItem[] = [
   {
     title: 'Dashboard',
     url: ROUTES.home,
-    icon: Home,
+    icon: LayoutDashboard,
+    isActive: pathname => pathname === ROUTES.home,
+  },
+  {
+    title: 'Propriedades',
+    url: ROUTES.properties,
+    icon: Building2,
+    isActive: pathname =>
+      pathname === ROUTES.properties || pathname.startsWith('/property/'),
   },
   {
     title: 'Reconciliar Estadias',
     url: ROUTES.reconcileStays,
     icon: RefreshCw,
-  },
-  {
-    title: 'Calendário',
-    url: '/calendar',
-    icon: Calendar,
+    isActive: pathname => pathname === ROUTES.reconcileStays,
   },
 ];
 
@@ -60,14 +71,12 @@ export const AppSidebar: FC = () => {
             <SidebarMenu>
               {navigationItems.map(item => {
                 const Icon = item.icon;
-                const isActive =
-                  location.pathname === item.url ||
-                  (item.url.includes(':property_id') &&
-                    location.pathname.startsWith('/property/'));
-
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={isActive}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={item.isActive(location.pathname)}
+                    >
                       <Link to={item.url}>
                         <Icon className='h-4 w-4' />
                         <span>{item.title}</span>

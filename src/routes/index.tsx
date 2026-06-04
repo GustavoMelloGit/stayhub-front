@@ -9,6 +9,7 @@ import {
   LazyStayInstructionsView,
   LazyStayDetailView,
   LazyNotFoundView,
+  LazyDashboardView,
   LazyPropertyListView,
   LazyPropertyDetailView,
   LazyReconcileStaysView,
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <LazyDashboardView />,
+      },
+      {
+        path: ROUTES.properties,
         element: <LazyPropertyListView />,
       },
       {
