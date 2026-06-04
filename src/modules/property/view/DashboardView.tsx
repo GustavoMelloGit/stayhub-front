@@ -108,10 +108,10 @@ const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
       <Icon className='h-4 w-4 sm:h-5 sm:w-5 text-white' aria-hidden='true' />
     </div>
     <div className='relative mt-4 sm:mt-5'>
-      <p className='text-xl sm:text-3xl font-bold leading-tight tracking-tight text-white'>
+      <p className='text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl'>
         {value}
       </p>
-      <p className='mt-1 text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/60'>
+      <p className='mt-1 text-[10px] font-semibold uppercase tracking-widest text-white/60 sm:text-xs'>
         {title}
       </p>
     </div>
@@ -143,8 +143,8 @@ const DashboardView: FC = () => {
           </p>
         </div>
 
-        {/* KPIs */}
-        <div className='grid grid-cols-2 gap-3 lg:grid-cols-4'>
+        {/* KPIs — grid-cols-2 no mobile; auto-fill com mínimo de 200px acima de sm */}
+        <div className='grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]'>
           <KpiCard
             title='Propriedades'
             value={propertiesLoading ? '—' : properties.length.toString()}
