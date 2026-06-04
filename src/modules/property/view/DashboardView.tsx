@@ -258,15 +258,17 @@ const DashboardView: FC = () => {
                         <p className='truncate font-medium text-foreground'>
                           {p.name}
                         </p>
-                        <div className='flex items-center gap-1 text-xs text-muted-foreground'>
-                          <MapPin
-                            className='h-3 w-3 shrink-0'
-                            aria-hidden='true'
-                          />
-                          <span className='truncate'>
-                            {p.address.city}, {p.address.state}
-                          </span>
-                        </div>
+                        {p.address && (
+                          <div className='flex items-center gap-1 text-xs text-muted-foreground'>
+                            <MapPin
+                              className='h-3 w-3 shrink-0'
+                              aria-hidden='true'
+                            />
+                            <span className='truncate'>
+                              {p.address.city}, {p.address.state}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <ChevronRight
                         className='h-4 w-4 shrink-0 text-muted-foreground/40'
