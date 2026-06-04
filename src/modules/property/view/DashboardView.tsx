@@ -104,36 +104,30 @@ type KpiCardProps = {
   title: string;
   value: string;
   icon: ElementType;
-  gradientClass: string;
-  iconBgClass: string;
-  iconColorClass: string;
+  cardClass: string;
 };
 
-const KpiCard: FC<KpiCardProps> = ({
-  title,
-  value,
-  icon: Icon,
-  gradientClass,
-  iconBgClass,
-  iconColorClass,
-}) => (
+const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
   <div
     className={cn(
-      'relative overflow-hidden rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl',
-      gradientClass
+      'relative overflow-hidden rounded-2xl p-6 transition-all duration-200 hover:-translate-y-1 hover:brightness-110',
+      cardClass
     )}
   >
-    <div
-      className={cn(
-        'flex h-10 w-10 items-center justify-center rounded-lg',
-        iconBgClass
-      )}
-    >
-      <Icon className={cn('h-5 w-5', iconColorClass)} aria-hidden='true' />
+    {/* Ícone decorativo de fundo */}
+    <Icon
+      className='absolute -right-3 -bottom-2 h-28 w-28 text-white/10'
+      aria-hidden='true'
+    />
+    {/* Ícone funcional */}
+    <div className='flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
+      <Icon className='h-5 w-5 text-white' aria-hidden='true' />
     </div>
-    <div className='mt-4'>
-      <p className='text-2xl font-bold tracking-tight text-white'>{value}</p>
-      <p className='mt-0.5 text-sm text-white/60'>{title}</p>
+    <div className='relative mt-5'>
+      <p className='text-3xl font-bold tracking-tight text-white'>{value}</p>
+      <p className='mt-1 text-xs font-semibold uppercase tracking-widest text-white/60'>
+        {title}
+      </p>
     </div>
   </div>
 );
@@ -169,33 +163,25 @@ const DashboardView: FC = () => {
             title='Propriedades'
             value={kpis.totalProperties.toString()}
             icon={Building2}
-            gradientClass='bg-gradient-to-br from-teal-900/90 to-teal-800/40 border-teal-700/40'
-            iconBgClass='bg-teal-500/20'
-            iconColorClass='text-teal-400'
+            cardClass='bg-gradient-to-br from-teal-500 to-teal-700'
           />
           <KpiCard
             title='Ocupadas hoje'
             value={kpis.activeStays.toString()}
             icon={Users}
-            gradientClass='bg-gradient-to-br from-sky-900/90 to-sky-800/40 border-sky-700/40'
-            iconBgClass='bg-sky-500/20'
-            iconColorClass='text-sky-400'
+            cardClass='bg-gradient-to-br from-sky-500 to-sky-700'
           />
           <KpiCard
             title='Check-ins em 7 dias'
             value={kpis.upcomingCheckIns.toString()}
             icon={CalendarCheck}
-            gradientClass='bg-gradient-to-br from-amber-900/90 to-amber-800/40 border-amber-700/40'
-            iconBgClass='bg-amber-500/20'
-            iconColorClass='text-amber-400'
+            cardClass='bg-gradient-to-br from-amber-400 to-orange-600'
           />
           <KpiCard
             title='Receita do mês'
             value={Currency.format(kpis.monthlyRevenue)}
             icon={TrendingUp}
-            gradientClass='bg-gradient-to-br from-emerald-900/90 to-emerald-800/40 border-emerald-700/40'
-            iconBgClass='bg-emerald-500/20'
-            iconColorClass='text-emerald-400'
+            cardClass='bg-gradient-to-br from-emerald-500 to-emerald-700'
           />
         </div>
 
