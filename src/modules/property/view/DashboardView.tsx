@@ -27,46 +27,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useFilters } from '@/hooks/useFilters';
 import { useUserProperties } from '../service/PropertyService.hooks';
-
-// --- MOCK DATA — remover após integrar /dashboard/overview ---
-const MOCK_UPCOMING_STAYS = [
-  {
-    id: 's1',
-    propertyId: '1',
-    propertyName: 'Apto Centro SP',
-    tenant: { name: 'Carlos Mendes' },
-    check_in: new Date(2026, 5, 7),
-  },
-  {
-    id: 's2',
-    propertyId: '2',
-    propertyName: 'Casa Praia Floripa',
-    tenant: { name: 'Ana Paula Souza' },
-    check_in: new Date(2026, 5, 10),
-  },
-  {
-    id: 's3',
-    propertyId: '1',
-    propertyName: 'Apto Centro SP',
-    tenant: { name: 'Roberto Lima' },
-    check_in: new Date(2026, 5, 14),
-  },
-  {
-    id: 's4',
-    propertyId: '3',
-    propertyName: 'Chalé Campos do Jordão',
-    tenant: { name: 'Fernanda Costa' },
-    check_in: new Date(2026, 5, 18),
-  },
-];
-
-// activeStays, upcomingCheckIns e monthlyRevenue: aguardando GET /dashboard/overview
-const MOCK_KPIS = {
-  activeStays: 1,
-  upcomingCheckIns: 3,
-  monthlyRevenue: 847500,
-};
-// --- FIM MOCK DATA ---
+import { useDashboardOverview } from '../service/DashboardService.hooks';
 
 const AVATAR_COLORS = [
   'bg-teal-500/20 text-teal-300',
@@ -107,12 +68,10 @@ const KpiCard: FC<KpiCardProps> = ({ title, value, icon: Icon, cardClass }) => (
       cardClass
     )}
   >
-    {/* Ícone decorativo de fundo */}
     <Icon
       className='absolute -right-2 -bottom-1 h-20 w-20 xl:h-28 xl:w-28 text-white/10'
       aria-hidden='true'
     />
-    {/* Ícone funcional */}
     <div className='flex h-9 w-9 xl:h-11 xl:w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm'>
       <Icon className='h-4 w-4 xl:h-5 xl:w-5 text-white' aria-hidden='true' />
     </div>
@@ -139,8 +98,8 @@ const DashboardView: FC = () => {
   const selectedDate = parseISO(dateStr);
 
   const { properties, isLoading: propertiesLoading } = useUserProperties();
-  const upcomingStays = MOCK_UPCOMING_STAYS;
-  const kpis = MOCK_KPIS;
+  const { overview, isLoading: overviewLoading } =
+    useDashboardOverview(dateStr);
 
   return (
     <Page.Container>
@@ -194,19 +153,31 @@ const DashboardView: FC = () => {
           />
           <KpiCard
             title='Ocupadas hoje'
-            value={kpis.activeStays.toString()}
+            value={
+              overviewLoading
+                ? '—'
+                : (overview?.kpis.active_stays ?? 0).toString()
+            }
             icon={Users}
             cardClass='bg-gradient-to-br from-sky-500 to-sky-700'
           />
           <KpiCard
             title='Check-ins em 7 dias'
-            value={kpis.upcomingCheckIns.toString()}
+            value={
+              overviewLoading
+                ? '—'
+                : (overview?.kpis.upcoming_check_ins ?? 0).toString()
+            }
             icon={CalendarCheck}
             cardClass='bg-gradient-to-br from-amber-400 to-orange-600'
           />
           <KpiCard
             title='Receita do mês'
-            value={Currency.format(kpis.monthlyRevenue)}
+            value={
+              overviewLoading
+                ? '—'
+                : Currency.format(overview?.kpis.monthly_revenue ?? 0)
+            }
             icon={TrendingUp}
             cardClass='bg-gradient-to-br from-emerald-500 to-emerald-700'
           />
@@ -221,38 +192,52 @@ const DashboardView: FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className='space-y-2'>
-              {upcomingStays.map(stay => (
-                <Link
-                  key={stay.id}
-                  to={ROUTES.property(stay.propertyId)}
-                  className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3 text-sm transition-all duration-150 hover:border-border/70 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
-                  aria-label={`Ver estadia em ${stay.propertyName} para ${stay.tenant.name}`}
-                >
-                  <div
-                    className={cn(
-                      'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
-                      getAvatarColor(stay.tenant.name)
-                    )}
-                  >
-                    {getInitials(stay.tenant.name)}
-                  </div>
-                  <div className='min-w-0 flex-1'>
-                    <p className='truncate font-medium text-foreground'>
-                      {stay.tenant.name}
-                    </p>
-                    <p className='truncate text-xs text-muted-foreground'>
-                      {stay.propertyName}
-                    </p>
-                  </div>
-                  <span className='shrink-0 rounded-md bg-primary/15 px-2 py-0.5 text-xs font-medium text-primary'>
-                    {format(stay.check_in, "d 'de' MMM", { locale: ptBR })}
-                  </span>
-                  <ChevronRight
-                    className='h-4 w-4 shrink-0 text-muted-foreground/40'
-                    aria-hidden='true'
-                  />
-                </Link>
-              ))}
+              {overviewLoading
+                ? Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3'
+                    >
+                      <Skeleton className='h-9 w-9 shrink-0 rounded-full' />
+                      <div className='flex-1 space-y-1.5'>
+                        <Skeleton className='h-3.5 w-32 rounded' />
+                        <Skeleton className='h-3 w-24 rounded' />
+                      </div>
+                      <Skeleton className='h-5 w-16 rounded-md' />
+                    </div>
+                  ))
+                : (overview?.upcoming_stays ?? []).map(stay => (
+                    <Link
+                      key={stay.id}
+                      to={ROUTES.property(stay.property_id)}
+                      className='flex items-center gap-3 rounded-lg border border-border/40 bg-muted/20 p-3 text-sm transition-all duration-150 hover:border-border/70 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+                      aria-label={`Ver estadia em ${stay.property_name} para ${stay.tenant.name}`}
+                    >
+                      <div
+                        className={cn(
+                          'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
+                          getAvatarColor(stay.tenant.name)
+                        )}
+                      >
+                        {getInitials(stay.tenant.name)}
+                      </div>
+                      <div className='min-w-0 flex-1'>
+                        <p className='truncate font-medium text-foreground'>
+                          {stay.tenant.name}
+                        </p>
+                        <p className='truncate text-xs text-muted-foreground'>
+                          {stay.property_name}
+                        </p>
+                      </div>
+                      <span className='shrink-0 rounded-md bg-primary/15 px-2 py-0.5 text-xs font-medium text-primary'>
+                        {format(stay.check_in, "d 'de' MMM", { locale: ptBR })}
+                      </span>
+                      <ChevronRight
+                        className='h-4 w-4 shrink-0 text-muted-foreground/40'
+                        aria-hidden='true'
+                      />
+                    </Link>
+                  ))}
             </CardContent>
           </Card>
 
