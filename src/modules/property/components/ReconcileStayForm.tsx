@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import TenantCombobox from './TenantCombobox';
 import {
   Select,
   SelectContent,
@@ -219,9 +220,17 @@ const ReconcileStayForm: FC<Props> = ({ externalStay, goBack }) => {
                     <FormItem>
                       <FormLabel>Nome do Hóspede</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder='Digite o nome do hóspede'
-                          {...field}
+                        <TenantCombobox
+                          value={field.value}
+                          onInputChange={field.onChange}
+                          onTenantSelect={tenant => {
+                            form.setValue('tenant_name', tenant.name);
+                            form.setValue(
+                              'tenant_phone',
+                              Phone.toHumanReadable(tenant.phone)
+                            );
+                            form.setValue('tenant_sex', tenant.sex);
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
