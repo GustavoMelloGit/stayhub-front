@@ -1,5 +1,5 @@
 import { useState, useMemo, type FC } from 'react';
-import { format, addMonths } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { usePropertyStays } from '../service/PropertyService.hooks';
 import {
   Card,
@@ -59,7 +59,7 @@ export const PropertyStaysList: FC<Props> = ({ propertyId }) => {
     const today = new Date();
     return {
       from: format(today, 'yyyy-MM-dd'),
-      to: format(addMonths(today, 1), 'yyyy-MM-dd'),
+      to: format(addDays(today, 30), 'yyyy-MM-dd'),
     };
   }, []);
 
