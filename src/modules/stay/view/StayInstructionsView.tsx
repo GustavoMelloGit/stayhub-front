@@ -24,7 +24,95 @@ export const StayInstructionsView: FC = () => {
   const { stay_id } = useParams<{ stay_id: string }>();
   const { data: stay, isPending } = useGetPublicStay(stay_id || '');
 
-  if (!stay || isPending) return <div>Carregando...</div>;
+  if (isPending || !stay) {
+    return (
+      <div className='bg-[#fbf4ed] min-h-screen'>
+        <div className='max-w-[40rem] mx-auto space-y-4 leading-none animate-pulse'>
+          <div className='aspect-[764/429] w-full sm:rounded-2xl bg-neutral-400/25' />
+          <div className='px-4 pb-10 space-y-4'>
+            <div className='space-y-2'>
+              <div className='h-6 w-52 bg-neutral-400/25 rounded-md' />
+              <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+              <div className='h-4 w-3/4 bg-neutral-400/25 rounded-md' />
+            </div>
+            <div className='space-y-3'>
+              <section className='space-y-2'>
+                <div className='h-3.5 w-32 bg-neutral-400/25 rounded-md' />
+                <div className='flex gap-2'>
+                  <div className='size-5 shrink-0 bg-neutral-400/25 rounded' />
+                  <div className='flex-1 space-y-1.5'>
+                    <div className='h-4 w-20 bg-neutral-400/25 rounded-md' />
+                    <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+                    <div className='h-4 w-2/3 bg-neutral-400/25 rounded-md' />
+                  </div>
+                </div>
+                <div className='h-10 w-full bg-neutral-400/25 rounded-sm' />
+              </section>
+              <div className='h-px bg-neutral-400/25' />
+              <section className='space-y-2'>
+                <div className='h-3.5 w-44 bg-neutral-400/25 rounded-md' />
+                <div className='grid grid-cols-2 rounded-lg ring ring-neutral-400/20'>
+                  {[0, 1, 2, 3].map(i => (
+                    <div
+                      key={i}
+                      className={[
+                        'p-2 space-y-1.5',
+                        i < 2 ? 'border-b border-neutral-400/20' : '',
+                        i % 2 === 0 ? 'border-r border-neutral-400/20' : '',
+                      ].join(' ')}
+                    >
+                      <div className='h-3 w-16 bg-neutral-400/25 rounded-md' />
+                      <div className='h-4 w-24 bg-neutral-400/25 rounded-md' />
+                    </div>
+                  ))}
+                </div>
+                <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-5/6 bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-2/3 bg-neutral-400/25 rounded-md' />
+              </section>
+              <div className='h-px bg-neutral-400/25' />
+              <section className='space-y-2'>
+                <div className='h-3.5 w-16 bg-neutral-400/25 rounded-md' />
+                <div className='grid grid-cols-2 rounded-lg ring ring-neutral-400/20'>
+                  {[0, 1].map(i => (
+                    <div
+                      key={i}
+                      className={[
+                        'p-2 space-y-1.5',
+                        i === 0 ? 'border-r border-neutral-400/20' : '',
+                      ].join(' ')}
+                    >
+                      <div className='h-3 w-16 bg-neutral-400/25 rounded-md' />
+                      <div className='h-4 w-20 bg-neutral-400/25 rounded-md' />
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <div className='h-px bg-neutral-400/25' />
+              <section className='space-y-2'>
+                <div className='h-3.5 w-36 bg-neutral-400/25 rounded-md' />
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className='flex gap-2'>
+                    <div className='size-5 shrink-0 bg-neutral-400/25 rounded' />
+                    <div className='h-4 flex-1 bg-neutral-400/25 rounded-md' />
+                  </div>
+                ))}
+              </section>
+              <div className='h-px bg-neutral-400/25' />
+              <section className='space-y-2'>
+                <div className='h-3.5 w-48 bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-4/5 bg-neutral-400/25 rounded-md' />
+                <div className='h-4 w-full bg-neutral-400/25 rounded-md' />
+                <div className='aspect-video w-full bg-neutral-400/25 rounded-md' />
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const checkInDate = dateFormatter.format(stay.check_in);
   const checkOutDate = dateFormatter.format(stay.check_out);
