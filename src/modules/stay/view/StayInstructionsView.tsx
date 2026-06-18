@@ -28,7 +28,14 @@ export const StayInstructionsView: FC = () => {
     return (
       <div className='bg-[#fbf4ed] min-h-screen'>
         <div className='max-w-[40rem] mx-auto space-y-4 leading-none animate-pulse'>
-          <div className='aspect-[764/429] w-full sm:rounded-2xl bg-neutral-400/25' />
+          <img
+            src='/stay-image.jpeg'
+            alt='apartamento 201 - Praia dos Castelhanos'
+            className='sm:rounded-2xl'
+            width={764}
+            height={429}
+            loading='eager'
+          />
           <div className='px-4 pb-10 space-y-4'>
             <div className='space-y-2'>
               <div className='h-6 w-52 bg-neutral-400/25 rounded-md' />
