@@ -94,7 +94,7 @@ export const useLandingSeo = (language: Language) => {
       document.head.appendChild(script);
     }
     script.textContent = JSON.stringify(
-      buildStructuredData(t, siteUrl, pageUrl)
+      buildStructuredData(t, siteUrl, pageUrl, language)
     );
   }, [language, t]);
 };
