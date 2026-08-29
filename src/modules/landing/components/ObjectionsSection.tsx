@@ -5,6 +5,13 @@ import { LandingSection } from './LandingSection';
 
 const ITEMS = ['item1', 'item2', 'item3', 'item4'] as const;
 
+/**
+ * Lista editorial, não cards.
+ *
+ * Pergunta à esquerda, resposta à direita, separadas por um fio. Sem caixa em
+ * volta: a seção anterior já é uma conversa e a seguinte já é um formulário —
+ * mais uma grade de retângulos aqui deixava as três indistinguíveis ao rolar.
+ */
 export const ObjectionsSection = () => {
   const { t } = useTranslation('landing');
   const ref = useRef<HTMLDivElement>(null);
@@ -34,16 +41,22 @@ export const ObjectionsSection = () => {
       eyebrow={t('objections.eyebrow')}
       title={t('objections.title')}
     >
-      <div ref={ref} className='grid gap-5 md:grid-cols-2 md:gap-6'>
+      <div ref={ref} className='flex flex-col'>
         {ITEMS.map(item => (
           <div
             key={item}
-            className='border-lp-border bg-lp-surface rounded-2xl border p-6 md:p-7'
+            className='border-lp-border grid gap-3 border-t py-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-12 md:py-10'
           >
-            <h3 className='text-lp-text text-xl font-semibold md:text-2xl'>
+            <h3 className='text-lp-text flex gap-3 text-xl font-semibold md:text-2xl'>
+              {/* Quadradinho em vez de marcador tipográfico: ecoa a marca e
+                  evita reintroduzir travessão na página. */}
+              <span
+                aria-hidden
+                className='bg-lp-brand mt-2.5 size-2.5 shrink-0 rounded-[3px] md:mt-3'
+              />
               {t(`objections.${item}.question`)}
             </h3>
-            <p className='text-lp-muted mt-3 text-base md:text-lg'>
+            <p className='text-lp-muted text-base md:text-lg'>
               {t(`objections.${item}.answer`)}
             </p>
           </div>

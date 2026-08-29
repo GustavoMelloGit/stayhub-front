@@ -205,6 +205,17 @@
     line-height: 1.6;
   }
 
+  /* Os links do cabeçalho apontam para âncoras; sem isto o salto é seco. */
+  html:has(.landing) {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:has(.landing) {
+      scroll-behavior: auto;
+    }
+  }
+
   @media (min-width: 768px) {
     .landing {
       font-size: 1.25rem;
