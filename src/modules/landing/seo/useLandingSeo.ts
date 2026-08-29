@@ -52,7 +52,9 @@ export const useLandingSeo = (language: Language) => {
     const pageUrl = language === 'en' ? `${siteUrl}/en` : `${siteUrl}/`;
     const title = t('meta.title');
     const description = t('meta.description');
-    const ogImage = `${siteUrl}/web-app-manifest-512x512.png`;
+    // Arte dedicada em 1200x630. O ícone quadrado do PWA continua servindo o
+    // `logo` do JSON-LD, mas como card social ele vira miniatura cortada.
+    const ogImage = `${siteUrl}/og-cover.png`;
 
     document.title = title;
     document.documentElement.lang = language === 'en' ? 'en' : 'pt-BR';
@@ -73,6 +75,10 @@ export const useLandingSeo = (language: Language) => {
     setMeta('meta[name="twitter:title"]', 'content', title);
     setMeta('meta[name="twitter:description"]', 'content', description);
     setMeta('meta[name="twitter:image"]', 'content', ogImage);
+    setMeta('meta[property="og:image:width"]', 'content', '1200');
+    setMeta('meta[property="og:image:height"]', 'content', '630');
+    setMeta('meta[property="og:image:type"]', 'content', 'image/png');
+    setMeta('meta[property="og:image:alt"]', 'content', 'Sogio');
 
     setLink('canonical', pageUrl);
     setLink('alternate', `${siteUrl}/`, 'pt-BR');
