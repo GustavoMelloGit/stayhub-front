@@ -52,7 +52,7 @@ export const GuideShell = ({ children }: { children: ReactNode }) => {
             size='compact'
             className='hidden md:inline-flex'
           >
-            Entrar na lista
+            Saber meu lucro
           </LandingCta>
         </div>
       </header>

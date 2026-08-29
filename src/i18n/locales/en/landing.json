@@ -9,7 +9,7 @@
     "answers": "What it answers",
     "faq": "Questions",
     "login": "Log in",
-    "cta": "Join the list",
+    "cta": "See my profit",
     "languageGroup": "Language"
   },
   "hero": {
@@ -17,8 +17,8 @@
     "titleLine1": "You're typing a booking",
     "titleLine2": "into a spreadsheet. Again.",
     "subtitle": "Send a voice note instead. Sogio logs it, files it, and tells you what the property earned this month.",
-    "cta": "Join the first 50",
-    "ctaTrigger": "Takes 20 seconds. No card, nothing to install."
+    "cta": "Show me my profit",
+    "ctaTrigger": "Takes 20 seconds. You join the first 50 and we'll tell you when it opens."
   },
   "demo": {
     "eyebrow": "What it actually looks like",
@@ -95,7 +95,7 @@
     "disclaimer": "Nothing is charged now. You join the list and we tell you when it opens."
   },
   "form": {
-    "title": "Join the first 50",
+    "title": "Show me my profit",
     "nameLabel": "Your name",
     "namePlaceholder": "What should we call you?",
     "whatsappLabel": "Your WhatsApp",
@@ -105,9 +105,9 @@
     "count2to3": "2 to 3",
     "count4to10": "4 to 10",
     "count10plus": "10 or more",
-    "submit": "Join the first 50",
+    "submit": "Show me my profit",
     "submitting": "Sending…",
-    "trigger": "Takes 20 seconds. No card, nothing to install.",
+    "trigger": "Takes 20 seconds. You join the first 50 and we'll tell you when it opens.",
     "privacy": "We use your WhatsApp only to tell you when it opens.",
     "successTitle": "Done. You're on the list.",
     "successBody": "We'll message you on WhatsApp as soon as conversational Sogio opens. No spam, promise.",
@@ -153,7 +153,7 @@
   "finalCta": {
     "title": "Start with the simplest thing: sending a message.",
     "subtitle": "Join the first 50 and lock in the launch price.",
-    "cta": "Join the first 50"
+    "cta": "Show me my profit"
   },
   "footer": {
     "tagline": "Short-term rental management, in a conversation.",

@@ -9,7 +9,7 @@
     "answers": "O que ele responde",
     "faq": "Dúvidas",
     "login": "Entrar",
-    "cta": "Entrar na lista",
+    "cta": "Saber meu lucro",
     "languageGroup": "Idioma"
   },
   "hero": {
@@ -17,8 +17,8 @@
     "titleLine1": "Você lança reserva",
     "titleLine2": "em planilha. De novo.",
     "subtitle": "Manda um áudio. Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
-    "cta": "Entrar na lista dos 50",
-    "ctaTrigger": "Leva 20 segundos. Sem cartão, sem instalar nada."
+    "cta": "Quero saber meu lucro",
+    "ctaTrigger": "Leva 20 segundos. Você entra na lista dos 50 e a gente avisa quando abrir."
   },
   "demo": {
     "eyebrow": "Como é na prática",
@@ -95,7 +95,7 @@
     "disclaimer": "Nada é cobrado agora. Você entra na lista e a gente avisa quando abrir."
   },
   "form": {
-    "title": "Entrar na lista dos 50",
+    "title": "Quero saber meu lucro",
     "nameLabel": "Seu nome",
     "namePlaceholder": "Como podemos te chamar?",
     "whatsappLabel": "Seu WhatsApp",
@@ -105,9 +105,9 @@
     "count2to3": "2 a 3",
     "count4to10": "4 a 10",
     "count10plus": "10 ou mais",
-    "submit": "Entrar na lista dos 50",
+    "submit": "Quero saber meu lucro",
     "submitting": "Enviando…",
-    "trigger": "Leva 20 segundos. Sem cartão, sem instalar nada.",
+    "trigger": "Leva 20 segundos. Você entra na lista dos 50 e a gente avisa quando abrir.",
     "privacy": "Usamos seu WhatsApp só para avisar da abertura.",
     "successTitle": "Pronto, você está na lista.",
     "successBody": "A gente chama você no WhatsApp assim que Sogio conversacional abrir. Sem spam, prometido.",
@@ -153,7 +153,7 @@
   "finalCta": {
     "title": "Comece pelo mais simples: mandar uma mensagem.",
     "subtitle": "Entre na lista dos 50 primeiros e trave o preço de lançamento.",
-    "cta": "Entrar na lista dos 50"
+    "cta": "Quero saber meu lucro"
   },
   "footer": {
     "tagline": "Gestão de imóveis de temporada, em uma conversa.",
