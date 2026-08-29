@@ -166,6 +166,14 @@
     --lp-bubble-in: oklch(0.225 0.017 183);
     --lp-bubble-out: oklch(0.34 0.055 160);
     --lp-glow: oklch(0.72 0.13 183 / 0.28);
+    /* Opacidade do brilho de fundo do herói e do CTA final. No escuro precisa
+     * ser bem maior: a mesma opacidade que tinge um fundo quase branco quase
+     * não move um fundo quase preto (delta de 25 contra 35 no claro).
+     *
+     * A 0.3 o fundo sob o herói chega a #023F39, onde `--lp-text` rende 10.7:1
+     * e `--lp-muted` cairia para 5.8:1. Por isso o centro do brilho só recebe
+     * texto principal; o subtítulo fica na borda, a 7.9:1. */
+    --lp-glow-opacity: 0.3;
 
     background-color: var(--lp-bg);
     color: var(--lp-text);
@@ -185,6 +193,7 @@
     --lp-bubble-in: oklch(0.945 0.008 183);
     --lp-bubble-out: oklch(0.88 0.06 160);
     --lp-glow: oklch(0.48 0.12 183 / 0.16);
+    --lp-glow-opacity: 0.14;
 
     color-scheme: light;
   }

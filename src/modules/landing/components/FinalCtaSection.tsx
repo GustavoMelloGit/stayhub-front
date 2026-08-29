@@ -9,7 +9,7 @@ export const FinalCtaSection = () => {
     <section className='relative overflow-hidden px-5 py-20 md:px-8 md:py-28'>
       <div
         aria-hidden
-        className='bg-lp-brand pointer-events-none absolute bottom-[-14rem] left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-[120px]'
+        className='bg-lp-brand pointer-events-none absolute bottom-[-14rem] left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full opacity-[var(--lp-glow-opacity)] blur-[120px]'
       />
       <div className='relative mx-auto flex max-w-3xl flex-col items-center text-center'>
         <h2 className='text-lp-text text-3xl leading-tight font-bold tracking-tight text-balance md:text-5xl'>

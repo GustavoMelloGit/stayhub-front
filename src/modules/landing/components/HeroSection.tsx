@@ -21,7 +21,7 @@ export const HeroSection = () => {
       {/* Brilho de marca atrás do texto. Puramente decorativo. */}
       <div
         aria-hidden
-        className='bg-lp-brand pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px] md:h-[40rem] md:w-[40rem]'
+        className='bg-lp-brand pointer-events-none absolute -top-40 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full opacity-[var(--lp-glow-opacity)] blur-[120px] md:h-[40rem] md:w-[40rem]'
       />
 
       <div className='relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16'>
