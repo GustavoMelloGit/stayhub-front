@@ -160,6 +160,7 @@
     "rights": "© {{year}} Sogio. All rights reserved.",
     "login": "Open the dashboard",
     "themeToLight": "Switch to the light theme",
-    "themeToDark": "Switch to the dark theme"
+    "themeToDark": "Switch to the dark theme",
+    "guides": "Guides"
   }
 }

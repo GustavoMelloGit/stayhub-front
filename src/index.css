@@ -292,3 +292,133 @@
     }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Conteúdo dos guias
+ *
+ * O HTML vem do Markdown convertido no build, então não há classe utilitária
+ * nos elementos: o estilo é aplicado por descendência a partir de `.lp-prose`.
+ * A escala segue a da landing, ampliada para o público 50+.
+ * ------------------------------------------------------------------------- */
+@layer base {
+  .landing .lp-prose {
+    color: var(--lp-muted);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  @media (min-width: 768px) {
+    .landing .lp-prose {
+      font-size: 1.25rem;
+    }
+  }
+
+  .landing .lp-prose > * + * {
+    margin-top: 1.25em;
+  }
+
+  .landing .lp-prose h2 {
+    color: var(--lp-text);
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin-top: 2.2em;
+    text-wrap: balance;
+  }
+
+  .landing .lp-prose h3 {
+    color: var(--lp-text);
+    font-size: 1.2em;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-top: 1.8em;
+  }
+
+  .landing .lp-prose strong {
+    color: var(--lp-text);
+    font-weight: 600;
+  }
+
+  .landing .lp-prose a {
+    color: var(--lp-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .landing .lp-prose ul,
+  .landing .lp-prose ol {
+    padding-left: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+
+  .landing .lp-prose ul {
+    list-style: disc;
+  }
+
+  .landing .lp-prose ol {
+    list-style: decimal;
+  }
+
+  .landing .lp-prose li::marker {
+    color: var(--lp-brand);
+  }
+
+  /* Blockquote carrega as fórmulas do texto, não citação: por isso o destaque
+   * é de painel e não de aspas. */
+  .landing .lp-prose blockquote {
+    border-left: 3px solid var(--lp-brand);
+    background: var(--lp-band);
+    color: var(--lp-text);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+  }
+
+  .landing .lp-prose blockquote > * + * {
+    margin-top: 0.75em;
+  }
+
+  .landing .lp-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .landing .lp-prose th,
+  .landing .lp-prose td {
+    border-bottom: 1px solid var(--lp-border);
+    padding: 0.7em 0.8em;
+    text-align: left;
+  }
+
+  .landing .lp-prose th {
+    color: var(--lp-text);
+    font-weight: 600;
+  }
+
+  /* Valores em coluna precisam alinhar; a última coluna é sempre numérica. */
+  .landing .lp-prose td:last-child,
+  .landing .lp-prose th:last-child {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .landing .lp-prose code {
+    background: var(--lp-elevated);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    font-size: 0.9em;
+  }
+
+  .landing .lp-prose hr {
+    border: 0;
+    border-top: 1px solid var(--lp-border);
+    margin-top: 2.5em;
+  }
+}

@@ -24,6 +24,8 @@ import {
   LazyBillingSettingsView,
   LazyLandingView,
   LazyAppLayout,
+  LazyGuidesIndexView,
+  LazyGuideView,
 } from './lazyComponents';
 
 export const router = createBrowserRouter([
@@ -45,6 +47,16 @@ export const router = createBrowserRouter([
         <LazyLandingView pageLanguage='en' />
       </LandingRoute>
     ),
+  },
+  {
+    // Conteúdo público. Como a landing, é pré-renderizado no build: é o que
+    // buscadores e crawlers de IA leem.
+    path: ROUTES.guides,
+    element: <LazyGuidesIndexView />,
+  },
+  {
+    path: ROUTES.guide(':slug'),
+    element: <LazyGuideView />,
   },
   {
     path: ROUTES.home,

@@ -25,6 +25,12 @@ export const LandingFooter = ({
 
         <div className='flex flex-wrap items-center gap-x-6 gap-y-3'>
           <Link
+            to={ROUTES.guides}
+            className='text-lp-muted hover:text-lp-text inline-flex min-h-11 items-center text-base transition-colors'
+          >
+            {t('footer.guides')}
+          </Link>
+          <Link
             to={ROUTES.login}
             className='text-lp-muted hover:text-lp-text inline-flex min-h-11 items-center text-base transition-colors'
           >

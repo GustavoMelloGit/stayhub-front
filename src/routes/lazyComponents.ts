@@ -66,3 +66,9 @@ export const LazyBillingSettingsView = lazy(
 export const LazyLandingView = lazy(
   () => import('@/modules/landing/view/LandingView')
 );
+export const LazyGuidesIndexView = lazy(
+  () => import('@/modules/guides/view/GuidesIndexView')
+);
+export const LazyGuideView = lazy(
+  () => import('@/modules/guides/view/GuideView')
+);

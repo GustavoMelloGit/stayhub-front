@@ -8,6 +8,8 @@ export const ROUTES = {
   // Público — pré-renderizado
   landing: '/',
   landingEn: '/en',
+  guides: '/guias',
+  guide: (slug: string) => `/guias/${slug}`,
 
   // Produto autenticado
   home: APP,

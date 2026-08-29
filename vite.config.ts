@@ -3,12 +3,27 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { markdown } from './plugins/vite-plugin-markdown';
+
+/** Troca `%GSC_VERIFICATION%` pela meta de verificação, ou remove o marcador. */
+const searchConsoleMeta = () => ({
+  name: 'sogio-gsc-meta',
+  transformIndexHtml(html: string) {
+    const token = process.env.VITE_GSC_VERIFICATION?.trim();
+    return html.replace(
+      '%GSC_VERIFICATION%',
+      token ? `<meta name="google-site-verification" content="${token}" />` : ''
+    );
+  },
+});
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    markdown(),
+    searchConsoleMeta(),
     VitePWA({
       registerType: 'prompt',
       // The service worker is registered manually in src/lib/pwa.ts.

@@ -15,7 +15,7 @@
  * HTML estático sai com o conteúdo visível, e não com `opacity: 0`.
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,16 +30,48 @@ const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://www.sogio.app').replace(
   ''
 );
 
-/** Rotas públicas que precisam existir como HTML estático. */
-const PAGES = [
+/** Rotas públicas fixas que precisam existir como HTML estático. */
+const STATIC_PAGES = [
   { path: '/', output: 'index.html', changefreq: 'weekly', priority: '1.0' },
   {
     path: '/en',
     output: 'en/index.html',
     changefreq: 'weekly',
     priority: '0.8',
+    lang: 'en',
   },
+  { path: '/guias', output: 'guias/index.html', changefreq: 'weekly', priority: '0.7' },
 ];
+
+/**
+ * Descobre os guias pelo sistema de arquivos em vez de importar o registro do
+ * app: este script roda em Node puro, sem o pipeline do Vite que converte os
+ * `.md`. O nome do arquivo é a fonte da verdade do slug.
+ */
+const discoverGuides = async () => {
+  const dir = join(ROOT, 'src/content/guides');
+  if (!existsSync(dir)) return [];
+
+  const files = (await readdir(dir)).filter(name => name.endsWith('.md'));
+
+  return Promise.all(
+    files.map(async name => {
+      const slug = name.replace(/\.md$/, '');
+      const source = await readFile(join(dir, name), 'utf8');
+      const title = /^title:\s*(.+)$/m.exec(source)?.[1]?.trim() ?? slug;
+      const description = /^description:\s*(.+)$/m.exec(source)?.[1]?.trim() ?? '';
+
+      return {
+        path: `/guias/${slug}`,
+        output: `guias/${slug}/index.html`,
+        changefreq: 'monthly',
+        priority: '0.6',
+        title,
+        description,
+      };
+    })
+  );
+};
 
 /** Crawlers de IA liberados explicitamente — sem isso vários assumem bloqueio. */
 const AI_CRAWLERS = [
@@ -95,28 +127,33 @@ const startServer = () =>
     server.listen(PORT, () => resolveServer(server));
   });
 
-const writeSitemap = async () => {
+const writeSitemap = async pages => {
   const today = new Date().toISOString().slice(0, 10);
-  const urls = PAGES.map(page => {
-    const loc = `${SITE_URL}${page.path === '/' ? '/' : page.path}`;
-    const alternates = PAGES.map(
-      alternate =>
-        `    <xhtml:link rel="alternate" hreflang="${
-          alternate.path === '/' ? 'pt-BR' : 'en'
-        }" href="${SITE_URL}${alternate.path === '/' ? '/' : alternate.path}" />`
-    ).join('\n');
+  const urls = pages
+    .map(page => {
+      const loc = `${SITE_URL}${page.path}`;
+      const linhas = [
+        '  <url>',
+        `    <loc>${loc}</loc>`,
+        `    <lastmod>${today}</lastmod>`,
+        `    <changefreq>${page.changefreq}</changefreq>`,
+        `    <priority>${page.priority}</priority>`,
+      ];
 
-    return [
-      '  <url>',
-      `    <loc>${loc}</loc>`,
-      `    <lastmod>${today}</lastmod>`,
-      `    <changefreq>${page.changefreq}</changefreq>`,
-      `    <priority>${page.priority}</priority>`,
-      alternates,
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />`,
-      '  </url>',
-    ].join('\n');
-  }).join('\n');
+      // Só a landing tem versão em outro idioma; declarar alternativa para um
+      // guia que existe só em português seria mentira para o buscador.
+      if (page.path === '/' || page.path === '/en') {
+        linhas.push(
+          `    <xhtml:link rel="alternate" hreflang="pt-BR" href="${SITE_URL}/" />`,
+          `    <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}/en" />`,
+          `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/" />`
+        );
+      }
+
+      linhas.push('  </url>');
+      return linhas.join('\n');
+    })
+    .join('\n');
 
   const sitemap = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -158,7 +195,7 @@ const writeRobots = async () => {
   await writeFile(join(DIST, 'robots.txt'), robots, 'utf8');
 };
 
-const writeLlmsTxt = async () => {
+const writeLlmsTxt = async guias => {
   const llms = `# Sogio
 
 > Gestão de imóveis de aluguel por temporada por conversa. O anfitrião manda um áudio, uma foto da nota ou uma pergunta, e Sogio lança a receita, arquiva a despesa e responde quanto cada imóvel deu de lucro, sem planilha e sem aprender um sistema novo.
@@ -172,6 +209,8 @@ Estado atual: o painel web Sogio está em produção. A versão conversacional e
 - [Landing page (pt-BR)](${SITE_URL}/): proposta, demonstração da conversa, objeções e perguntas frequentes.
 - [Landing page (en)](${SITE_URL}/en): a mesma página em inglês.
 - [Entrar no painel](${SITE_URL}/login): acesso ao produto para quem já é cliente.
+- [Guias](${SITE_URL}/guias): conteúdo aberto sobre gestão de aluguel por temporada.
+${guias}
 
 ## O que Sogio faz
 
@@ -196,15 +235,18 @@ const main = async () => {
   const shell = await readFile(join(DIST, 'index.html'), 'utf8');
   await writeFile(join(DIST, 'app.html'), shell, 'utf8');
 
+  const guides = await discoverGuides();
+  const pages = [...STATIC_PAGES, ...guides];
+
   const server = await startServer();
   const browser = await chromium.launch();
 
   try {
-    for (const page of PAGES) {
+    for (const page of pages) {
       const context = await browser.newContext({
         reducedMotion: 'reduce',
         viewport: { width: 1280, height: 900 },
-        locale: page.path === '/en' ? 'en-US' : 'pt-BR',
+        locale: page.lang === 'en' ? 'en-US' : 'pt-BR',
       });
 
       // O Clarity não deve entrar no HTML estático: o bundle o injeta em
@@ -215,7 +257,10 @@ const main = async () => {
       await tab.goto(`http://localhost:${PORT}${page.path}`, {
         waitUntil: 'networkidle',
       });
-      await tab.waitForSelector('main#conteudo details', { timeout: 30_000 });
+      // O `h1` só existe depois que a view montou, e vale para qualquer página
+      // pública. Contar caracteres seria frágil: uma página de índice curta
+      // reprovaria num limiar pensado para a landing.
+      await tab.waitForSelector('main#conteudo h1', { timeout: 30_000 });
 
       await tab.evaluate(() => {
         document
@@ -244,7 +289,18 @@ const main = async () => {
     server.close();
   }
 
-  await Promise.all([writeSitemap(), writeRobots(), writeLlmsTxt()]);
+  const listaDeGuias = guides
+    .map(
+      guide =>
+        `- [${guide.title}](${SITE_URL}${guide.path}): ${guide.description}`
+    )
+    .join('\n');
+
+  await Promise.all([
+    writeSitemap(pages),
+    writeRobots(),
+    writeLlmsTxt(listaDeGuias),
+  ]);
   console.log('prerender: sitemap.xml, robots.txt e llms.txt gerados');
 };
 
