@@ -1,8 +1,6 @@
 import type { CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
-import { ROUTES } from '@/routes/routes';
 import { trackEvent } from '@/lib/clarity';
 import { LandingCta } from './LandingCta';
 
@@ -75,12 +73,6 @@ export const HeroSection = () => {
             <p className='text-lp-muted mt-3 text-base'>
               {t('hero.ctaTrigger')}
             </p>
-            <Link
-              to={ROUTES.login}
-              className='text-lp-muted hover:text-lp-text mt-5 inline-flex min-h-11 items-center text-base underline underline-offset-4 transition-colors'
-            >
-              {t('hero.secondaryCta')}
-            </Link>
           </div>
         </div>
 
