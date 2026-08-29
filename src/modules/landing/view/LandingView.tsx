@@ -53,12 +53,29 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
 
   // O `<body>` usa os tokens do app; sem isto o fundo dele aparece no overscroll
   // e nas bordas em telas altas.
+  //
+  // A `theme-color` também é escrita aqui, e não deixada para o
+  // `ThemeColorMeta` global: aquele lê o fundo do `body` e roda antes deste
+  // efeito, então capturava o fundo do app em vez do da landing.
+  //
+  // Os valores são hexadecimais, e não os tokens `--lp-bg`, porque
+  // `theme-color` em `oklch()` não é lido de forma confiável por todos os
+  // navegadores. São o mesmo tom, resolvido para sRGB.
   useEffect(() => {
-    const previous = document.body.style.backgroundColor;
-    document.body.style.backgroundColor =
-      theme === 'light' ? 'oklch(0.99 0.004 183)' : 'oklch(0.13 0.012 183)';
+    const color = theme === 'light' ? '#f9fdfc' : '#030908';
+    const meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="theme-color"]'
+    );
+
+    const previousBackground = document.body.style.backgroundColor;
+    const previousMeta = meta?.content;
+
+    document.body.style.backgroundColor = color;
+    if (meta) meta.content = color;
+
     return () => {
-      document.body.style.backgroundColor = previous;
+      document.body.style.backgroundColor = previousBackground;
+      if (meta && previousMeta) meta.content = previousMeta;
     };
   }, [theme]);
 

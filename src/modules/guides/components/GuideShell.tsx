@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -15,6 +15,26 @@ import { LandingCta } from '@/modules/landing/components/LandingCta';
  */
 export const GuideShell = ({ children }: { children: ReactNode }) => {
   const { theme, toggleTheme } = useLandingTheme();
+
+  // Mesmo motivo da landing: o `ThemeColorMeta` global lê o fundo do `body`
+  // antes deste efeito e capturaria o fundo do app.
+  useEffect(() => {
+    const color = theme === 'light' ? '#f9fdfc' : '#030908';
+    const meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="theme-color"]'
+    );
+
+    const previousBackground = document.body.style.backgroundColor;
+    const previousMeta = meta?.content;
+
+    document.body.style.backgroundColor = color;
+    if (meta) meta.content = color;
+
+    return () => {
+      document.body.style.backgroundColor = previousBackground;
+      if (meta && previousMeta) meta.content = previousMeta;
+    };
+  }, [theme]);
 
   return (
     <div className='landing min-h-screen' data-lp-theme={theme}>
