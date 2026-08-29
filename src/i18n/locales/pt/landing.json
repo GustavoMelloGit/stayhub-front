@@ -9,7 +9,7 @@
     "answers": "O que ele responde",
     "faq": "Dúvidas",
     "login": "Entrar",
-    "cta": "Saber meu lucro",
+    "cta": "Largar a planilha",
     "languageGroup": "Idioma"
   },
   "hero": {
@@ -17,7 +17,7 @@
     "titleLine1": "Você lança reserva",
     "titleLine2": "em planilha. De novo.",
     "subtitle": "Manda um áudio. Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
-    "cta": "Quero saber meu lucro",
+    "cta": "Quero largar a planilha",
     "ctaTrigger": "Leva 20 segundos. Você entra na lista dos 50 e a gente avisa quando abrir."
   },
   "demo": {
@@ -95,7 +95,7 @@
     "disclaimer": "Nada é cobrado agora. Você entra na lista e a gente avisa quando abrir."
   },
   "form": {
-    "title": "Quero saber meu lucro",
+    "title": "Quero largar a planilha",
     "nameLabel": "Seu nome",
     "namePlaceholder": "Como podemos te chamar?",
     "whatsappLabel": "Seu WhatsApp",
@@ -105,7 +105,7 @@
     "count2to3": "2 a 3",
     "count4to10": "4 a 10",
     "count10plus": "10 ou mais",
-    "submit": "Quero saber meu lucro",
+    "submit": "Quero largar a planilha",
     "submitting": "Enviando…",
     "trigger": "Leva 20 segundos. Você entra na lista dos 50 e a gente avisa quando abrir.",
     "privacy": "Usamos seu WhatsApp só para avisar da abertura.",
@@ -153,7 +153,7 @@
   "finalCta": {
     "title": "Comece pelo mais simples: mandar uma mensagem.",
     "subtitle": "Entre na lista dos 50 primeiros e trave o preço de lançamento.",
-    "cta": "Quero saber meu lucro"
+    "cta": "Quero largar a planilha"
   },
   "footer": {
     "tagline": "Gestão de imóveis de temporada, em uma conversa.",

@@ -88,7 +88,7 @@ const GuideView = () => {
             href={`${ROUTES.landing}#lista`}
             className='mt-6 w-full sm:w-auto'
           >
-            Quero saber meu lucro
+            Quero largar a planilha
           </LandingCta>
         </aside>
 
