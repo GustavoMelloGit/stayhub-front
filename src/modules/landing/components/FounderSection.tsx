@@ -22,7 +22,7 @@ export const FounderSection = () => {
             {t('founder.body')}
           </p>
 
-          <div className='border-lp-brand bg-lp-brand-soft mt-8 inline-flex items-baseline gap-3 rounded-2xl border px-6 py-4'>
+          <div className='border-lp-brand bg-lp-brand-soft mt-8 inline-flex items-center gap-3 rounded-2xl border px-6 py-4'>
             <span className='text-lp-brand text-4xl font-bold md:text-5xl'>
               {t('founder.seatsValue')}
             </span>
