@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
+    "@sparticuz/chromium": "^149.0.0",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",

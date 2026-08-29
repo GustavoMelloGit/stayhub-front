@@ -21,6 +21,32 @@ import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
+/**
+ * Abre o navegador.
+ *
+ * No Linux da Vercel o Chromium do Playwright não sobe: a imagem de build é
+ * Amazon Linux e não traz as bibliotecas de sistema que ele precisa
+ * (`libnspr4.so` e companhia). Instalá-las exigiria root, que o build não dá.
+ *
+ * `@sparticuz/chromium` é um Chromium empacotado para plataformas serverless,
+ * com essas bibliotecas junto. Fora da Vercel, segue valendo o binário normal
+ * do Playwright, que é o que roda em desenvolvimento e nos testes.
+ */
+const launchBrowser = async () => {
+  if (!process.env.VERCEL) return chromium.launch();
+
+  const { default: serverless } = await import('@sparticuz/chromium');
+
+  return chromium.launch({
+    // `--single-process` vem afinado para o Lambda, onde a memória é apertada,
+    // e é conhecido por travar o Playwright. O container de build não tem essa
+    // restrição, então sai da lista.
+    args: serverless.args.filter(arg => arg !== '--single-process'),
+    executablePath: await serverless.executablePath(),
+    headless: true,
+  });
+};
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const PORT = 4319;
@@ -244,14 +270,13 @@ const main = async () => {
 
   let browser;
   try {
-    browser = await chromium.launch();
+    browser = await launchBrowser();
   } catch (cause) {
     server.close();
     throw new Error(
-      'Não foi possível abrir o Chromium para pré-renderizar. O pacote ' +
-        '`playwright` instala a biblioteca, não o navegador: rode ' +
-        '`npx playwright install chromium` antes do build. No deploy isso ' +
-        'está no `installCommand` do vercel.json.',
+      'Não foi possível abrir o Chromium para pré-renderizar. Em ambiente ' +
+        'local, rode `npx playwright install chromium`. Na Vercel, o binário ' +
+        'vem de `@sparticuz/chromium`: veja `launchBrowser` neste arquivo.',
       { cause }
     );
   }

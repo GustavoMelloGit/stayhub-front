@@ -1,6 +1,4 @@
 {
-  "installCommand": "npm install && PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install chromium",
-  "buildCommand": "PLAYWRIGHT_BROWSERS_PATH=0 npm run build",
   "rewrites": [
     {
       "source": "/(.*)",
