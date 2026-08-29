@@ -1,7 +1,9 @@
 {
   "meta": {
     "title": "Sogio: manage your short-term rentals by chatting",
-    "description": "No spreadsheet, no software to learn: send a voice note and Sogio logs the booking, files the expenses and tells you what the property earned."
+    "description": "No spreadsheet, no software to learn: send a voice note and Sogio logs the booking, files the expenses and tells you what the property earned.",
+    "category": "Short-term rental management",
+    "audience": "Owners and managers of short-term rental properties"
   },
   "nav": {
     "skipToContent": "Skip to content",

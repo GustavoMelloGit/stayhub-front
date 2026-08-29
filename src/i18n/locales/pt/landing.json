@@ -1,7 +1,9 @@
 {
   "meta": {
     "title": "Sogio: cuide dos seus imóveis de temporada conversando",
-    "description": "Sem planilha e sem aprender sistema novo: mande um áudio e Sogio lança a reserva, organiza as despesas e diz quanto o imóvel deu de lucro."
+    "description": "Sem planilha e sem aprender sistema novo: mande um áudio e Sogio lança a reserva, organiza as despesas e diz quanto o imóvel deu de lucro.",
+    "category": "Gestão de aluguel por temporada",
+    "audience": "Proprietários e administradores de imóveis de aluguel por temporada"
   },
   "nav": {
     "skipToContent": "Ir para o conteúdo",
