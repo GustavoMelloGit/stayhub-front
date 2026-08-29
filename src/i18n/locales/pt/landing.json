@@ -15,7 +15,7 @@
     "languageGroup": "Idioma"
   },
   "hero": {
-    "badge": "Em construção · 50 vagas de fundador",
+    "badge": "Em construção · 50 vagas de pioneiro",
     "titleLine1": "E se a planilha",
     "titleLine2": "te ouvisse?",
     "subtitle": "Manda um áudio. Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
@@ -81,7 +81,7 @@
     "item6": "Quanto paguei de taxa de plataforma no ano?"
   },
   "founder": {
-    "eyebrow": "Condição de fundador",
+    "eyebrow": "Condição de pioneiro",
     "title": "As 50 primeiras pessoas pagam R$ 25 no primeiro ano",
     "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar e paga R$ 25 por mês nos 12 primeiros meses, contra os R$ 35 do preço normal.",
     "priceValue": "R$ 25",
@@ -92,7 +92,7 @@
     "benefit2": "15 dias grátis antes da primeira cobrança",
     "benefit3": "Acesso antes da abertura ao público",
     "benefit4": "Linha direta com quem está construindo",
-    "seatsLabel": "vagas de fundador",
+    "seatsLabel": "vagas de pioneiro",
     "seatsValue": "50",
     "disclaimer": "Nada é cobrado agora. Você entra na lista, a gente avisa quando abrir, e as condições são confirmadas na abertura."
   },
