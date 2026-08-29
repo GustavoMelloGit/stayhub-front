@@ -139,10 +139,15 @@ const startServer = () =>
       const url = new URL(request.url, `http://localhost:${PORT}`);
       const filePath = join(DIST, decodeURIComponent(url.pathname));
 
+      // O fallback é a casca intocada, não o `index.html`: a landing é a
+      // primeira página do laço e sobrescreve o `index.html` antes das
+      // demais. Servi-lo como fallback faria cada guia herdar o `<head>` da
+      // landing, JSON-LD incluído. É também o que a Vercel faz em produção,
+      // onde todo caminho não estático é reescrito para `/app.html`.
       const target =
         existsSync(filePath) && statSync(filePath).isFile()
           ? filePath
-          : join(DIST, 'index.html');
+          : join(DIST, 'app.html');
 
       response.writeHead(200, {
         'Content-Type': MIME[extname(target)] ?? 'application/octet-stream',
