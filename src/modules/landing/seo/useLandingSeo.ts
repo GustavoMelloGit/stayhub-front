@@ -96,5 +96,10 @@ export const useLandingSeo = (language: Language) => {
     script.textContent = JSON.stringify(
       buildStructuredData(t, siteUrl, pageUrl, language)
     );
+
+    // Sai junto com a landing. Sem isso o bloco sobrevive a uma navegação pelo
+    // cliente e uma página de guia passa a declarar o `FAQPage` da landing,
+    // cujas perguntas não estão visíveis nela.
+    return () => script?.remove();
   }, [language, t]);
 };

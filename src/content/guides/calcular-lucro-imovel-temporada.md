@@ -31,8 +31,8 @@ Se você anuncia em mais de uma plataforma, some tudo. E se aluga direto também
 
 São as que acompanham a ocupação. Quanto mais você aluga, mais elas crescem.
 
-- **Taxa da plataforma.** Varia por plataforma e por modelo de cobrança, e muda com o tempo. Não use um número de cabeça: pegue o percentual real que aparece no seu extrato.
-- **Limpeza.** O que você paga à diarista, que raramente é igual ao que você cobra do hóspede.
+- **Taxa da plataforma.** Varia por plataforma e por modelo de cobrança, e muda com o tempo. Não use um número de cabeça: pegue o percentual real que aparece no seu extrato. Como os canais cobram de formas diferentes está no [guia de Airbnb e Booking](/guias/airbnb-ou-booking-qual-vale-mais).
+- **Limpeza.** O que você paga à diarista, que raramente é igual ao que você cobra do hóspede. Como chegar nos dois valores está no [guia de taxa de limpeza](/guias/taxa-de-limpeza-quanto-cobrar).
 - **Consumíveis.** Enxoval reposto, café, papel, produtos de limpeza, amenities.
 - **Água, luz e gás** na parte que varia com a ocupação.
 - **Taxas de pagamento** quando o aluguel é direto: maquininha, gateway, antecipação.
@@ -78,7 +78,7 @@ A métrica que junta as duas coisas é o **RevPAR**, a receita por diária dispo
 
 > **RevPAR = receita do período ÷ número de noites disponíveis**
 
-No exemplo acima, em um mês de 30 noites: R$ 6.300 ÷ 30 = R$ 210 de RevPAR. Comparar RevPAR entre dois imóveis diz mais do que comparar ocupação, porque o número não melhora só por você baixar o preço.
+No exemplo acima, em um mês de 30 noites: R$ 6.300 ÷ 30 = R$ 210 de RevPAR. Comparar RevPAR entre dois imóveis diz mais do que comparar ocupação, porque o número não melhora só por você baixar o preço. É a métrica que fecha a conta no [guia de precificação](/guias/quanto-cobrar-por-diaria-temporada).
 
 ## Três erros que distorcem a conta
 
@@ -90,7 +90,7 @@ No exemplo acima, em um mês de 30 noites: R$ 6.300 ÷ 30 = R$ 210 de RevPAR. Co
 
 ## Com que frequência refazer a conta
 
-Uma vez por mês é suficiente para acompanhar, e uma vez por ano é indispensável para decidir. O fechamento mensal mostra se o preço está certo; o anual mostra se o imóvel vale a pena.
+Uma vez por mês é suficiente para acompanhar, e uma vez por ano é indispensável para decidir. O fechamento mensal mostra se o preço está certo; o anual mostra se o imóvel vale a pena, inclusive na comparação com [aluguel fixo](/guias/temporada-ou-aluguel-fixo).
 
 Se você cuida de mais de um imóvel, faça a conta **por imóvel**, nunca no agregado. O agregado esconde o imóvel que está dando prejuízo atrás do que está indo bem, e essa é justamente a informação que muda uma decisão.
 
