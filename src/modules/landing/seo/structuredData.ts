@@ -45,6 +45,16 @@ export const buildStructuredData = (
       '@type': 'Audience',
       audienceType: t('answers.eyebrow'),
     },
+    // `PreOrder` porque a versão conversacional ainda não abriu. O preço
+    // declarado é o normal; o de fundador é condição de lançamento e vive na
+    // copy, não no schema.
+    offers: {
+      '@type': 'Offer',
+      price: '35.00',
+      priceCurrency: 'BRL',
+      availability: 'https://schema.org/PreOrder',
+      url: `${pageUrl}#lista`,
+    },
   },
   {
     '@context': 'https://schema.org',

@@ -81,12 +81,17 @@
   },
   "founder": {
     "eyebrow": "Founder terms",
-    "title": "The first 50 people lock their price for good",
-    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works, and keeping the launch price even after it goes up.",
-    "benefit1": "Launch price locked, whatever it turns out to be",
-    "benefit2": "Access before it opens to everyone",
-    "benefit3": "A direct line to the people building it",
-    "seatsLabel": "Founder seats",
+    "title": "The first 50 people pay R$ 25 forever",
+    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works, and keeping the R$ 25 for as long as you stay subscribed, even after the price goes up.",
+    "priceValue": "R$ 25",
+    "pricePeriod": "/month",
+    "priceRegularLabel": "Regular price",
+    "priceRegularValue": "R$ 35/month",
+    "benefit1": "R$ 25 a month locked, even when the price goes up",
+    "benefit2": "15 days free before the first charge",
+    "benefit3": "Access before it opens to everyone",
+    "benefit4": "A direct line to the people building it",
+    "seatsLabel": "founder seats",
     "seatsValue": "50",
     "disclaimer": "Nothing is charged now. You join the list and we tell you when it opens."
   },
@@ -139,7 +144,7 @@
     },
     "item6": {
       "question": "How much will it cost?",
-      "answer": "The price isn't set yet. Whoever joins the first 50 locks the launch price, whatever it turns out to be, for as long as they stay subscribed."
+      "answer": "R$ 35 per month when it opens to the public. Whoever joins the first 50 pays R$ 25 per month and keeps that price for as long as they stay subscribed. Either way, the first 15 days are free."
     },
     "item7": {
       "question": "Is it useful if I only have one property?",

@@ -81,12 +81,17 @@
   },
   "founder": {
     "eyebrow": "Condição de fundador",
-    "title": "As 50 primeiras pessoas travam o preço para sempre",
-    "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e continua pagando o preço de lançamento mesmo depois que ele subir.",
-    "benefit1": "Preço de lançamento travado, qualquer que seja ele",
-    "benefit2": "Acesso antes da abertura ao público",
-    "benefit3": "Linha direta com quem está construindo",
-    "seatsLabel": "Vagas de fundador",
+    "title": "As 50 primeiras pessoas pagam R$ 25 para sempre",
+    "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e mantém os R$ 25 pelo tempo que continuar assinando, mesmo depois que o preço subir.",
+    "priceValue": "R$ 25",
+    "pricePeriod": "/mês",
+    "priceRegularLabel": "Preço normal",
+    "priceRegularValue": "R$ 35/mês",
+    "benefit1": "R$ 25 por mês travados, mesmo quando o preço subir",
+    "benefit2": "15 dias grátis antes da primeira cobrança",
+    "benefit3": "Acesso antes da abertura ao público",
+    "benefit4": "Linha direta com quem está construindo",
+    "seatsLabel": "vagas de fundador",
     "seatsValue": "50",
     "disclaimer": "Nada é cobrado agora. Você entra na lista e a gente avisa quando abrir."
   },
@@ -139,7 +144,7 @@
     },
     "item6": {
       "question": "Quanto vai custar?",
-      "answer": "O preço ainda não está definido. Quem entra na lista dos 50 primeiros trava o preço de lançamento, seja ele qual for, pelo tempo que continuar assinando."
+      "answer": "R$ 35 por mês quando abrir ao público. Quem entra na lista dos 50 primeiros paga R$ 25 por mês e mantém esse valor pelo tempo que continuar assinando. Nos dois casos, os primeiros 15 dias são grátis."
     },
     "item7": {
       "question": "Serve para quem tem só um imóvel?",

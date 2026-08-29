@@ -3,7 +3,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { LandingSection } from './LandingSection';
 import { WaitlistForm } from './WaitlistForm';
 
-const BENEFITS = ['benefit1', 'benefit2', 'benefit3'] as const;
+const BENEFITS = ['benefit1', 'benefit2', 'benefit3', 'benefit4'] as const;
 
 export const FounderSection = () => {
   const { t } = useTranslation('landing');
@@ -22,14 +22,30 @@ export const FounderSection = () => {
             {t('founder.body')}
           </p>
 
-          <div className='border-lp-brand bg-lp-brand-soft mt-8 inline-flex items-center gap-3 rounded-2xl border px-6 py-4'>
-            <span className='text-lp-brand text-4xl font-bold md:text-5xl'>
-              {t('founder.seatsValue')}
-            </span>
-            <span className='text-lp-text text-base md:text-lg'>
-              {t('founder.seatsLabel')}
-            </span>
+          {/* O preço normal riscado ancora a oferta: sem ele "R$ 25" é só um
+              número, com ele vira desconto. O rótulo em texto acompanha o
+              risco, porque tachado sozinho é um sinal só visual. */}
+          <div className='border-lp-brand bg-lp-brand-soft mt-8 inline-flex flex-wrap items-end gap-x-4 gap-y-2 rounded-2xl border px-6 py-5'>
+            <p className='flex items-baseline gap-1'>
+              <span className='text-lp-brand text-4xl font-bold md:text-5xl'>
+                {t('founder.priceValue')}
+              </span>
+              <span className='text-lp-text text-lg md:text-xl'>
+                {t('founder.pricePeriod')}
+              </span>
+            </p>
+            <p className='text-lp-muted pb-1 text-base'>
+              {t('founder.priceRegularLabel')}{' '}
+              <s>{t('founder.priceRegularValue')}</s>
+            </p>
           </div>
+
+          <p className='text-lp-text mt-4 text-base md:text-lg'>
+            <span className='text-lp-brand font-semibold'>
+              {t('founder.seatsValue')}
+            </span>{' '}
+            {t('founder.seatsLabel')}
+          </p>
 
           <ul className='mt-8 flex flex-col gap-4'>
             {BENEFITS.map(benefit => (
