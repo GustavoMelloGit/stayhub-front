@@ -161,11 +161,11 @@ const writeRobots = async () => {
 const writeLlmsTxt = async () => {
   const llms = `# Sogio
 
-> Gestão de imóveis de aluguel por temporada por conversa. O anfitrião manda um áudio, uma foto da nota ou uma pergunta, e o Sogio lança a receita, arquiva a despesa e responde quanto cada imóvel deu de lucro, sem planilha e sem aprender um sistema novo.
+> Gestão de imóveis de aluguel por temporada por conversa. O anfitrião manda um áudio, uma foto da nota ou uma pergunta, e Sogio lança a receita, arquiva a despesa e responde quanto cada imóvel deu de lucro, sem planilha e sem aprender um sistema novo.
 
 Para quem: pessoas que cuidam de 1 a 15 imóveis de temporada (Airbnb, Booking ou aluguel direto), incluindo quem não tem familiaridade com software de gestão.
 
-Estado atual: o painel web do Sogio está em produção. A versão conversacional está em construção e as 50 primeiras pessoas da lista de espera travam o preço de lançamento.
+Estado atual: o painel web Sogio está em produção. A versão conversacional está em construção e as 50 primeiras pessoas da lista de espera travam o preço de lançamento.
 
 ## Páginas
 
@@ -173,7 +173,7 @@ Estado atual: o painel web do Sogio está em produção. A versão conversaciona
 - [Landing page (en)](${SITE_URL}/en): a mesma página em inglês.
 - [Entrar no painel](${SITE_URL}/login): acesso ao produto para quem já é cliente.
 
-## O que o Sogio faz
+## O que Sogio faz
 
 - Registra receitas e despesas a partir de áudio, foto de comprovante ou mensagem de texto.
 - Concilia reservas de Airbnb, Booking e aluguel direto.

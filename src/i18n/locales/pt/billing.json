@@ -26,7 +26,7 @@
     },
     "blockedReason": {
       "trial_expired": "Seu período de teste do plano Pro expirou. Assine para continuar com acesso completo.",
-      "period_expired": "Sua assinatura expirou. Renove seu plano para continuar usando o Sogio.",
+      "period_expired": "Sua assinatura expirou. Renove seu plano para continuar usando Sogio.",
       "payment_failed": "Não conseguimos processar seu pagamento. Atualize sua forma de pagamento para reativar seu acesso.",
       "no_subscription": "Você ainda não tem uma assinatura ativa. Escolha um plano abaixo para começar."
     },

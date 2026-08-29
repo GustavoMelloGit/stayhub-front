@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Sogio: cuide dos seus imóveis de temporada conversando",
-    "description": "Sem planilha e sem aprender sistema novo: mande um áudio e o Sogio lança a reserva, organiza as despesas e diz quanto o imóvel deu de lucro."
+    "description": "Sem planilha e sem aprender sistema novo: mande um áudio e Sogio lança a reserva, organiza as despesas e diz quanto o imóvel deu de lucro."
   },
   "nav": {
     "skipToContent": "Ir para o conteúdo",
@@ -16,7 +16,7 @@
     "badge": "Em construção · 50 vagas de fundador",
     "titleLine1": "Você lança reserva",
     "titleLine2": "em planilha. De novo.",
-    "subtitle": "Manda um áudio. O Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
+    "subtitle": "Manda um áudio. Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
     "cta": "Entrar na lista dos 50",
     "ctaTrigger": "Leva 20 segundos. Sem cartão, sem instalar nada.",
     "secondaryCta": "Já sou cliente"
@@ -29,7 +29,7 @@
     "chatName": "Sogio",
     "chatStatus": "online",
     "inputPlaceholder": "Demonstração: os três exemplos rodam sozinhos",
-    "srDescription": "Demonstração de uma conversa com o Sogio: um áudio registrando uma receita, a foto de uma nota de manutenção e uma pergunta sobre lucro.",
+    "srDescription": "Demonstração de uma conversa com Sogio: um áudio registrando uma receita, a foto de uma nota de manutenção e uma pergunta sobre lucro.",
     "tabs": {
       "audio": "Mandar um áudio",
       "photo": "Mandar uma foto",
@@ -54,13 +54,13 @@
   },
   "howItWorks": {
     "eyebrow": "Sem aprender sistema nenhum",
-    "title": "Se você sabe mandar mensagem, você sabe usar o Sogio.",
+    "title": "Se você sabe mandar mensagem, você sabe usar Sogio.",
     "step1": {
       "title": "Você fala do seu jeito",
       "body": "Áudio, foto da nota ou mensagem escrita. Não tem campo obrigatório, não tem menu, não tem tela para decorar."
     },
     "step2": {
-      "title": "O Sogio entende e lança",
+      "title": "Sogio entende e lança",
       "body": "Ele identifica o imóvel, o valor e a data e registra no lugar certo. Se ficar em dúvida, pergunta antes de gravar."
     },
     "step3": {
@@ -69,7 +69,7 @@
     }
   },
   "answers": {
-    "eyebrow": "O que o Sogio responde",
+    "eyebrow": "O que Sogio responde",
     "title": "As perguntas que hoje moram na sua cabeça",
     "subtitle": "Sem abrir planilha, sem procurar recibo, sem esperar o fim do mês.",
     "item1": "Quanto o apê da praia deu de lucro esse ano?",
@@ -84,7 +84,7 @@
     "title": "O que provavelmente está te travando",
     "item1": {
       "question": "E se ele entender errado o que eu falei?",
-      "answer": "Antes de gravar qualquer valor, o Sogio mostra o que entendeu e espera você confirmar. Se estiver errado, você responde na mesma conversa e ele corrige."
+      "answer": "Antes de gravar qualquer valor, Sogio mostra o que entendeu e espera você confirmar. Se estiver errado, você responde na mesma conversa e ele corrige."
     },
     "item2": {
       "question": "Meus dados financeiros ficam seguros?",
@@ -92,17 +92,17 @@
     },
     "item3": {
       "question": "Preciso instalar ou aprender algum programa?",
-      "answer": "Não. É uma conversa. O painel do Sogio existe e continua funcionando para quem gosta de ver tudo numa tela, mas ele é opcional."
+      "answer": "Não. É uma conversa. O painel Sogio existe e continua funcionando para quem gosta de ver tudo numa tela, mas ele é opcional."
     },
     "item4": {
       "question": "E se eu já tenho tudo numa planilha?",
-      "answer": "Você manda a planilha na própria conversa e o Sogio importa o histórico. Não precisa recomeçar do zero."
+      "answer": "Você manda a planilha na própria conversa e Sogio importa o histórico. Não precisa recomeçar do zero."
     }
   },
   "founder": {
     "eyebrow": "Condição de fundador",
     "title": "As 50 primeiras pessoas travam o preço para sempre",
-    "body": "O Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e continua pagando o preço de lançamento mesmo depois que ele subir.",
+    "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e continua pagando o preço de lançamento mesmo depois que ele subir.",
     "benefit1": "Preço de lançamento travado, qualquer que seja ele",
     "benefit2": "Acesso antes da abertura ao público",
     "benefit3": "Linha direta com quem está construindo",
@@ -126,7 +126,7 @@
     "trigger": "Leva 20 segundos. Sem cartão, sem instalar nada.",
     "privacy": "Usamos seu WhatsApp só para avisar da abertura.",
     "successTitle": "Pronto, você está na lista.",
-    "successBody": "A gente chama você no WhatsApp assim que o Sogio conversacional abrir. Sem spam, prometido.",
+    "successBody": "A gente chama você no WhatsApp assim que Sogio conversacional abrir. Sem spam, prometido.",
     "errors": {
       "invalidName": "Escreva seu nome, mesmo que só o primeiro.",
       "invalidWhatsapp": "Digite o WhatsApp com DDD, só números.",
@@ -138,8 +138,8 @@
     "eyebrow": "Dúvidas",
     "title": "Perguntas frequentes",
     "item1": {
-      "question": "O Sogio já funciona por WhatsApp hoje?",
-      "answer": "Ainda não. O painel do Sogio está no ar e em uso, e a versão conversacional está em construção. Por isso existe uma lista de espera em vez de um botão de cadastro."
+      "question": "Sogio já funciona por WhatsApp hoje?",
+      "answer": "Ainda não. O painel Sogio está no ar e em uso, e a versão conversacional está em construção. Por isso existe uma lista de espera em vez de um botão de cadastro."
     },
     "item2": {
       "question": "Quanto vai custar?",
@@ -147,7 +147,7 @@
     },
     "item3": {
       "question": "Serve para quem tem só um imóvel?",
-      "answer": "Serve. O Sogio é feito para quem cuida de 1 a 15 imóveis de temporada, de um apartamento na praia a um pequeno portfólio."
+      "answer": "Serve. Sogio é feito para quem cuida de 1 a 15 imóveis de temporada, de um apartamento na praia a um pequeno portfólio."
     },
     "item4": {
       "question": "Funciona com Airbnb e Booking?",
