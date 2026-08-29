@@ -33,8 +33,14 @@ const COUNT_LABEL_KEYS: Record<PropertyCountRange, string> = {
   '10+': 'form.count10plus',
 };
 
+/**
+ * O `Input` do shadcn traz `dark:bg-input/30`, e a variante `dark:` reage à
+ * classe de tema do app, não ao `data-lp-theme` da landing. Sem repetir o
+ * token na variante, o campo herdava o fundo escuro do app quando o sistema
+ * estava em escuro e a landing em claro.
+ */
 const FIELD_CLASSES =
-  'border-lp-border bg-lp-elevated text-lp-text placeholder:text-lp-muted focus-visible:border-lp-brand focus-visible:ring-lp-brand/40 h-14 rounded-xl px-4 text-lg md:text-lg';
+  'border-lp-border bg-lp-field dark:bg-lp-field dark:border-lp-border text-lp-text placeholder:text-lp-muted focus-visible:border-lp-brand focus-visible:ring-lp-brand/40 h-14 rounded-xl px-4 text-lg md:text-lg';
 
 /**
  * Mensagem de erro traduzida. O schema guarda apenas a chave do erro para que a

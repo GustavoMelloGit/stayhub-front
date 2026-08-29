@@ -144,6 +144,7 @@
   --color-lp-band: var(--lp-band);
   --color-lp-surface: var(--lp-surface);
   --color-lp-elevated: var(--lp-elevated);
+  --color-lp-field: var(--lp-field);
   --color-lp-border: var(--lp-border);
   --color-lp-text: var(--lp-text);
   --color-lp-muted: var(--lp-muted);
@@ -161,6 +162,9 @@
      * que um card sobre a faixa continue se destacando. */
     --lp-band: oklch(0.2 0.015 183);
     --lp-surface: oklch(0.245 0.017 183);
+    /* Campo de formulário. Fica abaixo da cor de card nos dois temas: um
+     * input é um poço, não um relevo. */
+    --lp-field: oklch(0.18 0.014 183);
     --lp-elevated: oklch(0.29 0.019 183);
     --lp-border: oklch(0.36 0.021 183);
     --lp-text: oklch(0.94 0.006 183);
@@ -196,6 +200,7 @@
     --lp-bg: oklch(0.99 0.004 183);
     --lp-band: oklch(0.958 0.007 183);
     --lp-surface: oklch(0.94 0.008 183);
+    --lp-field: oklch(0.995 0.002 183);
     --lp-elevated: oklch(0.93 0.009 183);
     --lp-border: oklch(0.86 0.012 183);
     --lp-text: oklch(0.22 0.02 183);
