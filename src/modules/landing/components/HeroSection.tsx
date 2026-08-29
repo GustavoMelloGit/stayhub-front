@@ -49,6 +49,10 @@ export const HeroSection = () => {
             <motion.span {...rise(0.08)} className='block'>
               {t('hero.titleLine1')}
             </motion.span>
+            {/* O espaço é explícito: sem ele os dois `span` ficam colados no
+                HTML e quem extrai texto por regex, como boa parte dos crawlers
+                de IA, lê "reservaem planilha". O `display: block` só resolve
+                para quem interpreta CSS. */}{' '}
             <motion.span {...rise(0.18)} className='text-lp-brand block'>
               {t('hero.titleLine2')}
             </motion.span>

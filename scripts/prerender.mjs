@@ -129,17 +129,31 @@ const writeSitemap = async () => {
   await writeFile(join(DIST, 'sitemap.xml'), sitemap, 'utf8');
 };
 
-const writeRobots = async () => {
-  const blocks = [
-    ['User-agent: *', 'Allow: /', 'Disallow: /app/', 'Disallow: /connect/'],
-    ...AI_CRAWLERS.map(agent => [`User-agent: ${agent}`, 'Allow: /']),
-  ];
+/**
+ * Rotas sem valor de busca. `/app` vai sem barra final de propósito: com
+ * `/app/` a regra não casa com `/app`, que é justamente a URL do produto.
+ */
+const DISALLOWED = [
+  '/app',
+  '/login',
+  '/signup',
+  '/forgot-password',
+  '/reset-password',
+  '/connect',
+  '/stay/',
+];
 
-  const robots = [
-    ...blocks.map(lines => lines.join('\n')),
-    `Sitemap: ${SITE_URL}/sitemap.xml`,
-    '',
-  ].join('\n\n');
+const writeRobots = async () => {
+  // Cada `User-agent` repete a lista porque um robô obedece só ao grupo mais
+  // específico que casa com ele: um bloco com apenas `Allow: /` não herda os
+  // `Disallow` do grupo `*`.
+  const rules = ['Allow: /', ...DISALLOWED.map(path => `Disallow: ${path}`)];
+
+  const groups = ['*', ...AI_CRAWLERS].map(agent =>
+    [`User-agent: ${agent}`, ...rules].join('\n')
+  );
+
+  const robots = [...groups, `Sitemap: ${SITE_URL}/sitemap.xml`, ''].join('\n\n');
 
   await writeFile(join(DIST, 'robots.txt'), robots, 'utf8');
 };

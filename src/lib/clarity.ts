@@ -1,6 +1,6 @@
 import { env } from './env';
 
-type ClarityFn = (...args: unknown[]) => void;
+type ClarityFn = ((...args: unknown[]) => void) & { q?: unknown[][] };
 
 declare global {
   interface Window {
@@ -23,6 +23,18 @@ export const setupClarity = (): void => {
   if (!projectId) return;
 
   injected = true;
+
+  // A fila é o que o snippet oficial instala antes de baixar o script: sem ela
+  // um evento disparado nos primeiros instantes da página (um clique no CTA do
+  // herói, por exemplo) cairia num `window.clarity` ainda indefinido e sumiria.
+  // O `clarity.js` consome `clarity.q` ao inicializar.
+  if (!window.clarity) {
+    const queue: ClarityFn = (...args: unknown[]) => {
+      queue.q = queue.q ?? [];
+      queue.q.push(args);
+    };
+    window.clarity = queue;
+  }
 
   const script = document.createElement('script');
   script.async = true;
