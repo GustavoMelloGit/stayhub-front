@@ -38,7 +38,7 @@ export const FaqSection = () => {
       id='duvidas'
       eyebrow={t('faq.eyebrow')}
       title={t('faq.title')}
-      className='bg-lp-band'
+      band
     >
       <div ref={ref} className='flex flex-col gap-3'>
         {FAQ_ITEM_KEYS.map(item => (

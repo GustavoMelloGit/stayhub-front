@@ -8,7 +8,6 @@ export const FAQ_ITEM_KEYS = [
   'item5',
   'item6',
   'item7',
-  'item8',
 ] as const;
 
 /**

@@ -143,14 +143,10 @@
       "answer": "Send the spreadsheet in the conversation and Sogio imports the history. You don't start from scratch."
     },
     "item6": {
-      "question": "How much will it cost?",
-      "answer": "R$ 35 per month when it opens to the public. Whoever joins the first 50 pays R$ 25 per month and keeps that price for as long as they stay subscribed. Either way, the first 15 days are free."
-    },
-    "item7": {
       "question": "Is it useful if I only have one property?",
       "answer": "Yes. Sogio is built for people looking after 1 to 15 short-term rentals, from a single beach flat to a small portfolio."
     },
-    "item8": {
+    "item7": {
       "question": "Does it work with Airbnb and Booking?",
       "answer": "Yes. You can log bookings from any platform or from direct rentals and reconcile everything in one place."
     }

@@ -3,6 +3,15 @@ import { cn } from '@/lib/utils';
 
 interface LandingSectionProps {
   id?: string;
+  /**
+   * Faixa alternada. Aplica o fundo e um fio em cima e embaixo.
+   *
+   * O fio existe porque só o preenchimento não resolve no tema escuro: perto
+   * do preto a escala tonal comprime, e o degrau de fundo que salta aos olhos
+   * no claro quase some no escuro. Como as faixas alternam, marcar só elas dá
+   * exatamente um fio por fronteira, sem linha dupla.
+   */
+  band?: boolean;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
@@ -17,12 +26,17 @@ export const LandingSection = ({
   title,
   subtitle,
   children,
+  band,
   className,
   headingClassName,
 }: LandingSectionProps) => (
   <section
     id={id}
-    className={cn('scroll-mt-24 px-5 py-16 md:px-8 md:py-24', className)}
+    className={cn(
+      'scroll-mt-24 px-5 py-16 md:px-8 md:py-24',
+      band && 'bg-lp-band border-lp-border border-y',
+      className
+    )}
   >
     <div className='mx-auto w-full max-w-6xl'>
       {(eyebrow || title || subtitle) && (

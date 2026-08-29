@@ -143,14 +143,10 @@
       "answer": "Você manda a planilha na própria conversa e Sogio importa o histórico. Não precisa recomeçar do zero."
     },
     "item6": {
-      "question": "Quanto vai custar?",
-      "answer": "R$ 35 por mês quando abrir ao público. Quem entra na lista dos 50 primeiros paga R$ 25 por mês e mantém esse valor pelo tempo que continuar assinando. Nos dois casos, os primeiros 15 dias são grátis."
-    },
-    "item7": {
       "question": "Serve para quem tem só um imóvel?",
       "answer": "Serve. Sogio é feito para quem cuida de 1 a 15 imóveis de temporada, de um apartamento na praia a um pequeno portfólio."
     },
-    "item8": {
+    "item7": {
       "question": "Funciona com Airbnb e Booking?",
       "answer": "Sim. Você registra reservas de qualquer plataforma ou de aluguel direto e concilia tudo no mesmo lugar."
     }

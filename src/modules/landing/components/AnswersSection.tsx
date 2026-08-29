@@ -20,7 +20,7 @@ export const AnswersSection = () => {
       eyebrow={t('answers.eyebrow')}
       title={t('answers.title')}
       subtitle={t('answers.subtitle')}
-      className='bg-lp-band'
+      band
     >
       {/* `flex-1` sobre uma base larga: as pílulas crescem para fechar a
           linha em vez de deixarem um vão à direita, e a quantidade por linha
