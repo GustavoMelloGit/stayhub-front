@@ -212,7 +212,7 @@ export const WaitlistForm = () => {
                         'focus-visible:ring-lp-brand outline-none focus-visible:ring-3',
                         selected
                           ? 'border-lp-brand bg-lp-brand text-lp-on-brand'
-                          : 'border-lp-border bg-lp-elevated text-lp-text hover:border-lp-brand'
+                          : 'border-lp-border bg-lp-field text-lp-text hover:border-lp-brand'
                       )}
                     >
                       {t(COUNT_LABEL_KEYS[range])}
