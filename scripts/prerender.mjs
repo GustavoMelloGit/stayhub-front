@@ -241,7 +241,20 @@ const main = async () => {
   const pages = [...STATIC_PAGES, ...guides];
 
   const server = await startServer();
-  const browser = await chromium.launch();
+
+  let browser;
+  try {
+    browser = await chromium.launch();
+  } catch (cause) {
+    server.close();
+    throw new Error(
+      'Não foi possível abrir o Chromium para pré-renderizar. O pacote ' +
+        '`playwright` instala a biblioteca, não o navegador: rode ' +
+        '`npx playwright install chromium` antes do build. No deploy isso ' +
+        'está no `installCommand` do vercel.json.',
+      { cause }
+    );
+  }
 
   try {
     for (const page of pages) {
