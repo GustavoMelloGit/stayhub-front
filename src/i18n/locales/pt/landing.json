@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "title": "Sogio — cuide dos seus imóveis de temporada conversando",
+    "description": "Mande um áudio, uma foto da nota ou uma pergunta. O Sogio lança as reservas, organiza as despesas e diz quanto cada imóvel deu de lucro. Sem planilha, sem aprender sistema novo."
+  },
+  "nav": {
+    "skipToContent": "Ir para o conteúdo",
+    "howItWorks": "Como funciona",
+    "answers": "O que ele responde",
+    "faq": "Dúvidas",
+    "login": "Entrar",
+    "cta": "Entrar na lista"
+  },
+  "hero": {
+    "badge": "Em construção · 50 vagas de fundador",
+    "titleLine1": "Você lança reserva",
+    "titleLine2": "em planilha. De novo.",
+    "subtitle": "Manda um áudio. O Sogio lança, organiza e te diz quanto o imóvel deu de lucro esse mês.",
+    "cta": "Entrar na lista dos 50",
+    "ctaTrigger": "Leva 20 segundos. Sem cartão, sem instalar nada.",
+    "secondaryCta": "Já sou cliente"
+  },
+  "demo": {
+    "eyebrow": "Como é na prática",
+    "title": "Áudio, foto ou pergunta. A resposta vem com número.",
+    "subtitle": "Três coisas que você faria numa planilha — feitas numa conversa.",
+    "replay": "Ver de novo",
+    "chatName": "Sogio",
+    "chatStatus": "online",
+    "inputPlaceholder": "Demonstração — os três exemplos rodam sozinhos",
+    "srDescription": "Demonstração de uma conversa com o Sogio: um áudio registrando uma receita, a foto de uma nota de manutenção e uma pergunta sobre lucro.",
+    "tabs": {
+      "audio": "Mandar um áudio",
+      "photo": "Mandar uma foto",
+      "text": "Fazer uma pergunta"
+    },
+    "acts": {
+      "audio": {
+        "duration": "0:04",
+        "transcript": "recebi 1.200 do apê da praia",
+        "reply": "Lancei. Setembro fecha em R$ 4.380 líquido no Apê da Praia — 18% acima de agosto."
+      },
+      "photo": {
+        "attachment": "nota-manutencao.jpg",
+        "caption": "conserto do chuveiro da chácara",
+        "reply": "Manutenção de R$ 340 na Chácara. Lancei como despesa dedutível e guardei a nota junto."
+      },
+      "text": {
+        "question": "qual imóvel deu mais lucro esse ano?",
+        "reply": "Apê da Praia: R$ 31.200 líquido em 2026. A Chácara ficou em R$ 12.700."
+      }
+    }
+  },
+  "howItWorks": {
+    "eyebrow": "Sem aprender sistema nenhum",
+    "title": "Se você sabe mandar mensagem, você sabe usar o Sogio.",
+    "step1": {
+      "title": "Você fala do seu jeito",
+      "body": "Áudio, foto da nota ou mensagem escrita. Não tem campo obrigatório, não tem menu, não tem tela para decorar."
+    },
+    "step2": {
+      "title": "O Sogio entende e lança",
+      "body": "Ele identifica o imóvel, o valor e a data e registra no lugar certo. Se ficar em dúvida, pergunta antes de gravar."
+    },
+    "step3": {
+      "title": "Você pergunta quando quiser",
+      "body": "Quanto entrou esse mês? A chácara deu lucro? A resposta vem com número, na hora, sem abrir planilha."
+    }
+  },
+  "answers": {
+    "eyebrow": "O que o Sogio responde",
+    "title": "As perguntas que hoje moram na sua cabeça",
+    "subtitle": "Sem abrir planilha, sem procurar recibo, sem esperar o fim do mês.",
+    "item1": "Quanto o apê da praia deu de lucro esse ano?",
+    "item2": "Quais dias de dezembro ainda estão livres?",
+    "item3": "Quanto gastei de manutenção nos últimos seis meses?",
+    "item4": "Qual dos meus imóveis rende mais por diária?",
+    "item5": "Quanto eu tenho a receber ainda esse mês?",
+    "item6": "Quanto paguei de taxa de plataforma no ano?"
+  },
+  "objections": {
+    "eyebrow": "Falando abertamente",
+    "title": "O que provavelmente está te travando",
+    "item1": {
+      "question": "E se ele entender errado o que eu falei?",
+      "answer": "Antes de gravar qualquer valor, o Sogio mostra o que entendeu e espera você confirmar. Se estiver errado, você responde na mesma conversa e ele corrige."
+    },
+    "item2": {
+      "question": "Meus dados financeiros ficam seguros?",
+      "answer": "Ficam na sua conta, criptografados, e não são vendidos nem compartilhados. Você exporta tudo e apaga sua conta quando quiser, sem falar com atendente."
+    },
+    "item3": {
+      "question": "Preciso instalar ou aprender algum programa?",
+      "answer": "Não. É uma conversa. O painel do Sogio existe e continua funcionando para quem gosta de ver tudo numa tela — mas ele é opcional."
+    },
+    "item4": {
+      "question": "E se eu já tenho tudo numa planilha?",
+      "answer": "Você manda a planilha na própria conversa e o Sogio importa o histórico. Não precisa recomeçar do zero."
+    }
+  },
+  "founder": {
+    "eyebrow": "Condição de fundador",
+    "title": "As 50 primeiras pessoas travam o preço para sempre",
+    "body": "O Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar — e continua pagando o preço de lançamento mesmo depois que ele subir.",
+    "benefit1": "Preço de lançamento travado, qualquer que seja ele",
+    "benefit2": "Acesso antes da abertura ao público",
+    "benefit3": "Linha direta com quem está construindo",
+    "seatsLabel": "Vagas de fundador",
+    "seatsValue": "50",
+    "disclaimer": "Nada é cobrado agora. Você entra na lista e a gente avisa quando abrir."
+  },
+  "form": {
+    "title": "Entrar na lista dos 50",
+    "nameLabel": "Seu nome",
+    "namePlaceholder": "Como podemos te chamar?",
+    "whatsappLabel": "Seu WhatsApp",
+    "whatsappPlaceholder": "(11) 90000-0000",
+    "countLabel": "Quantos imóveis você cuida?",
+    "count1": "1",
+    "count2to3": "2 a 3",
+    "count4to10": "4 a 10",
+    "count10plus": "10 ou mais",
+    "submit": "Entrar na lista dos 50",
+    "submitting": "Enviando…",
+    "trigger": "Leva 20 segundos. Sem cartão, sem instalar nada.",
+    "privacy": "Usamos seu WhatsApp só para avisar da abertura.",
+    "successTitle": "Pronto, você está na lista.",
+    "successBody": "A gente chama você no WhatsApp assim que o Sogio conversacional abrir. Sem spam, prometido.",
+    "errors": {
+      "invalidName": "Escreva seu nome, mesmo que só o primeiro.",
+      "invalidWhatsapp": "Digite o WhatsApp com DDD, só números.",
+      "invalidCount": "Escolha uma das faixas acima.",
+      "generic": "Não conseguimos enviar agora. Tente de novo em instantes."
+    }
+  },
+  "faq": {
+    "eyebrow": "Dúvidas",
+    "title": "Perguntas frequentes",
+    "item1": {
+      "question": "O Sogio já funciona por WhatsApp hoje?",
+      "answer": "Ainda não. O painel do Sogio está no ar e em uso, e a versão conversacional está em construção — por isso existe uma lista de espera em vez de um botão de cadastro."
+    },
+    "item2": {
+      "question": "Quanto vai custar?",
+      "answer": "O preço ainda não está definido. Quem entra na lista dos 50 primeiros trava o preço de lançamento, seja ele qual for, pelo tempo que continuar assinando."
+    },
+    "item3": {
+      "question": "Serve para quem tem só um imóvel?",
+      "answer": "Serve. O Sogio é feito para quem cuida de 1 a 15 imóveis de temporada — de um apartamento na praia a um pequeno portfólio."
+    },
+    "item4": {
+      "question": "Funciona com Airbnb e Booking?",
+      "answer": "Sim. Você registra reservas de qualquer plataforma ou de aluguel direto e concilia tudo no mesmo lugar."
+    },
+    "item5": {
+      "question": "Preciso saber mexer em tecnologia?",
+      "answer": "Se você manda mensagem e áudio no WhatsApp, já sabe o suficiente. Não existe tela nova para aprender."
+    },
+    "item6": {
+      "question": "Os dados são meus?",
+      "answer": "São. Você exporta tudo a qualquer momento e pode apagar sua conta sem precisar pedir para ninguém."
+    }
+  },
+  "finalCta": {
+    "title": "Comece pelo mais simples: mandar uma mensagem.",
+    "subtitle": "Entre na lista dos 50 primeiros e trave o preço de lançamento.",
+    "cta": "Entrar na lista dos 50"
+  },
+  "footer": {
+    "tagline": "Gestão de imóveis de temporada, em uma conversa.",
+    "rights": "© {{year}} Sogio. Todos os direitos reservados.",
+    "login": "Entrar no painel",
+    "themeToLight": "Mudar para o tema claro",
+    "themeToDark": "Mudar para o tema escuro",
+    "languageSwitch": "English"
+  }
+}

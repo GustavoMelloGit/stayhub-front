@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthData } from '@/modules/auth/service/AuthService.hooks';
+import { ROUTES } from '@/routes/routes';
 import { AuthLoadingSpinner } from './AuthLoadingSpinner';
 
 interface PublicRouteProps {
@@ -22,7 +23,7 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
 
   // Se estiver autenticado, redireciona para a página inicial ou para onde estava tentando ir
   if (isAuthenticated) {
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || ROUTES.home;
     return <Navigate to={from} replace />;
   }
 

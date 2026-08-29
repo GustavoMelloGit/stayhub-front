@@ -128,3 +128,77 @@
     appearance: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Landing page
+ *
+ * A landing tem paleta própria, escopada em `.landing`, por dois motivos:
+ * o tema claro do app é o cinza padrão do shadcn e não carrega cor de marca
+ * nenhuma; e a landing precisa de contraste ≥7:1 no corpo de texto porque o
+ * público-alvo tem 50+ anos. Os tokens abaixo são escuros por padrão e viram
+ * claros com `data-lp-theme='light'` — o layout não muda, só a polaridade.
+ * ------------------------------------------------------------------------- */
+@theme inline {
+  --color-lp-bg: var(--lp-bg);
+  --color-lp-surface: var(--lp-surface);
+  --color-lp-elevated: var(--lp-elevated);
+  --color-lp-border: var(--lp-border);
+  --color-lp-text: var(--lp-text);
+  --color-lp-muted: var(--lp-muted);
+  --color-lp-brand: var(--lp-brand);
+  --color-lp-brand-soft: var(--lp-brand-soft);
+  --color-lp-on-brand: var(--lp-on-brand);
+  --color-lp-bubble-in: var(--lp-bubble-in);
+  --color-lp-bubble-out: var(--lp-bubble-out);
+}
+
+@layer base {
+  .landing {
+    --lp-bg: oklch(0.13 0.012 183);
+    --lp-surface: oklch(0.175 0.014 183);
+    --lp-elevated: oklch(0.225 0.017 183);
+    --lp-border: oklch(0.3 0.019 183);
+    --lp-text: oklch(0.94 0.006 183);
+    --lp-muted: oklch(0.74 0.02 183);
+    --lp-brand: oklch(0.72 0.13 183);
+    --lp-brand-soft: oklch(0.72 0.13 183 / 0.14);
+    --lp-on-brand: oklch(0.15 0.02 183);
+    --lp-bubble-in: oklch(0.225 0.017 183);
+    --lp-bubble-out: oklch(0.34 0.055 160);
+    --lp-glow: oklch(0.72 0.13 183 / 0.28);
+
+    background-color: var(--lp-bg);
+    color: var(--lp-text);
+    color-scheme: dark;
+  }
+
+  .landing[data-lp-theme='light'] {
+    --lp-bg: oklch(0.99 0.004 183);
+    --lp-surface: oklch(0.965 0.006 183);
+    --lp-elevated: oklch(0.93 0.009 183);
+    --lp-border: oklch(0.86 0.012 183);
+    --lp-text: oklch(0.22 0.02 183);
+    --lp-muted: oklch(0.36 0.03 183);
+    --lp-brand: oklch(0.48 0.12 183);
+    --lp-brand-soft: oklch(0.48 0.12 183 / 0.1);
+    --lp-on-brand: oklch(0.99 0.008 183);
+    --lp-bubble-in: oklch(0.945 0.008 183);
+    --lp-bubble-out: oklch(0.88 0.06 160);
+    --lp-glow: oklch(0.48 0.12 183 / 0.16);
+
+    color-scheme: light;
+  }
+
+  /* Escala tipográfica ampliada: o corpo de 16px padrão de SaaS é pequeno
+   * demais para o ICP. Base 18px no mobile, 20px a partir de `md`. */
+  .landing {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .landing {
+      font-size: 1.25rem;
+    }
+  }
+}

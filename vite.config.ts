@@ -22,7 +22,10 @@ export default defineConfig({
         theme_color: '#000000',
         background_color: '#000000',
         display: 'standalone',
-        start_url: '/',
+        // A raiz agora é a landing page pública; o app instalado abre direto
+        // no produto autenticado.
+        start_url: '/app',
+        scope: '/',
         icons: [
           {
             src: '/web-app-manifest-192x192.png',
@@ -40,6 +43,11 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        // Navegações caem na casca limpa da SPA, nunca no HTML pré-renderizado
+        // da landing — senão `/app` piscaria o conteúdo de marketing. A landing
+        // e sua versão em inglês ficam de fora e são buscadas na rede.
+        navigateFallback: '/app.html',
+        navigateFallbackDenylist: [/^\/$/, /^\/en\/?$/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\./i,

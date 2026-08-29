@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
+import { LandingRoute } from '@/components/LandingRoute';
 import { ROUTES } from './routes';
 import { AppLayout } from '@/components/layout';
 import {
@@ -20,9 +21,29 @@ import {
   LazyResetPasswordView,
   LazyChangePasswordView,
   LazyBillingSettingsView,
+  LazyLandingView,
 } from './lazyComponents';
 
 export const router = createBrowserRouter([
+  {
+    // Landing page pública. Fica na raiz porque é a única rota que precisa
+    // ranquear em busca e ser lida por crawlers de IA — o build a pré-renderiza
+    // em `/` (pt-BR) e `/en` (inglês).
+    path: ROUTES.landing,
+    element: (
+      <LandingRoute>
+        <LazyLandingView pageLanguage='pt' />
+      </LandingRoute>
+    ),
+  },
+  {
+    path: ROUTES.landingEn,
+    element: (
+      <LandingRoute>
+        <LazyLandingView pageLanguage='en' />
+      </LandingRoute>
+    ),
+  },
   {
     path: ROUTES.home,
     element: (
