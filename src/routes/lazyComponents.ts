@@ -1,5 +1,14 @@
 import { lazy } from 'react';
 
+/**
+ * O layout do app entra aqui junto com as views. Ele era o único import
+ * síncrono do roteador, e arrastava `Sidebar → SpecularButton → ogl` (WebGL)
+ * para o chunk de entrada, que a landing pública também baixa.
+ */
+export const LazyAppLayout = lazy(() =>
+  import('@/components/layout').then(module => ({ default: module.AppLayout }))
+);
+
 export const LazyLoginView = lazy(
   () => import('@/modules/auth/view/LoginView')
 );

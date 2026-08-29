@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence } from 'motion/react';
 import { RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from '@/i18n/useTranslation';
@@ -150,9 +149,7 @@ export const ChatDemo = ({ onWatched }: ChatDemoProps) => {
           {messages.slice(0, visible).map(message => (
             <ChatBubble key={message.id} message={message} />
           ))}
-          <AnimatePresence>
-            {typing ? <TypingIndicator /> : null}
-          </AnimatePresence>
+          {typing ? <TypingIndicator /> : null}
         </div>
 
         <div className='border-lp-border bg-lp-elevated border-t px-4 py-3'>

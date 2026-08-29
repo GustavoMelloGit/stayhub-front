@@ -1,31 +1,20 @@
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
 import { ROUTES } from '@/routes/routes';
 import { trackEvent } from '@/lib/clarity';
-import { canAnimate } from '../lib/motion';
 import { LandingCta } from './LandingCta';
 
 const WAVEFORM = [26, 58, 40, 82, 50, 92, 36, 68, 96, 54, 32, 76, 44, 88, 34];
 
+/**
+ * A entrada escalonada do herói vive na classe `lp-rise` (`src/index.css`), que
+ * também trata `prefers-reduced-motion`. O atraso de cada elemento entra por
+ * `--lp-delay`.
+ */
 export const HeroSection = () => {
   const { t } = useTranslation('landing');
-  const [animated] = useState(canAnimate);
-
-  const rise = (delay: number) =>
-    animated
-      ? {
-          initial: { opacity: 0, y: 18 },
-          animate: { opacity: 1, y: 0 },
-          transition: {
-            duration: 0.6,
-            delay,
-            ease: [0.22, 1, 0.36, 1] as const,
-          },
-        }
-      : {};
 
   return (
     <section className='relative overflow-hidden px-5 pt-14 pb-16 md:px-8 md:pt-24 md:pb-24'>
@@ -37,35 +26,44 @@ export const HeroSection = () => {
 
       <div className='relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16'>
         <div>
-          <motion.p
-            {...rise(0)}
-            className='border-lp-border bg-lp-brand-soft text-lp-text mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium md:text-base'
+          <p
+            className='lp-rise border-lp-border bg-lp-brand-soft text-lp-text mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium md:text-base'
+            style={{ '--lp-delay': '0ms' } as CSSProperties}
           >
             <span className='bg-lp-brand size-2 rounded-full' aria-hidden />
             {t('hero.badge')}
-          </motion.p>
+          </p>
 
           <h1 className='text-lp-text text-4xl leading-[1.08] font-bold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-[4.1rem]'>
-            <motion.span {...rise(0.08)} className='block'>
+            <span
+              className='lp-rise block'
+              style={{ '--lp-delay': '80ms' } as CSSProperties}
+            >
               {t('hero.titleLine1')}
-            </motion.span>
+            </span>
             {/* O espaço é explícito: sem ele os dois `span` ficam colados no
                 HTML e quem extrai texto por regex, como boa parte dos crawlers
                 de IA, lê "reservaem planilha". O `display: block` só resolve
                 para quem interpreta CSS. */}{' '}
-            <motion.span {...rise(0.18)} className='text-lp-brand block'>
+            <span
+              className='lp-rise text-lp-brand block'
+              style={{ '--lp-delay': '180ms' } as CSSProperties}
+            >
               {t('hero.titleLine2')}
-            </motion.span>
+            </span>
           </h1>
 
-          <motion.p
-            {...rise(0.3)}
-            className='text-lp-muted mt-6 max-w-xl text-lg md:mt-8 md:text-2xl'
+          <p
+            className='lp-rise text-lp-muted mt-6 max-w-xl text-lg md:mt-8 md:text-2xl'
+            style={{ '--lp-delay': '300ms' } as CSSProperties}
           >
             {t('hero.subtitle')}
-          </motion.p>
+          </p>
 
-          <motion.div {...rise(0.42)} className='mt-8 md:mt-10'>
+          <div
+            className='lp-rise mt-8 md:mt-10'
+            style={{ '--lp-delay': '420ms' } as CSSProperties}
+          >
             <LandingCta
               href='#lista'
               size='large'
@@ -83,12 +81,15 @@ export const HeroSection = () => {
             >
               {t('hero.secondaryCta')}
             </Link>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div {...rise(0.5)} className='relative'>
+        <div
+          className='lp-rise relative'
+          style={{ '--lp-delay': '500ms' } as CSSProperties}
+        >
           <HeroTeaser />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

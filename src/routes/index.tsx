@@ -1,9 +1,10 @@
+import { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
 import { LandingRoute } from '@/components/LandingRoute';
+import { AuthLoadingSpinner } from '@/components/AuthLoadingSpinner';
 import { ROUTES } from './routes';
-import { AppLayout } from '@/components/layout';
 import {
   LazyLoginView,
   LazySignupView,
@@ -22,6 +23,7 @@ import {
   LazyChangePasswordView,
   LazyBillingSettingsView,
   LazyLandingView,
+  LazyAppLayout,
 } from './lazyComponents';
 
 export const router = createBrowserRouter([
@@ -48,9 +50,11 @@ export const router = createBrowserRouter([
     path: ROUTES.home,
     element: (
       <ProtectedRoute>
-        <AppLayout>
-          <Outlet />
-        </AppLayout>
+        <Suspense fallback={<AuthLoadingSpinner />}>
+          <LazyAppLayout>
+            <Outlet />
+          </LazyAppLayout>
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [
