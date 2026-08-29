@@ -1,4 +1,4 @@
-import { Moon, Sun } from 'lucide-react';
+import { Languages, Moon, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { ROUTES } from '@/routes/routes';
@@ -40,14 +40,17 @@ export const LandingHeader = ({
       <div className='mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-3 md:px-8 md:py-4'>
         <Link
           to={ROUTES.landing}
-          className='text-lp-text mr-auto text-xl font-bold tracking-tight md:text-2xl'
+          className='text-lp-text text-xl font-bold tracking-tight md:text-2xl'
         >
           Sogio
         </Link>
 
+        {/* Os links de seção ficam centrados, e idioma e tema ficam no grupo
+            da direita com o mesmo formato de pílula: sem isso "English" lê como
+            mais um link de seção em vez de um controle. */}
         <nav
           aria-label='Menu'
-          className='mr-2 hidden items-center gap-6 lg:flex'
+          className='mx-auto hidden items-center gap-6 lg:flex'
         >
           {NAV_ITEMS.map(item => (
             <a
@@ -60,40 +63,48 @@ export const LandingHeader = ({
           ))}
         </nav>
 
-        <button
-          type='button'
-          onClick={onSwitchLanguage}
-          className='text-lp-muted hover:text-lp-text hidden min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-base transition-colors sm:inline-flex'
-        >
-          {languageLabel}
-        </button>
+        <div className='ml-auto flex items-center gap-2 lg:ml-0'>
+          <button
+            type='button'
+            onClick={onSwitchLanguage}
+            aria-label={languageLabel}
+            className={cn(
+              'border-lp-border text-lp-muted hover:text-lp-text hover:border-lp-brand',
+              'inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border transition-colors',
+              'sm:px-4 sm:text-base'
+            )}
+          >
+            <Languages className='size-5' aria-hidden />
+            <span className='hidden sm:inline'>{languageLabel}</span>
+          </button>
 
-        <button
-          type='button'
-          onClick={onToggleTheme}
-          aria-label={t(
-            theme === 'dark' ? 'footer.themeToLight' : 'footer.themeToDark'
-          )}
-          className={cn(
-            'border-lp-border text-lp-muted hover:text-lp-text hover:border-lp-brand',
-            'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border transition-colors'
-          )}
-        >
-          {theme === 'dark' ? (
-            <Sun className='size-5' aria-hidden />
-          ) : (
-            <Moon className='size-5' aria-hidden />
-          )}
-        </button>
+          <button
+            type='button'
+            onClick={onToggleTheme}
+            aria-label={t(
+              theme === 'dark' ? 'footer.themeToLight' : 'footer.themeToDark'
+            )}
+            className={cn(
+              'border-lp-border text-lp-muted hover:text-lp-text hover:border-lp-brand',
+              'inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border transition-colors'
+            )}
+          >
+            {theme === 'dark' ? (
+              <Sun className='size-5' aria-hidden />
+            ) : (
+              <Moon className='size-5' aria-hidden />
+            )}
+          </button>
 
-        <LandingCta
-          href='#lista'
-          size='compact'
-          className='hidden md:inline-flex'
-          onClick={() => trackEvent('cta_click_header')}
-        >
-          {t('nav.cta')}
-        </LandingCta>
+          <LandingCta
+            href='#lista'
+            size='compact'
+            className='ml-1 hidden md:inline-flex'
+            onClick={() => trackEvent('cta_click_header')}
+          >
+            {t('nav.cta')}
+          </LandingCta>
+        </div>
       </div>
     </header>
   );
