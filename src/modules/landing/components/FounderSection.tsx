@@ -50,8 +50,16 @@ export const FounderSection = () => {
           <ul className='mt-8 flex flex-col gap-4'>
             {BENEFITS.map(benefit => (
               <li key={benefit} className='flex items-start gap-3'>
-                <span className='bg-lp-brand text-lp-on-brand mt-1 flex size-6 shrink-0 items-center justify-center rounded-full'>
-                  <Check className='size-4' aria-hidden />
+                {/* O invólucro tem a altura de uma linha de texto (1.6em, a
+                    entrelinha da landing), então o círculo centraliza na
+                    primeira linha em qualquer tamanho de fonte. Uma margem
+                    fixa acertava num breakpoint e errava no outro, e itens que
+                    quebram em duas linhas no mobile precisam do alinhamento
+                    pelo topo. */}
+                <span className='flex h-[1.6em] shrink-0 items-center text-base md:text-lg'>
+                  <span className='bg-lp-brand text-lp-on-brand flex size-6 items-center justify-center rounded-full'>
+                    <Check className='size-4' aria-hidden />
+                  </span>
                 </span>
                 <span className='text-lp-text text-base md:text-lg'>
                   {t(`founder.${benefit}`)}
