@@ -3,12 +3,27 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { markdown } from './plugins/vite-plugin-markdown';
+
+/** Troca `%GSC_VERIFICATION%` pela meta de verificação, ou remove o marcador. */
+const searchConsoleMeta = () => ({
+  name: 'sogio-gsc-meta',
+  transformIndexHtml(html: string) {
+    const token = process.env.VITE_GSC_VERIFICATION?.trim();
+    return html.replace(
+      '%GSC_VERIFICATION%',
+      token ? `<meta name="google-site-verification" content="${token}" />` : ''
+    );
+  },
+});
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    markdown(),
+    searchConsoleMeta(),
     VitePWA({
       registerType: 'prompt',
       // The service worker is registered manually in src/lib/pwa.ts.
@@ -22,7 +37,10 @@ export default defineConfig({
         theme_color: '#000000',
         background_color: '#000000',
         display: 'standalone',
-        start_url: '/',
+        // A raiz agora é a landing page pública; o app instalado abre direto
+        // no produto autenticado.
+        start_url: '/app',
+        scope: '/',
         icons: [
           {
             src: '/web-app-manifest-192x192.png',
@@ -40,6 +58,11 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        // Navegações caem na casca limpa da SPA, nunca no HTML pré-renderizado
+        // da landing — senão `/app` piscaria o conteúdo de marketing. A landing
+        // e sua versão em inglês ficam de fora e são buscadas na rede.
+        navigateFallback: '/app.html',
+        navigateFallbackDenylist: [/^\/$/, /^\/en\/?$/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\./i,

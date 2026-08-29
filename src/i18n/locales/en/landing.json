@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "Sogio: manage your short-term rentals by chatting",
+    "description": "No spreadsheet, no software to learn: send a voice note and Sogio logs the booking, files the expenses and tells you what the property earned."
+  },
+  "nav": {
+    "skipToContent": "Skip to content",
+    "howItWorks": "How it works",
+    "answers": "What it answers",
+    "faq": "Questions",
+    "login": "Log in",
+    "cta": "Drop the spreadsheet",
+    "languageGroup": "Language"
+  },
+  "hero": {
+    "badge": "In the works · 50 founder seats",
+    "titleLine1": "What if the spreadsheet",
+    "titleLine2": "listened to you?",
+    "subtitle": "Send a voice note instead. Sogio logs it, files it, and tells you what the property earned this month.",
+    "cta": "I want to drop the spreadsheet",
+    "ctaTrigger": "Takes 20 seconds. You join the first 50 and we'll tell you when it opens."
+  },
+  "demo": {
+    "eyebrow": "What it actually looks like",
+    "title": "A voice note, a photo, or a question. The answer comes with a number.",
+    "subtitle": "Three things you'd do in a spreadsheet, done in a conversation.",
+    "replay": "Play again",
+    "chatName": "Sogio",
+    "chatStatus": "online",
+    "inputPlaceholder": "Demo: the three examples play on their own",
+    "srDescription": "A demo conversation with Sogio: a voice note logging income, a photo of a maintenance receipt, and a question about profit.",
+    "tabs": {
+      "audio": "Send a voice note",
+      "photo": "Send a photo",
+      "text": "Ask a question"
+    },
+    "acts": {
+      "audio": {
+        "duration": "0:04",
+        "transcript": "just got 1,200 from the beach flat",
+        "reply": "Logged it. September closes at R$ 4,380 net on the Beach Flat, 18% above August."
+      },
+      "photo": {
+        "attachment": "maintenance-receipt.jpg",
+        "caption": "shower repair at the country house",
+        "reply": "R$ 340 maintenance at the Country House. Filed as a deductible expense, receipt attached."
+      },
+      "text": {
+        "question": "which property made the most this year?",
+        "reply": "Beach Flat: R$ 31,200 net in 2026. The Country House came in at R$ 12,700."
+      }
+    }
+  },
+  "howItWorks": {
+    "eyebrow": "Nothing new to learn",
+    "title": "If you can send a message, you can use Sogio.",
+    "step1": {
+      "title": "You say it your way",
+      "body": "A voice note, a photo of the receipt, or plain text. No required fields, no menus, no screen to memorise."
+    },
+    "step2": {
+      "title": "Sogio understands and logs it",
+      "body": "It picks out the property, the amount and the date, and files it in the right place. When it isn't sure, it asks before saving."
+    },
+    "step3": {
+      "title": "You ask whenever you want",
+      "body": "How much came in this month? Did the country house turn a profit? The answer comes back with a number, right away."
+    }
+  },
+  "answers": {
+    "eyebrow": "What Sogio answers",
+    "title": "The questions living rent-free in your head",
+    "subtitle": "No spreadsheet to open, no receipt to hunt down, no waiting for month-end.",
+    "item1": "How much did the beach flat earn this year?",
+    "item2": "Which days in December are still free?",
+    "item3": "How much have I spent on maintenance in six months?",
+    "item4": "Which property earns the most per night?",
+    "item5": "How much am I still owed this month?",
+    "item6": "How much did I pay in platform fees this year?"
+  },
+  "founder": {
+    "eyebrow": "Founder terms",
+    "title": "The first 50 people pay R$ 25 in the first year",
+    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works and paying R$ 25 a month for the first 12 months, against the R$ 35 regular price.",
+    "priceValue": "R$ 25",
+    "pricePeriod": "/month",
+    "priceRegularLabel": "Regular price",
+    "priceRegularValue": "R$ 35/month",
+    "benefit1": "R$ 25 a month for the first 12 months",
+    "benefit2": "15 days free before the first charge",
+    "benefit3": "Access before it opens to everyone",
+    "benefit4": "A direct line to the people building it",
+    "seatsLabel": "founder seats",
+    "seatsValue": "50",
+    "disclaimer": "Nothing is charged now. You join the list, we tell you when it opens, and the terms are confirmed at launch."
+  },
+  "form": {
+    "title": "I want to drop the spreadsheet",
+    "nameLabel": "Your name",
+    "namePlaceholder": "What should we call you?",
+    "whatsappLabel": "Your WhatsApp",
+    "whatsappPlaceholder": "(11) 90000-0000",
+    "countLabel": "How many properties do you look after?",
+    "count1": "1",
+    "count2to3": "2 to 3",
+    "count4to10": "4 to 10",
+    "count10plus": "10 or more",
+    "submit": "I want to drop the spreadsheet",
+    "submitting": "Sending…",
+    "trigger": "Takes 20 seconds. You join the first 50 and we'll tell you when it opens.",
+    "privacy": "We use your WhatsApp only to tell you when it opens.",
+    "successTitle": "Done. You're on the list.",
+    "successBody": "We'll message you on WhatsApp as soon as conversational Sogio opens. No spam, promise.",
+    "errors": {
+      "invalidName": "Write your name, even just the first one.",
+      "invalidWhatsapp": "Enter your WhatsApp with area code, digits only.",
+      "invalidCount": "Pick one of the ranges above.",
+      "generic": "We couldn't send that right now. Try again in a moment."
+    }
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Frequently asked",
+    "item1": {
+      "question": "Does Sogio already work over WhatsApp?",
+      "answer": "Not yet. The Sogio dashboard is live and in use, and the conversational version is being built. That's why there's a waiting list instead of a sign-up button."
+    },
+    "item2": {
+      "question": "What if it misunderstands me?",
+      "answer": "Before saving any amount, Sogio shows you what it understood and waits for your confirmation. If it's wrong, you say so in the same conversation and it fixes it."
+    },
+    "item3": {
+      "question": "Is my financial data safe?",
+      "answer": "It stays in your account, encrypted, and is never sold or shared. And it's yours: you can export everything at any time and delete your account whenever you want, without talking to anyone."
+    },
+    "item4": {
+      "question": "Do I need to install anything or be good with technology?",
+      "answer": "No. If you send messages and voice notes on WhatsApp, you already know enough, and there's no new screen to learn. The Sogio dashboard still works for people who like seeing everything on a screen, but it's optional."
+    },
+    "item5": {
+      "question": "What if everything is already in a spreadsheet?",
+      "answer": "Send the spreadsheet in the conversation and Sogio imports the history. You don't start from scratch."
+    },
+    "item6": {
+      "question": "Is it useful if I only have one property?",
+      "answer": "Yes. Sogio is built for people looking after 1 to 15 short-term rentals, from a single beach flat to a small portfolio."
+    },
+    "item7": {
+      "question": "Does it work with Airbnb and Booking?",
+      "answer": "Yes. You can log bookings from any platform or from direct rentals and reconcile everything in one place."
+    }
+  },
+  "finalCta": {
+    "title": "Start with the simplest thing: sending a message.",
+    "subtitle": "Join the first 50 and pay R$ 25 a month in the first year.",
+    "cta": "I want to drop the spreadsheet"
+  },
+  "footer": {
+    "tagline": "Short-term rental management, in a conversation.",
+    "rights": "© {{year}} Sogio. All rights reserved.",
+    "login": "Open the dashboard",
+    "themeToLight": "Switch to the light theme",
+    "themeToDark": "Switch to the dark theme",
+    "guides": "Guides"
+  }
+}

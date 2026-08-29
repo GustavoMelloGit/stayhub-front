@@ -1,8 +1,10 @@
+import { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { PublicRoute } from '@/components/PublicRoute';
+import { LandingRoute } from '@/components/LandingRoute';
+import { AuthLoadingSpinner } from '@/components/AuthLoadingSpinner';
 import { ROUTES } from './routes';
-import { AppLayout } from '@/components/layout';
 import {
   LazyLoginView,
   LazySignupView,
@@ -20,16 +22,51 @@ import {
   LazyResetPasswordView,
   LazyChangePasswordView,
   LazyBillingSettingsView,
+  LazyLandingView,
+  LazyAppLayout,
+  LazyGuidesIndexView,
+  LazyGuideView,
 } from './lazyComponents';
 
 export const router = createBrowserRouter([
   {
+    // Landing page pública. Fica na raiz porque é a única rota que precisa
+    // ranquear em busca e ser lida por crawlers de IA — o build a pré-renderiza
+    // em `/` (pt-BR) e `/en` (inglês).
+    path: ROUTES.landing,
+    element: (
+      <LandingRoute>
+        <LazyLandingView pageLanguage='pt' />
+      </LandingRoute>
+    ),
+  },
+  {
+    path: ROUTES.landingEn,
+    element: (
+      <LandingRoute>
+        <LazyLandingView pageLanguage='en' />
+      </LandingRoute>
+    ),
+  },
+  {
+    // Conteúdo público. Como a landing, é pré-renderizado no build: é o que
+    // buscadores e crawlers de IA leem.
+    path: ROUTES.guides,
+    element: <LazyGuidesIndexView />,
+  },
+  {
+    path: ROUTES.guide(':slug'),
+    element: <LazyGuideView />,
+  },
+  {
     path: ROUTES.home,
     element: (
       <ProtectedRoute>
-        <AppLayout>
-          <Outlet />
-        </AppLayout>
+        <Suspense fallback={<AuthLoadingSpinner />}>
+          <LazyAppLayout>
+            <Outlet />
+          </LazyAppLayout>
+        </Suspense>
       </ProtectedRoute>
     ),
     children: [

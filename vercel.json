@@ -2,12 +2,21 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/app.html"
     }
   ],
   "headers": [
     {
       "source": "/(sw.js|manifest.webmanifest)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(index.html|en/index.html|robots.txt|llms.txt|sitemap.xml)",
       "headers": [
         {
           "key": "Cache-Control",

@@ -6,6 +6,15 @@ import { z } from 'zod';
  */
 const envSchema = z.object({
   VITE_API_URL: z.url().default('http://localhost:3030'),
+  /** URL pública do site, usada nos canonical/hreflang e no sitemap. */
+  VITE_SITE_URL: z.url().default('https://www.sogio.app'),
+  /** Project ID do Microsoft Clarity. Vazio desliga o analytics. */
+  VITE_CLARITY_ID: z.string().trim().optional(),
+  /**
+   * Token do Google Search Console. Só o conteúdo, sem a tag: a meta é
+   * escrita no `index.html` durante o build e entra no HTML pré-renderizado.
+   */
+  VITE_GSC_VERIFICATION: z.string().trim().optional(),
 });
 
 /**
@@ -21,6 +30,9 @@ function validateEnv(): Env {
   try {
     return envSchema.parse({
       VITE_API_URL: import.meta.env.VITE_API_URL,
+      VITE_SITE_URL: import.meta.env.VITE_SITE_URL,
+      VITE_CLARITY_ID: import.meta.env.VITE_CLARITY_ID,
+      VITE_GSC_VERIFICATION: import.meta.env.VITE_GSC_VERIFICATION,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {

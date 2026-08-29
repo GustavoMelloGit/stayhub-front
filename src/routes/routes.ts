@@ -1,18 +1,34 @@
+/**
+ * Prefixo do produto autenticado. A raiz `/` pertence à landing page pública,
+ * que é pré-renderizada no build para ser lida por buscadores e crawlers de IA.
+ */
+const APP = '/app';
+
 export const ROUTES = {
-  stayInstructions: (stay_id: string) => `/stay/${stay_id}`,
+  // Público — pré-renderizado
+  landing: '/',
+  landingEn: '/en',
+  guides: '/guias',
+  guide: (slug: string) => `/guias/${slug}`,
+
+  // Produto autenticado
+  home: APP,
+  properties: `${APP}/properties`,
+  property: (property_id: string) => `${APP}/property/${property_id}`,
+  createProperty: `${APP}/property/new`,
+  reconcileStays: `${APP}/reconcile-stays`,
   stayDetail: (property_id: string, stay_id: string) =>
-    `/property/${property_id}/stay/${stay_id}`,
+    `${APP}/property/${property_id}/stay/${stay_id}`,
+  connectedApps: `${APP}/settings/connected-apps`,
+  changePassword: `${APP}/settings/change-password`,
+  billingSettings: `${APP}/settings/billing`,
+
+  // Fora do app de propósito: links enviados a hóspedes e fluxos de autenticação
+  // que precisam continuar funcionando nas URLs já divulgadas.
+  stayInstructions: (stay_id: string) => `/stay/${stay_id}`,
   login: '/login',
   signup: '/signup',
-  home: '/',
-  properties: '/properties',
-  property: (property_id: string) => `/property/${property_id}`,
-  reconcileStays: '/reconcile-stays',
-  createProperty: '/property/new',
   connectAuthorize: '/connect/authorize',
-  connectedApps: '/settings/connected-apps',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
-  changePassword: '/settings/change-password',
-  billingSettings: '/settings/billing',
 } as const;
