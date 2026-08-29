@@ -44,15 +44,16 @@ export const setupClarity = (): void => {
 
 /**
  * Eventos de decisão da landing. `form_abandon` inclui o campo em que a pessoa
- * parou — sem isso não dá para saber se pedir o WhatsApp está derrubando a
- * conversão, que é a hipótese mais provável num público 50+.
+ * parou: sem isso não dá para saber se pedir o WhatsApp está derrubando a
+ * conversão, que é a hipótese mais provável num público 50+. `faq_reached`
+ * marca quem desceu até as objeções, o sinal mais forte de intenção da página.
  */
 export type LandingEvent =
   | 'cta_click_hero'
   | 'cta_click_final'
   | 'cta_click_header'
   | 'demo_watched'
-  | 'objections_reached'
+  | 'faq_reached'
   | 'form_start'
   | 'form_submit'
   | 'form_abandon';

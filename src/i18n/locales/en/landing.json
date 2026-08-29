@@ -79,26 +79,6 @@
     "item5": "How much am I still owed this month?",
     "item6": "How much did I pay in platform fees this year?"
   },
-  "objections": {
-    "eyebrow": "Straight answers",
-    "title": "What's probably holding you back",
-    "item1": {
-      "question": "What if it misunderstands me?",
-      "answer": "Before saving any amount, Sogio shows you what it understood and waits for your confirmation. If it's wrong, you say so in the same conversation and it fixes it."
-    },
-    "item2": {
-      "question": "Is my financial data safe?",
-      "answer": "It stays in your account, encrypted, and is never sold or shared. You can export everything and delete your account whenever you want, without talking to anyone."
-    },
-    "item3": {
-      "question": "Do I need to install or learn any software?",
-      "answer": "No. It's a conversation. The Sogio dashboard exists and still works for people who like seeing everything on a screen, but it's optional."
-    },
-    "item4": {
-      "question": "What if everything is already in a spreadsheet?",
-      "answer": "Send the spreadsheet in the conversation and Sogio imports the history. You don't start from scratch."
-    }
-  },
   "founder": {
     "eyebrow": "Founder terms",
     "title": "The first 50 people lock their price for good",
@@ -142,24 +122,32 @@
       "answer": "Not yet. The Sogio dashboard is live and in use, and the conversational version is being built. That's why there's a waiting list instead of a sign-up button."
     },
     "item2": {
+      "question": "What if it misunderstands me?",
+      "answer": "Before saving any amount, Sogio shows you what it understood and waits for your confirmation. If it's wrong, you say so in the same conversation and it fixes it."
+    },
+    "item3": {
+      "question": "Is my financial data safe?",
+      "answer": "It stays in your account, encrypted, and is never sold or shared. And it's yours: you can export everything at any time and delete your account whenever you want, without talking to anyone."
+    },
+    "item4": {
+      "question": "Do I need to install anything or be good with technology?",
+      "answer": "No. If you send messages and voice notes on WhatsApp, you already know enough, and there's no new screen to learn. The Sogio dashboard still works for people who like seeing everything on a screen, but it's optional."
+    },
+    "item5": {
+      "question": "What if everything is already in a spreadsheet?",
+      "answer": "Send the spreadsheet in the conversation and Sogio imports the history. You don't start from scratch."
+    },
+    "item6": {
       "question": "How much will it cost?",
       "answer": "The price isn't set yet. Whoever joins the first 50 locks the launch price, whatever it turns out to be, for as long as they stay subscribed."
     },
-    "item3": {
+    "item7": {
       "question": "Is it useful if I only have one property?",
       "answer": "Yes. Sogio is built for people looking after 1 to 15 short-term rentals, from a single beach flat to a small portfolio."
     },
-    "item4": {
+    "item8": {
       "question": "Does it work with Airbnb and Booking?",
       "answer": "Yes. You can log bookings from any platform or from direct rentals and reconcile everything in one place."
-    },
-    "item5": {
-      "question": "Do I need to be good with technology?",
-      "answer": "If you send messages and voice notes on WhatsApp, you already know enough. There's no new screen to learn."
-    },
-    "item6": {
-      "question": "Is the data mine?",
-      "answer": "It is. You can export everything at any time and delete your account without having to ask anyone."
     }
   },
   "finalCta": {

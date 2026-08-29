@@ -15,7 +15,6 @@ import { HeroSection } from '../components/HeroSection';
 import { DemoSection } from '../components/DemoSection';
 import { HowItWorksSection } from '../components/HowItWorksSection';
 import { AnswersSection } from '../components/AnswersSection';
-import { ObjectionsSection } from '../components/ObjectionsSection';
 import { FounderSection } from '../components/FounderSection';
 import { FaqSection } from '../components/FaqSection';
 import { FinalCtaSection } from '../components/FinalCtaSection';
@@ -93,7 +92,6 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
         <DemoSection />
         <HowItWorksSection />
         <AnswersSection />
-        <ObjectionsSection />
         <FounderSection />
         <FaqSection />
         <FinalCtaSection />

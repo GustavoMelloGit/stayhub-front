@@ -1,5 +1,7 @@
+import { useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
+import { trackEvent } from '@/lib/clarity';
 import { LandingSection } from './LandingSection';
 import { FAQ_ITEM_KEYS } from '../seo/structuredData';
 
@@ -10,6 +12,26 @@ import { FAQ_ITEM_KEYS } from '../seo/structuredData';
  */
 export const FaqSection = () => {
   const { t } = useTranslation('landing');
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Descer até aqui é o sinal mais forte de intenção da página: quem lê as
+  // objeções está decidindo, não passeando.
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (!entries[0]?.isIntersecting) return;
+        trackEvent('faq_reached');
+        observer.disconnect();
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <LandingSection
@@ -17,7 +39,7 @@ export const FaqSection = () => {
       eyebrow={t('faq.eyebrow')}
       title={t('faq.title')}
     >
-      <div className='flex flex-col gap-3'>
+      <div ref={ref} className='flex flex-col gap-3'>
         {FAQ_ITEM_KEYS.map(item => (
           <details
             key={item}
