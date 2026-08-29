@@ -88,7 +88,8 @@ export const LandingHeader = ({
 
         <LandingCta
           href='#lista'
-          className='hidden min-h-11 px-5 text-base md:inline-flex'
+          size='compact'
+          className='hidden md:inline-flex'
           onClick={() => trackEvent('cta_click_header')}
         >
           {t('nav.cta')}
