@@ -126,7 +126,11 @@ export const ChatDemo = ({ onWatched }: ChatDemoProps) => {
             <span className='text-lp-text text-base font-semibold'>
               {t('demo.chatName')}
             </span>
-            <span className='text-lp-brand text-sm'>
+            {/* A cor de marca em 14px não alcança 7:1 sobre esta superfície.
+                O ponto carrega o sinal visual e a palavra carrega o
+                significado, então nada depende só da cor. */}
+            <span className='text-lp-text flex items-center gap-1.5 text-sm'>
+              <span className='bg-lp-brand size-2 rounded-full' aria-hidden />
               {t('demo.chatStatus')}
             </span>
           </span>
@@ -153,7 +157,7 @@ export const ChatDemo = ({ onWatched }: ChatDemoProps) => {
         </div>
 
         <div className='border-lp-border bg-lp-elevated border-t px-4 py-3'>
-          <p className='border-lp-border text-lp-muted rounded-full border px-4 py-2.5 text-sm'>
+          <p className='border-lp-border text-lp-text rounded-full border px-4 py-2.5 text-sm'>
             {t('demo.inputPlaceholder')}
           </p>
         </div>

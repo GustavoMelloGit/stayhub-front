@@ -158,16 +158,16 @@
     --lp-bg: oklch(0.13 0.012 183);
     /* Faixa de seção alternada. Fica entre o fundo base e a cor de card, para
      * que um card sobre a faixa continue se destacando. */
-    --lp-band: oklch(0.168 0.013 183);
-    --lp-surface: oklch(0.195 0.015 183);
-    --lp-elevated: oklch(0.225 0.017 183);
-    --lp-border: oklch(0.3 0.019 183);
+    --lp-band: oklch(0.2 0.015 183);
+    --lp-surface: oklch(0.245 0.017 183);
+    --lp-elevated: oklch(0.29 0.019 183);
+    --lp-border: oklch(0.36 0.021 183);
     --lp-text: oklch(0.94 0.006 183);
-    --lp-muted: oklch(0.79 0.022 183);
+    --lp-muted: oklch(0.82 0.023 183);
     --lp-brand: oklch(0.72 0.13 183);
     --lp-brand-soft: oklch(0.72 0.13 183 / 0.14);
     --lp-on-brand: oklch(0.15 0.02 183);
-    --lp-bubble-in: oklch(0.225 0.017 183);
+    --lp-bubble-in: oklch(0.29 0.019 183);
     --lp-bubble-out: oklch(0.3 0.05 160);
     --lp-glow: oklch(0.72 0.13 183 / 0.28);
     /* Opacidade do brilho de fundo do herói e do CTA final. No escuro precisa
@@ -410,6 +410,7 @@
   }
 
   .landing .lp-prose code {
+    color: var(--lp-text);
     background: var(--lp-elevated);
     border-radius: 4px;
     padding: 0.1em 0.35em;
