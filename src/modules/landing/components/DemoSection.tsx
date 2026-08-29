@@ -17,7 +17,7 @@ export const DemoSection = () => {
       eyebrow={t('demo.eyebrow')}
       title={t('demo.title')}
       subtitle={t('demo.subtitle')}
-      className='bg-lp-surface/40'
+      className='bg-lp-band'
     >
       <div className='mx-auto w-full max-w-2xl'>
         <ChatDemo onWatched={handleWatched} />

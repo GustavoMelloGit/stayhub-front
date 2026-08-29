@@ -9,7 +9,7 @@ export const FounderSection = () => {
   const { t } = useTranslation('landing');
 
   return (
-    <LandingSection id='lista' className='bg-lp-surface/40'>
+    <LandingSection id='lista'>
       <div className='grid items-start gap-10 lg:grid-cols-2 lg:gap-16'>
         <div>
           <p className='text-lp-brand mb-3 text-base font-semibold tracking-wide uppercase'>

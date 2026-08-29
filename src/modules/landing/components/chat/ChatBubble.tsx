@@ -54,11 +54,11 @@ export const ChatBubble = ({ message }: { message: DemoMessage }) => {
               />
             ))}
           </span>
-          <span className='text-lp-muted shrink-0 text-sm'>
+          <span className='text-lp-text shrink-0 text-sm'>
             {message.duration}
           </span>
         </div>
-        <p className='text-lp-muted mt-2 text-sm italic md:text-base'>
+        <p className='text-lp-text mt-2 text-sm italic md:text-base'>
           “{message.transcript}”
         </p>
         <Ticks />

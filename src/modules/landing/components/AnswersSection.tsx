@@ -1,17 +1,15 @@
 import { useTranslation } from '@/i18n/useTranslation';
-import { cn } from '@/lib/utils';
 import { LandingSection } from './LandingSection';
 
 const ITEMS = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'] as const;
 
 /**
- * Conversa, não grade.
+ * Sugestões de pergunta, não bolhas de conversa.
  *
- * As seis são perguntas do próprio usuário, então todas usam a cor da bolha
- * de saída: colori-las como um diálogo sugeriria uma troca que não existe. O
- * que alterna é só a posição, que dá ritmo sem afirmar nada. Uma grade de seis
- * retângulos idênticos dizia "lista de features"; isto diz "é assim que você
- * vai falar com ele", que é a tese da página.
+ * As seis são perguntas da mesma pessoa, então qualquer coisa que pareça uma
+ * troca de mensagens mente: não há dois lados. O formato de pílula é o que já
+ * se reconhece como "coisas que dá para perguntar", e a largura de cada uma
+ * vem do próprio texto, o que preenche a linha sem grade nem coluna fixa.
  */
 export const AnswersSection = () => {
   const { t } = useTranslation('landing');
@@ -22,28 +20,19 @@ export const AnswersSection = () => {
       eyebrow={t('answers.eyebrow')}
       title={t('answers.title')}
       subtitle={t('answers.subtitle')}
-      className='bg-lp-surface/40'
+      className='bg-lp-band'
     >
-      <ul className='flex max-w-3xl flex-col gap-3'>
-        {ITEMS.map((item, index) => {
-          const alignEnd = index % 2 === 1;
-
-          return (
-            <li
-              key={item}
-              className={cn('flex', alignEnd ? 'justify-end' : 'justify-start')}
-            >
-              <p
-                className={cn(
-                  'bg-lp-bubble-out text-lp-text max-w-[85%] rounded-2xl px-5 py-4 text-base md:text-lg',
-                  alignEnd ? 'rounded-br-md' : 'rounded-bl-md'
-                )}
-              >
-                {t(`answers.${item}`)}
-              </p>
-            </li>
-          );
-        })}
+      {/* `flex-1` sobre uma base larga: as pílulas crescem para fechar a
+          linha em vez de deixarem um vão à direita, e a quantidade por linha
+          se ajusta sozinha conforme a largura da tela. */}
+      <ul className='flex flex-wrap gap-3'>
+        {ITEMS.map(item => (
+          <li key={item} className='flex flex-1 basis-[26rem]'>
+            <span className='border-lp-border bg-lp-elevated text-lp-text flex w-full items-center rounded-full border px-6 py-4 text-base md:text-lg'>
+              {t(`answers.${item}`)}
+            </span>
+          </li>
+        ))}
       </ul>
     </LandingSection>
   );
