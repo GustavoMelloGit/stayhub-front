@@ -9,7 +9,8 @@
     "answers": "What it answers",
     "faq": "Questions",
     "login": "Log in",
-    "cta": "Join the list"
+    "cta": "Join the list",
+    "languageGroup": "Language"
   },
   "hero": {
     "badge": "In the works · 50 founder seats",
@@ -171,7 +172,6 @@
     "rights": "© {{year}} Sogio. All rights reserved.",
     "login": "Open the dashboard",
     "themeToLight": "Switch to the light theme",
-    "themeToDark": "Switch to the dark theme",
-    "languageSwitch": "Português"
+    "themeToDark": "Switch to the dark theme"
   }
 }

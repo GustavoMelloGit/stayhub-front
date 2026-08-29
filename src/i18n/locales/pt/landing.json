@@ -9,7 +9,8 @@
     "answers": "O que ele responde",
     "faq": "Dúvidas",
     "login": "Entrar",
-    "cta": "Entrar na lista"
+    "cta": "Entrar na lista",
+    "languageGroup": "Idioma"
   },
   "hero": {
     "badge": "Em construção · 50 vagas de fundador",
@@ -171,7 +172,6 @@
     "rights": "© {{year}} Sogio. Todos os direitos reservados.",
     "login": "Entrar no painel",
     "themeToLight": "Mudar para o tema claro",
-    "themeToDark": "Mudar para o tema escuro",
-    "languageSwitch": "English"
+    "themeToDark": "Mudar para o tema escuro"
   }
 }

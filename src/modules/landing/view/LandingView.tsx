@@ -27,7 +27,7 @@ interface LandingViewProps {
 }
 
 const LandingView = ({ pageLanguage }: LandingViewProps) => {
-  const { t, language, changeLanguage } = useTranslation('landing');
+  const { language, changeLanguage } = useTranslation('landing');
   const { theme, toggleTheme } = useLandingTheme();
   const navigate = useNavigate();
 
@@ -65,12 +65,15 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
 
   useLandingSeo(pageLanguage);
 
-  const switchLanguage = useCallback(() => {
-    const next: Language = pageLanguage === 'en' ? 'pt' : 'en';
-    rememberLanguageChoice();
-    changeLanguage(next);
-    navigate(next === 'en' ? ROUTES.landingEn : ROUTES.landing);
-  }, [pageLanguage, changeLanguage, navigate]);
+  const selectLanguage = useCallback(
+    (next: Language) => {
+      if (next === pageLanguage) return;
+      rememberLanguageChoice();
+      changeLanguage(next);
+      navigate(next === 'en' ? ROUTES.landingEn : ROUTES.landing);
+    },
+    [pageLanguage, changeLanguage, navigate]
+  );
 
   if (shouldRedirectToEnglish) {
     return <Navigate to={ROUTES.landingEn} replace />;
@@ -81,8 +84,8 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
       <LandingHeader
         theme={theme}
         onToggleTheme={toggleTheme}
-        onSwitchLanguage={switchLanguage}
-        languageLabel={t('footer.languageSwitch')}
+        language={pageLanguage}
+        onSelectLanguage={selectLanguage}
       />
 
       <main id='conteudo'>
@@ -97,8 +100,8 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
       </main>
 
       <LandingFooter
-        onSwitchLanguage={switchLanguage}
-        languageLabel={t('footer.languageSwitch')}
+        language={pageLanguage}
+        onSelectLanguage={selectLanguage}
       />
     </div>
   );

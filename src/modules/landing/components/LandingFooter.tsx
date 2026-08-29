@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/i18n/useTranslation';
+import type { Language } from '@/i18n/language';
 import { ROUTES } from '@/routes/routes';
+import { LanguageToggle } from './LanguageToggle';
 
 interface LandingFooterProps {
-  onSwitchLanguage: () => void;
-  languageLabel: string;
+  language: Language;
+  onSelectLanguage: (language: Language) => void;
 }
 
 export const LandingFooter = ({
-  onSwitchLanguage,
-  languageLabel,
+  language,
+  onSelectLanguage,
 }: LandingFooterProps) => {
   const { t } = useTranslation('landing');
 
@@ -28,13 +30,7 @@ export const LandingFooter = ({
           >
             {t('footer.login')}
           </Link>
-          <button
-            type='button'
-            onClick={onSwitchLanguage}
-            className='text-lp-muted hover:text-lp-text inline-flex min-h-11 items-center text-base transition-colors'
-          >
-            {languageLabel}
-          </button>
+          <LanguageToggle language={language} onSelect={onSelectLanguage} />
         </div>
       </div>
 

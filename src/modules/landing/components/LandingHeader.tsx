@@ -1,17 +1,19 @@
-import { Languages, Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { ROUTES } from '@/routes/routes';
 import { useTranslation } from '@/i18n/useTranslation';
 import { trackEvent } from '@/lib/clarity';
+import type { Language } from '@/i18n/language';
 import type { LandingTheme } from '../lib/useLandingTheme';
+import { LanguageToggle } from './LanguageToggle';
 import { LandingCta } from './LandingCta';
 
 interface LandingHeaderProps {
   theme: LandingTheme;
   onToggleTheme: () => void;
-  onSwitchLanguage: () => void;
-  languageLabel: string;
+  language: Language;
+  onSelectLanguage: (language: Language) => void;
 }
 
 const NAV_ITEMS = [
@@ -23,8 +25,8 @@ const NAV_ITEMS = [
 export const LandingHeader = ({
   theme,
   onToggleTheme,
-  onSwitchLanguage,
-  languageLabel,
+  language,
+  onSelectLanguage,
 }: LandingHeaderProps) => {
   const { t } = useTranslation('landing');
 
@@ -64,19 +66,7 @@ export const LandingHeader = ({
         </nav>
 
         <div className='ml-auto flex items-center gap-2 lg:ml-0'>
-          <button
-            type='button'
-            onClick={onSwitchLanguage}
-            aria-label={languageLabel}
-            className={cn(
-              'border-lp-border text-lp-muted hover:text-lp-text hover:border-lp-brand',
-              'inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border transition-colors',
-              'sm:px-4 sm:text-base'
-            )}
-          >
-            <Languages className='size-5' aria-hidden />
-            <span className='hidden sm:inline'>{languageLabel}</span>
-          </button>
+          <LanguageToggle language={language} onSelect={onSelectLanguage} />
 
           <button
             type='button'
