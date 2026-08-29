@@ -116,9 +116,13 @@ export const ChatDemo = ({ onWatched }: ChatDemoProps) => {
 
       <div className='border-lp-border bg-lp-surface overflow-hidden rounded-3xl border shadow-[0_32px_80px_-40px_var(--lp-glow)]'>
         <div className='border-lp-border bg-lp-elevated flex items-center gap-3 border-b px-4 py-3'>
-          <span className='bg-lp-brand text-lp-on-brand flex size-10 items-center justify-center rounded-full text-lg font-bold'>
-            S
-          </span>
+          <img
+            src='/favicon.svg'
+            alt=''
+            width={40}
+            height={40}
+            className='size-10 shrink-0 rounded-xl'
+          />
           <span className='flex flex-col leading-tight'>
             <span className='text-lp-text text-base font-semibold'>
               {t('demo.chatName')}
