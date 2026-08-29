@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Sogio — manage your short-term rentals by chatting",
+    "title": "Sogio: manage your short-term rentals by chatting",
     "description": "Send a voice note, a photo of a receipt, or just ask. Sogio logs the bookings, files the expenses, and tells you how much each property actually earned. No spreadsheet, no new software to learn."
   },
   "nav": {
@@ -23,11 +23,11 @@
   "demo": {
     "eyebrow": "What it actually looks like",
     "title": "A voice note, a photo, or a question. The answer comes with a number.",
-    "subtitle": "Three things you'd do in a spreadsheet — done in a conversation.",
+    "subtitle": "Three things you'd do in a spreadsheet, done in a conversation.",
     "replay": "Play again",
     "chatName": "Sogio",
     "chatStatus": "online",
-    "inputPlaceholder": "Demo — the three examples play on their own",
+    "inputPlaceholder": "Demo: the three examples play on their own",
     "srDescription": "A demo conversation with Sogio: a voice note logging income, a photo of a maintenance receipt, and a question about profit.",
     "tabs": {
       "audio": "Send a voice note",
@@ -38,7 +38,7 @@
       "audio": {
         "duration": "0:04",
         "transcript": "just got 1,200 from the beach flat",
-        "reply": "Logged it. September closes at R$ 4,380 net on the Beach Flat — 18% above August."
+        "reply": "Logged it. September closes at R$ 4,380 net on the Beach Flat, 18% above August."
       },
       "photo": {
         "attachment": "maintenance-receipt.jpg",
@@ -91,7 +91,7 @@
     },
     "item3": {
       "question": "Do I need to install or learn any software?",
-      "answer": "No. It's a conversation. The Sogio dashboard exists and still works for people who like seeing everything on a screen — but it's optional."
+      "answer": "No. It's a conversation. The Sogio dashboard exists and still works for people who like seeing everything on a screen, but it's optional."
     },
     "item4": {
       "question": "What if everything is already in a spreadsheet?",
@@ -101,7 +101,7 @@
   "founder": {
     "eyebrow": "Founder terms",
     "title": "The first 50 people lock their price for good",
-    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works — and keeping the launch price even after it goes up.",
+    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works, and keeping the launch price even after it goes up.",
     "benefit1": "Launch price locked, whatever it turns out to be",
     "benefit2": "Access before it opens to everyone",
     "benefit3": "A direct line to the people building it",
@@ -124,7 +124,7 @@
     "submitting": "Sending…",
     "trigger": "Takes 20 seconds. No card, nothing to install.",
     "privacy": "We use your WhatsApp only to tell you when it opens.",
-    "successTitle": "Done — you're on the list.",
+    "successTitle": "Done. You're on the list.",
     "successBody": "We'll message you on WhatsApp as soon as conversational Sogio opens. No spam, promise.",
     "errors": {
       "invalidName": "Write your name, even just the first one.",
@@ -138,7 +138,7 @@
     "title": "Frequently asked",
     "item1": {
       "question": "Does Sogio already work over WhatsApp?",
-      "answer": "Not yet. The Sogio dashboard is live and in use, and the conversational version is being built — which is why there's a waiting list instead of a sign-up button."
+      "answer": "Not yet. The Sogio dashboard is live and in use, and the conversational version is being built. That's why there's a waiting list instead of a sign-up button."
     },
     "item2": {
       "question": "How much will it cost?",
@@ -146,7 +146,7 @@
     },
     "item3": {
       "question": "Is it useful if I only have one property?",
-      "answer": "Yes. Sogio is built for people looking after 1 to 15 short-term rentals — from a single beach flat to a small portfolio."
+      "answer": "Yes. Sogio is built for people looking after 1 to 15 short-term rentals, from a single beach flat to a small portfolio."
     },
     "item4": {
       "question": "Does it work with Airbnb and Booking?",

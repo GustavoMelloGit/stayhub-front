@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Sogio — cuide dos seus imóveis de temporada conversando",
+    "title": "Sogio: cuide dos seus imóveis de temporada conversando",
     "description": "Mande um áudio, uma foto da nota ou uma pergunta. O Sogio lança as reservas, organiza as despesas e diz quanto cada imóvel deu de lucro. Sem planilha, sem aprender sistema novo."
   },
   "nav": {
@@ -23,11 +23,11 @@
   "demo": {
     "eyebrow": "Como é na prática",
     "title": "Áudio, foto ou pergunta. A resposta vem com número.",
-    "subtitle": "Três coisas que você faria numa planilha — feitas numa conversa.",
+    "subtitle": "Três coisas que você faria numa planilha, feitas numa conversa.",
     "replay": "Ver de novo",
     "chatName": "Sogio",
     "chatStatus": "online",
-    "inputPlaceholder": "Demonstração — os três exemplos rodam sozinhos",
+    "inputPlaceholder": "Demonstração: os três exemplos rodam sozinhos",
     "srDescription": "Demonstração de uma conversa com o Sogio: um áudio registrando uma receita, a foto de uma nota de manutenção e uma pergunta sobre lucro.",
     "tabs": {
       "audio": "Mandar um áudio",
@@ -38,7 +38,7 @@
       "audio": {
         "duration": "0:04",
         "transcript": "recebi 1.200 do apê da praia",
-        "reply": "Lancei. Setembro fecha em R$ 4.380 líquido no Apê da Praia — 18% acima de agosto."
+        "reply": "Lancei. Setembro fecha em R$ 4.380 líquido no Apê da Praia, 18% acima de agosto."
       },
       "photo": {
         "attachment": "nota-manutencao.jpg",
@@ -91,7 +91,7 @@
     },
     "item3": {
       "question": "Preciso instalar ou aprender algum programa?",
-      "answer": "Não. É uma conversa. O painel do Sogio existe e continua funcionando para quem gosta de ver tudo numa tela — mas ele é opcional."
+      "answer": "Não. É uma conversa. O painel do Sogio existe e continua funcionando para quem gosta de ver tudo numa tela, mas ele é opcional."
     },
     "item4": {
       "question": "E se eu já tenho tudo numa planilha?",
@@ -101,7 +101,7 @@
   "founder": {
     "eyebrow": "Condição de fundador",
     "title": "As 50 primeiras pessoas travam o preço para sempre",
-    "body": "O Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar — e continua pagando o preço de lançamento mesmo depois que ele subir.",
+    "body": "O Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e continua pagando o preço de lançamento mesmo depois que ele subir.",
     "benefit1": "Preço de lançamento travado, qualquer que seja ele",
     "benefit2": "Acesso antes da abertura ao público",
     "benefit3": "Linha direta com quem está construindo",
@@ -138,7 +138,7 @@
     "title": "Perguntas frequentes",
     "item1": {
       "question": "O Sogio já funciona por WhatsApp hoje?",
-      "answer": "Ainda não. O painel do Sogio está no ar e em uso, e a versão conversacional está em construção — por isso existe uma lista de espera em vez de um botão de cadastro."
+      "answer": "Ainda não. O painel do Sogio está no ar e em uso, e a versão conversacional está em construção. Por isso existe uma lista de espera em vez de um botão de cadastro."
     },
     "item2": {
       "question": "Quanto vai custar?",
@@ -146,7 +146,7 @@
     },
     "item3": {
       "question": "Serve para quem tem só um imóvel?",
-      "answer": "Serve. O Sogio é feito para quem cuida de 1 a 15 imóveis de temporada — de um apartamento na praia a um pequeno portfólio."
+      "answer": "Serve. O Sogio é feito para quem cuida de 1 a 15 imóveis de temporada, de um apartamento na praia a um pequeno portfólio."
     },
     "item4": {
       "question": "Funciona com Airbnb e Booking?",

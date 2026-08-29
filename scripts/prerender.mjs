@@ -147,7 +147,7 @@ const writeRobots = async () => {
 const writeLlmsTxt = async () => {
   const llms = `# Sogio
 
-> Gestão de imóveis de aluguel por temporada por conversa. O anfitrião manda um áudio, uma foto da nota ou uma pergunta, e o Sogio lança a receita, arquiva a despesa e responde quanto cada imóvel deu de lucro — sem planilha e sem aprender um sistema novo.
+> Gestão de imóveis de aluguel por temporada por conversa. O anfitrião manda um áudio, uma foto da nota ou uma pergunta, e o Sogio lança a receita, arquiva a despesa e responde quanto cada imóvel deu de lucro, sem planilha e sem aprender um sistema novo.
 
 Para quem: pessoas que cuidam de 1 a 15 imóveis de temporada (Airbnb, Booking ou aluguel direto), incluindo quem não tem familiaridade com software de gestão.
 
