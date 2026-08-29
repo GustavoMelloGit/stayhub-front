@@ -17,7 +17,7 @@ export const FaqSection = () => {
       eyebrow={t('faq.eyebrow')}
       title={t('faq.title')}
     >
-      <div className='flex max-w-3xl flex-col gap-3'>
+      <div className='flex flex-col gap-3'>
         {FAQ_ITEM_KEYS.map(item => (
           <details
             key={item}
@@ -30,7 +30,9 @@ export const FaqSection = () => {
                 aria-hidden
               />
             </summary>
-            <p className='text-lp-muted px-5 pb-4 text-base md:text-lg'>
+            {/* O card ocupa a largura toda, mas a resposta mantém a medida de
+                leitura: a 1152px o texto passaria de 90 caracteres por linha. */}
+            <p className='text-lp-muted max-w-3xl px-5 pb-4 text-base md:text-lg'>
               {t(`faq.${item}.answer`)}
             </p>
           </details>
