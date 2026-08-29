@@ -204,7 +204,7 @@ Para quem: pessoas que cuidam de 1 a 15 imóveis de temporada (Airbnb, Booking o
 
 Estado atual: o painel web Sogio está em produção. A versão conversacional está em construção e entra por lista de espera.
 
-Preço: R$ 35 por mês quando abrir ao público. As 50 primeiras pessoas da lista pagam R$ 25 por mês e mantêm esse valor enquanto continuarem assinando. Os primeiros 15 dias são gratuitos nos dois casos.
+Preço: R$ 35 por mês quando abrir ao público. As 50 primeiras pessoas da lista pagam R$ 25 por mês nos 12 primeiros meses. Os primeiros 15 dias são gratuitos nos dois casos.
 
 ## Páginas
 

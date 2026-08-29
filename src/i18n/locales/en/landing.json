@@ -80,19 +80,19 @@
   },
   "founder": {
     "eyebrow": "Founder terms",
-    "title": "The first 50 people pay R$ 25 forever",
-    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works, and keeping the R$ 25 for as long as you stay subscribed, even after the price goes up.",
+    "title": "The first 50 people pay R$ 25 in the first year",
+    "body": "Conversational Sogio is still being built. Joining now means helping shape how it works and paying R$ 25 a month for the first 12 months, against the R$ 35 regular price.",
     "priceValue": "R$ 25",
     "pricePeriod": "/month",
     "priceRegularLabel": "Regular price",
     "priceRegularValue": "R$ 35/month",
-    "benefit1": "R$ 25 a month locked, even when the price goes up",
+    "benefit1": "R$ 25 a month for the first 12 months",
     "benefit2": "15 days free before the first charge",
     "benefit3": "Access before it opens to everyone",
     "benefit4": "A direct line to the people building it",
     "seatsLabel": "founder seats",
     "seatsValue": "50",
-    "disclaimer": "Nothing is charged now. You join the list and we tell you when it opens."
+    "disclaimer": "Nothing is charged now. You join the list, we tell you when it opens, and the terms are confirmed at launch."
   },
   "form": {
     "title": "I want to drop the spreadsheet",
@@ -152,7 +152,7 @@
   },
   "finalCta": {
     "title": "Start with the simplest thing: sending a message.",
-    "subtitle": "Join the first 50 and lock in the launch price.",
+    "subtitle": "Join the first 50 and pay R$ 25 a month in the first year.",
     "cta": "I want to drop the spreadsheet"
   },
   "footer": {

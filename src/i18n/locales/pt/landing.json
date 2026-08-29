@@ -80,19 +80,19 @@
   },
   "founder": {
     "eyebrow": "Condição de fundador",
-    "title": "As 50 primeiras pessoas pagam R$ 25 para sempre",
-    "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar, e mantém os R$ 25 pelo tempo que continuar assinando, mesmo depois que o preço subir.",
+    "title": "As 50 primeiras pessoas pagam R$ 25 no primeiro ano",
+    "body": "Sogio conversacional ainda está sendo construído. Quem entra agora ajuda a definir como ele vai funcionar e paga R$ 25 por mês nos 12 primeiros meses, contra os R$ 35 do preço normal.",
     "priceValue": "R$ 25",
     "pricePeriod": "/mês",
     "priceRegularLabel": "Preço normal",
     "priceRegularValue": "R$ 35/mês",
-    "benefit1": "R$ 25 por mês travados, mesmo quando o preço subir",
+    "benefit1": "R$ 25 por mês nos 12 primeiros meses",
     "benefit2": "15 dias grátis antes da primeira cobrança",
     "benefit3": "Acesso antes da abertura ao público",
     "benefit4": "Linha direta com quem está construindo",
     "seatsLabel": "vagas de fundador",
     "seatsValue": "50",
-    "disclaimer": "Nada é cobrado agora. Você entra na lista e a gente avisa quando abrir."
+    "disclaimer": "Nada é cobrado agora. Você entra na lista, a gente avisa quando abrir, e as condições são confirmadas na abertura."
   },
   "form": {
     "title": "Quero largar a planilha",
@@ -152,7 +152,7 @@
   },
   "finalCta": {
     "title": "Comece pelo mais simples: mandar uma mensagem.",
-    "subtitle": "Entre na lista dos 50 primeiros e trave o preço de lançamento.",
+    "subtitle": "Entre na lista dos 50 primeiros e pague R$ 25 por mês no primeiro ano.",
     "cta": "Quero largar a planilha"
   },
   "footer": {
