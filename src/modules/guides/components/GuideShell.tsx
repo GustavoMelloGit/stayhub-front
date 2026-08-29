@@ -18,8 +18,8 @@ export const GuideShell = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className='landing min-h-screen' data-lp-theme={theme}>
-      <header className='border-lp-border bg-lp-bg/85 sticky top-0 z-50 border-b backdrop-blur-md'>
-        <div className='mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-3 md:px-8 md:py-4'>
+      <header className='fixed inset-x-0 top-0 z-50 px-4 py-3 md:px-6 md:py-4'>
+        <div className='lp-glass mx-auto flex w-full max-w-6xl items-center gap-3 rounded-full py-2 pr-2 pl-4 md:pl-6'>
           <Link
             to={ROUTES.landing}
             className='text-lp-text mr-auto text-xl font-bold tracking-tight md:text-2xl'

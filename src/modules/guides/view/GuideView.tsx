@@ -39,7 +39,7 @@ const GuideView = () => {
 
   return (
     <GuideShell>
-      <article className='mx-auto w-full max-w-3xl px-5 py-12 md:px-8 md:py-16'>
+      <article className='mx-auto w-full max-w-3xl px-5 pt-28 pb-12 md:px-8 md:pt-36 md:pb-16'>
         <Link
           to={ROUTES.guides}
           className='text-lp-muted hover:text-lp-text inline-flex min-h-11 items-center gap-2 text-base transition-colors'

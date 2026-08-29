@@ -15,7 +15,7 @@ export const HeroSection = () => {
   const { t } = useTranslation('landing');
 
   return (
-    <section className='relative overflow-hidden px-5 pt-14 pb-16 md:px-8 md:pt-24 md:pb-24'>
+    <section className='relative overflow-hidden px-5 pt-28 pb-16 md:px-8 md:pt-36 md:pb-24'>
       {/* Brilho de marca atrás do texto. Puramente decorativo. */}
       <div
         aria-hidden

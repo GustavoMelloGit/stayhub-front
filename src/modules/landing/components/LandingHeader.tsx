@@ -31,7 +31,7 @@ export const LandingHeader = ({
   const { t } = useTranslation('landing');
 
   return (
-    <header className='border-lp-border bg-lp-bg/85 sticky top-0 z-50 border-b backdrop-blur-md'>
+    <header className='fixed inset-x-0 top-0 z-50 px-4 py-3 md:px-6 md:py-4'>
       <a
         href='#conteudo'
         className='bg-lp-brand text-lp-on-brand sr-only rounded-b-lg px-4 py-2 focus:not-sr-only focus:absolute focus:top-0 focus:left-4'
@@ -39,7 +39,9 @@ export const LandingHeader = ({
         {t('nav.skipToContent')}
       </a>
 
-      <div className='mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-3 md:px-8 md:py-4'>
+      {/* A pílula flutua com margem da borda da tela, como no cabeçalho da
+          Magie. O `lp-glass` traz o desfoque e o brilho especular. */}
+      <div className='lp-glass mx-auto flex w-full max-w-6xl items-center gap-3 rounded-full py-2 pr-2 pl-4 md:pl-6'>
         <Link
           to={ROUTES.landing}
           className='text-lp-text text-xl font-bold tracking-tight md:text-2xl'

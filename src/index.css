@@ -140,6 +140,7 @@
  * ------------------------------------------------------------------------- */
 @theme inline {
   --color-lp-bg: var(--lp-bg);
+  --color-lp-glass: var(--lp-glass);
   --color-lp-band: var(--lp-band);
   --color-lp-surface: var(--lp-surface);
   --color-lp-elevated: var(--lp-elevated);
@@ -170,6 +171,13 @@
     --lp-bubble-in: oklch(0.29 0.019 183);
     --lp-bubble-out: oklch(0.3 0.05 160);
     --lp-glow: oklch(0.72 0.13 183 / 0.28);
+    /* Vidro do cabeçalho flutuante. O fundo fica em 78% e não menos: abaixo
+     * disso o texto perde os 7:1 quando a faixa clara passa por baixo. */
+    --lp-glass: oklch(0.15 0.013 183 / 0.78);
+    --lp-glass-sheen: rgb(255 255 255 / 0.16);
+    --lp-glass-inner: rgb(255 255 255 / 0.05);
+    --lp-glass-line: oklch(0.94 0.006 183 / 0.14);
+    --lp-glass-drop: 0 10px 34px -14px rgb(0 0 0 / 0.75);
     /* Opacidade do brilho de fundo do herói e do CTA final. No escuro precisa
      * ser bem maior: a mesma opacidade que tinge um fundo quase branco quase
      * não move um fundo quase preto (delta de 25 contra 35 no claro).
@@ -198,6 +206,13 @@
     --lp-bubble-in: oklch(0.945 0.008 183);
     --lp-bubble-out: oklch(0.88 0.06 160);
     --lp-glow: oklch(0.37 0.115 183 / 0.16);
+    /* No claro o brilho branco na aresta some contra um fundo claro, então
+     * quem desenha a borda é uma sombra interna escura embaixo. */
+    --lp-glass: oklch(1 0 0 / 0.72);
+    --lp-glass-sheen: rgb(255 255 255 / 0.9);
+    --lp-glass-inner: oklch(0.22 0.02 183 / 0.05);
+    --lp-glass-line: oklch(0.22 0.02 183 / 0.12);
+    --lp-glass-drop: 0 10px 30px -14px oklch(0.22 0.02 183 / 0.28);
     --lp-glow-opacity: 0.14;
 
     color-scheme: light;
@@ -208,6 +223,11 @@
   .landing {
     font-size: 1.125rem;
     line-height: 1.6;
+
+    /* O cabeçalho é `fixed` e saiu do fluxo. `scroll-padding-top` mantém as
+     * âncoras abaixo dele, e substitui o `scroll-mt` que ficava em cada
+     * seção. */
+    scroll-padding-top: 6.5rem;
   }
 
   /* Os links do cabeçalho apontam para âncoras; sem isto o salto é seco. */
@@ -224,6 +244,29 @@
   @media (min-width: 768px) {
     .landing {
       font-size: 1.25rem;
+    }
+  }
+
+  /* Vidro líquido do cabeçalho.
+   *
+   * O que faz o efeito ser lido é a combinação de desfoque com saturação no
+   * fundo, o brilho especular na aresta de cima e a borda de um pixel. A
+   * refração cromática por `feDisplacementMap` foi deixada de fora de
+   * propósito: exige um mapa de deslocamento em base64 de dezenas de KB, e o
+   * ganho visual não paga o peso numa página que acabou de ser enxugada. */
+  .landing .lp-glass {
+    background: var(--lp-glass);
+    border: 1px solid var(--lp-glass-line);
+    box-shadow:
+      inset 0 1px 0 var(--lp-glass-sheen),
+      inset 0 0 0 1px var(--lp-glass-inner),
+      var(--lp-glass-drop);
+  }
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .landing .lp-glass {
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      backdrop-filter: blur(20px) saturate(1.6);
     }
   }
 

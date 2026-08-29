@@ -20,7 +20,7 @@ const GuidesIndexView = () => {
 
   return (
     <GuideShell>
-      <div className='mx-auto w-full max-w-4xl px-5 py-12 md:px-8 md:py-16'>
+      <div className='mx-auto w-full max-w-4xl px-5 pt-28 pb-12 md:px-8 md:pt-36 md:pb-16'>
         <h1 className='text-lp-text text-3xl leading-tight font-bold tracking-tight text-balance md:text-5xl'>
           Guias para quem aluga por temporada
         </h1>
