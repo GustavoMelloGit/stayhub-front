@@ -12,10 +12,16 @@ export const FAQ_ITEM_KEYS = [
 ] as const;
 
 /**
- * Perfis reais do fundador. "Sogio" disputa a busca com entidades homônimas
- * (há artistas com esse nome), e `sameAs` apontando para um perfil verificável
- * é o sinal que o buscador usa para separar uma entidade da outra.
+ * Perfis reais, do produto e de quem o constrói.
+ *
+ * "Sogio" disputa a busca com entidades homônimas (há músicas e uma empresa
+ * holandesa com esse nome), e `sameAs` apontando para perfis verificáveis é o
+ * sinal que o buscador usa para separar uma entidade da outra. Só entra perfil
+ * que existe e que aponta de volta para este domínio: é a checagem de mão dupla
+ * que dá valor ao campo.
  */
+const ORGANIZATION_PROFILES = ['https://www.linkedin.com/company/sogioapp/'];
+
 const FOUNDER_PROFILES = ['https://www.linkedin.com/in/gustavo-marques-mello/'];
 
 /**
@@ -67,6 +73,7 @@ export const buildStructuredData = (
       },
       image: `${siteUrl}/og-cover.png`,
       description: t('meta.description'),
+      sameAs: ORGANIZATION_PROFILES,
       areaServed: { '@type': 'Country', name: 'BR' },
       founder: {
         '@type': 'Person',
