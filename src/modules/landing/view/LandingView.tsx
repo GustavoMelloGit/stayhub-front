@@ -1,14 +1,10 @@
 import { useCallback, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/i18n/useTranslation';
 import type { Language } from '@/i18n/language';
 import { ROUTES } from '@/routes/routes';
 import { setupClarity } from '@/lib/clarity';
 import { useLandingTheme } from '../lib/useLandingTheme';
-import {
-  hasChosenLanguage,
-  rememberLanguageChoice,
-} from '../lib/languagePreference';
 import { useLandingSeo } from '../seo/useLandingSeo';
 import { LandingHeader } from '../components/LandingHeader';
 import { HeroSection } from '../components/HeroSection';
@@ -30,22 +26,18 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
   const { theme, toggleTheme } = useLandingTheme();
   const navigate = useNavigate();
 
-  // A URL manda no idioma da landing: é o que o `hreflang` e o `canonical`
-  // prometem. A exceção é quem *chega* em `/` com o navegador em inglês; em vez
-  // de trocar o idioma da pessoa, mandamos para a URL correspondente.
+  // A URL manda no idioma, sem exceção: é o que o `hreflang` e o `canonical`
+  // prometem, e é a única regra que vale igual para gente e para rastreador.
   //
-  // Só vale para quem ainda não usou o seletor. Sem essa condição, clicar em
-  // "Português" voltaria para `/en`: o `changeLanguage` é assíncrono e o
-  // `navigate` para `/` acontece antes de `language` virar `pt`. E a decisão
-  // não pode ser memorizada em estado: o React reaproveita esta instância ao ir
-  // de `/` para `/en`, e um valor preso em `true` viraria laço de redirect.
-  const shouldRedirectToEnglish =
-    pageLanguage === 'pt' && language === 'en' && !hasChosenLanguage();
-
+  // Havia aqui um redirecionamento de `/` para `/en` quando o navegador estava
+  // em inglês. O Googlebot renderiza com locale en-US, então ele caía nesse
+  // desvio e indexava a home com o conteúdo inglês: era o que aparecia na
+  // busca para quem pesquisava em português. Detectar idioma para redirecionar
+  // é justamente o que a documentação do Google desaconselha. Quem chega com o
+  // navegador em outro idioma troca pelo seletor do cabeçalho.
   useEffect(() => {
-    if (shouldRedirectToEnglish) return;
     if (language !== pageLanguage) changeLanguage(pageLanguage);
-  }, [shouldRedirectToEnglish, language, pageLanguage, changeLanguage]);
+  }, [language, pageLanguage, changeLanguage]);
 
   useEffect(() => {
     setupClarity();
@@ -84,16 +76,11 @@ const LandingView = ({ pageLanguage }: LandingViewProps) => {
   const selectLanguage = useCallback(
     (next: Language) => {
       if (next === pageLanguage) return;
-      rememberLanguageChoice();
       changeLanguage(next);
       navigate(next === 'en' ? ROUTES.landingEn : ROUTES.landing);
     },
     [pageLanguage, changeLanguage, navigate]
   );
-
-  if (shouldRedirectToEnglish) {
-    return <Navigate to={ROUTES.landingEn} replace />;
-  }
 
   return (
     <div className='landing min-h-screen' data-lp-theme={theme}>

@@ -15,7 +15,7 @@
     "languageGroup": "Language"
   },
   "hero": {
-    "badge": "In the works · 50 founder seats",
+    "badge": "In the works · 50 pioneer seats",
     "titleLine1": "What if the spreadsheet",
     "titleLine2": "listened to you?",
     "subtitle": "Send a voice note instead. Sogio logs it, files it, and tells you what the property earned this month.",
@@ -81,7 +81,7 @@
     "item6": "How much did I pay in platform fees this year?"
   },
   "founder": {
-    "eyebrow": "Founder terms",
+    "eyebrow": "Pioneer terms",
     "title": "The first 50 people pay R$ 25 in the first year",
     "body": "Conversational Sogio is still being built. Joining now means helping shape how it works and paying R$ 25 a month for the first 12 months, against the R$ 35 regular price.",
     "priceValue": "R$ 25",
@@ -92,7 +92,7 @@
     "benefit2": "15 days free before the first charge",
     "benefit3": "Access before it opens to everyone",
     "benefit4": "A direct line to the people building it",
-    "seatsLabel": "founder seats",
+    "seatsLabel": "pioneer seats",
     "seatsValue": "50",
     "disclaimer": "Nothing is charged now. You join the list, we tell you when it opens, and the terms are confirmed at launch."
   },
