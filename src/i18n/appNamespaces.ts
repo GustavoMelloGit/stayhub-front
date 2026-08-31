@@ -1,15 +1,15 @@
 import i18n from './index';
+import './stayNamespace';
 import dashboardEn from './locales/en/dashboard.json';
 import dashboardPt from './locales/pt/dashboard.json';
-import stayEn from './locales/en/stay.json';
-import stayPt from './locales/pt/stay.json';
 import propertyEn from './locales/en/property.json';
 import propertyPt from './locales/pt/property.json';
 import billingEn from './locales/en/billing.json';
 import billingPt from './locales/pt/billing.json';
 
 /**
- * Traduções das telas do produto.
+ * Traduções das telas do produto. O namespace `stay` vem de
+ * `stayNamespace.ts`, que a tela pública de instruções também importa.
  *
  * Importado por `components/layout`, que é carregado sob demanda: os JSON
  * viajam no chunk do app em vez do chunk de entrada, que a landing pública
@@ -19,13 +19,11 @@ import billingPt from './locales/pt/billing.json';
 const BUNDLES = {
   en: {
     dashboard: dashboardEn,
-    stay: stayEn,
     property: propertyEn,
     billing: billingEn,
   },
   pt: {
     dashboard: dashboardPt,
-    stay: stayPt,
     property: propertyPt,
     billing: billingPt,
   },

@@ -11,6 +11,9 @@ import {
 import { useGetPublicStay } from '../service/StayService.hooks';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from '@/i18n/useTranslation';
+// Rota pública, fora do `AppLayout`: registra o namespace `stay` por conta
+// própria, senão a tela renderiza as chaves cruas.
+import '@/i18n/stayNamespace';
 import { INTL_LOCALES } from '@/i18n/locale-maps';
 
 export const StayInstructionsView: FC = () => {
