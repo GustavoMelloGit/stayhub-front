@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthData } from '@/modules/auth/service/AuthService.hooks';
+import { ROUTES } from '@/routes/routes';
 import { AuthLoadingSpinner } from './AuthLoadingSpinner';
 
 interface ProtectedRouteProps {
@@ -22,7 +23,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // Se não estiver autenticado, redireciona para login
   if (!isAuthenticated) {
-    return <Navigate to='/login' state={{ from: location }} replace />;
+    return <Navigate to={ROUTES.login} state={{ from: location }} replace />;
   }
 
   // Se autenticado, renderiza o conteúdo protegido

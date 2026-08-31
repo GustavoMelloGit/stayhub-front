@@ -65,7 +65,7 @@ const PropertyDetailView: FC = () => {
             {t('propertyDetail.errorMessage')}
           </Alert>
           <Link
-            to='/'
+            to={ROUTES.home}
             className={buttonVariants({
               variant: 'outline',
               className: 'w-full',
@@ -96,7 +96,7 @@ const PropertyDetailView: FC = () => {
             {t('propertyDetail.notFoundMessage')}
           </Alert>
           <Link
-            to='/'
+            to={ROUTES.home}
             className={buttonVariants({
               variant: 'outline',
               className: 'w-full',

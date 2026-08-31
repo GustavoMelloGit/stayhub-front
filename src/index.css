@@ -128,3 +128,346 @@
     appearance: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Landing page
+ *
+ * A landing tem paleta própria, escopada em `.landing`, por dois motivos:
+ * o tema claro do app é o cinza padrão do shadcn e não carrega cor de marca
+ * nenhuma; e a landing precisa de contraste ≥7:1 no corpo de texto porque o
+ * público-alvo tem 50+ anos. Os tokens abaixo são escuros por padrão e viram
+ * claros com `data-lp-theme='light'` — o layout não muda, só a polaridade.
+ * ------------------------------------------------------------------------- */
+@theme inline {
+  --color-lp-bg: var(--lp-bg);
+  --color-lp-glass: var(--lp-glass);
+  --color-lp-band: var(--lp-band);
+  --color-lp-surface: var(--lp-surface);
+  --color-lp-elevated: var(--lp-elevated);
+  --color-lp-field: var(--lp-field);
+  --color-lp-border: var(--lp-border);
+  --color-lp-text: var(--lp-text);
+  --color-lp-muted: var(--lp-muted);
+  --color-lp-brand: var(--lp-brand);
+  --color-lp-brand-soft: var(--lp-brand-soft);
+  --color-lp-on-brand: var(--lp-on-brand);
+  --color-lp-bubble-in: var(--lp-bubble-in);
+  --color-lp-bubble-out: var(--lp-bubble-out);
+}
+
+@layer base {
+  .landing {
+    --lp-bg: oklch(0.13 0.012 183);
+    /* Faixa de seção alternada. Fica entre o fundo base e a cor de card, para
+     * que um card sobre a faixa continue se destacando. */
+    --lp-band: oklch(0.2 0.015 183);
+    --lp-surface: oklch(0.245 0.017 183);
+    /* Campo de formulário. Fica abaixo da cor de card nos dois temas: um
+     * input é um poço, não um relevo. */
+    --lp-field: oklch(0.18 0.014 183);
+    --lp-elevated: oklch(0.29 0.019 183);
+    --lp-border: oklch(0.36 0.021 183);
+    --lp-text: oklch(0.94 0.006 183);
+    --lp-muted: oklch(0.82 0.023 183);
+    --lp-brand: oklch(0.72 0.13 183);
+    --lp-brand-soft: oklch(0.72 0.13 183 / 0.14);
+    --lp-on-brand: oklch(0.15 0.02 183);
+    --lp-bubble-in: oklch(0.29 0.019 183);
+    --lp-bubble-out: oklch(0.3 0.05 160);
+    --lp-glow: oklch(0.72 0.13 183 / 0.28);
+    /* Vidro do cabeçalho flutuante. O fundo fica em 78% e não menos: abaixo
+     * disso o texto perde os 7:1 quando a faixa clara passa por baixo. */
+    --lp-glass: oklch(0.15 0.013 183 / 0.78);
+    --lp-glass-sheen: rgb(255 255 255 / 0.16);
+    --lp-glass-inner: rgb(255 255 255 / 0.05);
+    --lp-glass-line: oklch(0.94 0.006 183 / 0.14);
+    --lp-glass-drop: 0 10px 34px -14px rgb(0 0 0 / 0.75);
+    /* Opacidade do brilho de fundo do herói e do CTA final. No escuro precisa
+     * ser bem maior: a mesma opacidade que tinge um fundo quase branco quase
+     * não move um fundo quase preto (delta de 25 contra 35 no claro).
+     *
+     * A 0.3 o fundo sob o herói chega a #023F39, onde `--lp-text` rende 10.7:1
+     * e `--lp-muted` cairia para 5.8:1. Por isso o centro do brilho só recebe
+     * texto principal; o subtítulo fica na borda, a 7.9:1. */
+    --lp-glow-opacity: 0.3;
+
+    background-color: var(--lp-bg);
+    color: var(--lp-text);
+    color-scheme: dark;
+  }
+
+  .landing[data-lp-theme='light'] {
+    --lp-bg: oklch(0.99 0.004 183);
+    --lp-band: oklch(0.958 0.007 183);
+    --lp-surface: oklch(0.94 0.008 183);
+    --lp-field: oklch(0.995 0.002 183);
+    --lp-elevated: oklch(0.93 0.009 183);
+    --lp-border: oklch(0.86 0.012 183);
+    --lp-text: oklch(0.22 0.02 183);
+    --lp-muted: oklch(0.32 0.03 183);
+    --lp-brand: oklch(0.37 0.115 183);
+    --lp-brand-soft: oklch(0.37 0.115 183 / 0.1);
+    --lp-on-brand: oklch(0.99 0.008 183);
+    --lp-bubble-in: oklch(0.945 0.008 183);
+    --lp-bubble-out: oklch(0.88 0.06 160);
+    --lp-glow: oklch(0.37 0.115 183 / 0.16);
+    /* No claro o brilho branco na aresta some contra um fundo claro, então
+     * quem desenha a borda é uma sombra interna escura embaixo. */
+    --lp-glass: oklch(1 0 0 / 0.72);
+    --lp-glass-sheen: rgb(255 255 255 / 0.9);
+    --lp-glass-inner: oklch(0.22 0.02 183 / 0.05);
+    --lp-glass-line: oklch(0.22 0.02 183 / 0.12);
+    --lp-glass-drop: 0 10px 30px -14px oklch(0.22 0.02 183 / 0.28);
+    --lp-glow-opacity: 0.14;
+
+    color-scheme: light;
+  }
+
+  /* Escala tipográfica ampliada: o corpo de 16px padrão de SaaS é pequeno
+   * demais para o ICP. Base 18px no mobile, 20px a partir de `md`. */
+  .landing {
+    font-size: 1.125rem;
+    line-height: 1.6;
+
+    /* O cabeçalho é `fixed` e saiu do fluxo. `scroll-padding-top` mantém as
+     * âncoras abaixo dele, e substitui o `scroll-mt` que ficava em cada
+     * seção. */
+    scroll-padding-top: 6.5rem;
+  }
+
+  /* Os links do cabeçalho apontam para âncoras; sem isto o salto é seco. */
+  html:has(.landing) {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:has(.landing) {
+      scroll-behavior: auto;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .landing {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Vidro líquido do cabeçalho.
+   *
+   * O que faz o efeito ser lido é a combinação de desfoque com saturação no
+   * fundo, o brilho especular na aresta de cima e a borda de um pixel. A
+   * refração cromática por `feDisplacementMap` foi deixada de fora de
+   * propósito: exige um mapa de deslocamento em base64 de dezenas de KB, e o
+   * ganho visual não paga o peso numa página que acabou de ser enxugada. */
+  .landing .lp-glass {
+    background: var(--lp-glass);
+    border: 1px solid var(--lp-glass-line);
+    box-shadow:
+      inset 0 1px 0 var(--lp-glass-sheen),
+      inset 0 0 0 1px var(--lp-glass-inner),
+      var(--lp-glass-drop);
+  }
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .landing .lp-glass {
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      backdrop-filter: blur(20px) saturate(1.6);
+    }
+  }
+
+  /* Animações da landing.
+   *
+   * Feitas em CSS de propósito: as duas únicas coisas animadas são a entrada
+   * do herói e a demonstração de conversa, e uma biblioteca de animação
+   * custava ~35 KB comprimidos para isso. `both` no fill-mode faz o elemento
+   * respeitar o estado inicial durante o atraso.
+   *
+   * Sob `prefers-reduced-motion` a animação some e sobra o estado final, que
+   * é o mesmo estado que o HTML pré-renderizado do build precisa ter. */
+  @keyframes lp-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes lp-pop {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes lp-dot {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: none;
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  .landing .lp-rise {
+    animation: lp-rise 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--lp-delay, 0ms);
+  }
+
+  .landing .lp-pop {
+    animation: lp-pop 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .landing .lp-dot {
+    animation: lp-dot 900ms ease-in-out infinite;
+    animation-delay: var(--lp-delay, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing .lp-rise,
+    .landing .lp-pop,
+    .landing .lp-dot {
+      animation: none;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Conteúdo dos guias
+ *
+ * O HTML vem do Markdown convertido no build, então não há classe utilitária
+ * nos elementos: o estilo é aplicado por descendência a partir de `.lp-prose`.
+ * A escala segue a da landing, ampliada para o público 50+.
+ * ------------------------------------------------------------------------- */
+@layer base {
+  .landing .lp-prose {
+    color: var(--lp-muted);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  @media (min-width: 768px) {
+    .landing .lp-prose {
+      font-size: 1.25rem;
+    }
+  }
+
+  .landing .lp-prose > * + * {
+    margin-top: 1.25em;
+  }
+
+  .landing .lp-prose h2 {
+    color: var(--lp-text);
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin-top: 2.2em;
+    text-wrap: balance;
+  }
+
+  .landing .lp-prose h3 {
+    color: var(--lp-text);
+    font-size: 1.2em;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-top: 1.8em;
+  }
+
+  .landing .lp-prose strong {
+    color: var(--lp-text);
+    font-weight: 600;
+  }
+
+  .landing .lp-prose a {
+    color: var(--lp-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .landing .lp-prose ul,
+  .landing .lp-prose ol {
+    padding-left: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+
+  .landing .lp-prose ul {
+    list-style: disc;
+  }
+
+  .landing .lp-prose ol {
+    list-style: decimal;
+  }
+
+  .landing .lp-prose li::marker {
+    color: var(--lp-brand);
+  }
+
+  /* Blockquote carrega as fórmulas do texto, não citação: por isso o destaque
+   * é de painel e não de aspas. */
+  .landing .lp-prose blockquote {
+    border-left: 3px solid var(--lp-brand);
+    background: var(--lp-band);
+    color: var(--lp-text);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+  }
+
+  .landing .lp-prose blockquote > * + * {
+    margin-top: 0.75em;
+  }
+
+  .landing .lp-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .landing .lp-prose th,
+  .landing .lp-prose td {
+    border-bottom: 1px solid var(--lp-border);
+    padding: 0.7em 0.8em;
+    text-align: left;
+  }
+
+  .landing .lp-prose th {
+    color: var(--lp-text);
+    font-weight: 600;
+  }
+
+  /* Valores em coluna precisam alinhar; a última coluna é sempre numérica. */
+  .landing .lp-prose td:last-child,
+  .landing .lp-prose th:last-child {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .landing .lp-prose code {
+    color: var(--lp-text);
+    background: var(--lp-elevated);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    font-size: 0.9em;
+  }
+
+  .landing .lp-prose hr {
+    border: 0;
+    border-top: 1px solid var(--lp-border);
+    margin-top: 2.5em;
+  }
+}
