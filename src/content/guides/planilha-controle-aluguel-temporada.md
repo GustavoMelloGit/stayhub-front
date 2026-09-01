@@ -103,6 +103,8 @@ Três sinais objetivos:
 
 O terceiro é o mais grave, porque é quando a planilha para de ser ferramenta de decisão e vira dívida.
 
+Se você reconheceu algum dos três, o [comparativo de alternativas à planilha](/guias/alternativa-a-planilha-de-temporada) mostra as cinco saídas possíveis e para qual problema cada uma serve.
+
 ## A alternativa
 
 Sogio existe exatamente para essa parte. O cálculo continua sendo o mesmo deste guia: a diferença é que o lançamento acontece no momento em que o fato acontece, falando.
