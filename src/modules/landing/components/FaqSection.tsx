@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import { useTranslation } from '@/i18n/useTranslation';
 import { trackEvent } from '@/lib/clarity';
 import { LandingSection } from './LandingSection';
-import { FAQ_ITEM_KEYS } from '../seo/structuredData';
+import { FAQ_ITEM_KEYS } from '@/seo/landingStructuredData';
 
 /**
  * Usa `<details>` nativo de propósito: a resposta continua no HTML mesmo

@@ -1,28 +1,23 @@
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
+import { GUIDES_INDEX, GUIDES_INDEX_BREADCRUMB } from '@/seo/buildGuideHead';
 import { GUIDES } from '../service/guides';
 import { GuideShell } from '../components/GuideShell';
 import { useGuideSeo } from '../seo/useGuideSeo';
 
-const BREADCRUMB = [
-  { name: 'Início', path: ROUTES.landing },
-  { name: 'Guias', path: ROUTES.guides },
-];
-
 const GuidesIndexView = () => {
   useGuideSeo({
-    title: 'Guias para quem aluga por temporada',
-    description:
-      'Contas, comparações e rotinas de quem cuida de imóveis de aluguel por temporada, explicadas sem jargão.',
+    title: GUIDES_INDEX.title,
+    description: GUIDES_INDEX.description,
     path: ROUTES.guides,
-    breadcrumb: BREADCRUMB,
+    breadcrumb: GUIDES_INDEX_BREADCRUMB,
   });
 
   return (
     <GuideShell>
       <div className='mx-auto w-full max-w-4xl px-5 pt-28 pb-12 md:px-8 md:pt-36 md:pb-16'>
         <h1 className='text-lp-text text-3xl leading-tight font-bold tracking-tight text-balance md:text-5xl'>
-          Guias para quem aluga por temporada
+          {GUIDES_INDEX.title}
         </h1>
         <p className='text-lp-muted mt-4 max-w-2xl text-lg md:text-xl'>
           Contas, comparações e rotinas de quem cuida de imóveis de temporada,

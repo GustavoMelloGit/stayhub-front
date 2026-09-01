@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { ROUTES } from '@/routes/routes';
 import { LandingCta } from '@/modules/landing/components/LandingCta';
+import { GUIDES_INDEX_BREADCRUMB, guideBreadcrumb } from '@/seo/buildGuideHead';
 import { findGuide, GUIDES } from '../service/guides';
 import { GuideShell } from '../components/GuideShell';
 import { useGuideSeo } from '../seo/useGuideSeo';
@@ -12,11 +13,10 @@ const GuideView = () => {
   const guide = findGuide(slug);
 
   const breadcrumb = useMemo(
-    () => [
-      { name: 'Início', path: ROUTES.landing },
-      { name: 'Guias', path: ROUTES.guides },
-      ...(guide ? [{ name: guide.title, path: ROUTES.guide(guide.slug) }] : []),
-    ],
+    () =>
+      guide
+        ? guideBreadcrumb(guide.slug, guide.title)
+        : GUIDES_INDEX_BREADCRUMB,
     [guide]
   );
 
