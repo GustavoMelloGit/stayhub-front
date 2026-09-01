@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "husky",
-    "prerender": "node scripts/prerender.mjs"
+    "build:seo": "vite build --ssr src/seo/node.ts --outDir dist-seo",
+    "prerender": "npm run build:seo && node scripts/prerender.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

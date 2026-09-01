@@ -5,6 +5,12 @@
  * visita as rotas públicas com um navegador de verdade e grava o HTML já
  * renderizado por cima dos arquivos do build.
  *
+ * O navegador produz o `<body>`, e só ele. O `<head>` é gerado aqui, por
+ * `renderHead`, a partir do frontmatter dos guias e dos arquivos de tradução —
+ * e substitui por inteiro o que o React tiver montado. Antes o SEO era o que
+ * sobrasse de um `useEffect` no momento do snapshot: uma tag esquecida ou um
+ * efeito que não disparasse saíam como página sem meta, sem erro de build.
+ *
  * Por que um navegador em vez de SSG: o app é uma SPA com React Router 7, e o
  * `vite-react-ssg` ainda declara peer de `react-router-dom ^6`. O Playwright já
  * era devDependency do projeto, então esta rota custa zero dependência nova e
@@ -20,6 +26,17 @@ import { createServer } from 'node:http';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+// Compilado de `src/seo/node.ts` pelo passo `build:seo`. É o que garante que o
+// HTML estático e o navegador montem o `<head>` a partir do mesmo builder.
+import {
+  buildGuideHead,
+  buildLandingHead,
+  guideBreadcrumb,
+  GUIDES_INDEX,
+  GUIDES_INDEX_BREADCRUMB,
+  MANAGED_ATTR,
+  renderHead,
+} from '../dist-seo/node.js';
 
 /**
  * Abre o navegador.
@@ -56,18 +73,71 @@ const SITE_URL = (process.env.VITE_SITE_URL ?? 'https://www.sogio.app').replace(
   ''
 );
 
+/**
+ * Tradutor de leitura direta sobre o JSON do idioma.
+ *
+ * Os builders só pedem chaves de `meta` e `faq`, nenhuma delas com
+ * interpolação, então um `reduce` por caminho basta e evita subir o i18next em
+ * Node. A chave ausente estoura o build de propósito: uma `meta` vazia passaria
+ * despercebida até alguém olhar o resultado da busca.
+ */
+const loadTranslator = async language => {
+  const file = join(ROOT, `src/i18n/locales/${language}/landing.json`);
+  const dictionary = JSON.parse(await readFile(file, 'utf8'));
+
+  return key => {
+    const value = key
+      .split('.')
+      .reduce((node, part) => (node == null ? node : node[part]), dictionary);
+
+    if (typeof value !== 'string') {
+      throw new Error(
+        `[prerender] chave de tradução ausente em ${language}: "${key}"`
+      );
+    }
+
+    return value;
+  };
+};
+
 /** Rotas públicas fixas que precisam existir como HTML estático. */
-const STATIC_PAGES = [
-  { path: '/', output: 'index.html', changefreq: 'weekly', priority: '1.0' },
-  {
-    path: '/en',
-    output: 'en/index.html',
-    changefreq: 'weekly',
-    priority: '0.8',
-    lang: 'en',
-  },
-  { path: '/guias', output: 'guias/index.html', changefreq: 'weekly', priority: '0.7' },
-];
+const buildStaticPages = async () => {
+  const [pt, en] = await Promise.all([
+    loadTranslator('pt'),
+    loadTranslator('en'),
+  ]);
+
+  return [
+    {
+      path: '/',
+      output: 'index.html',
+      changefreq: 'weekly',
+      priority: '1.0',
+      head: buildLandingHead({ siteUrl: SITE_URL, language: 'pt', t: pt }),
+    },
+    {
+      path: '/en',
+      output: 'en/index.html',
+      changefreq: 'weekly',
+      priority: '0.8',
+      lang: 'en',
+      head: buildLandingHead({ siteUrl: SITE_URL, language: 'en', t: en }),
+    },
+    {
+      path: '/guias',
+      output: 'guias/index.html',
+      changefreq: 'weekly',
+      priority: '0.7',
+      head: buildGuideHead({
+        siteUrl: SITE_URL,
+        title: GUIDES_INDEX.title,
+        description: GUIDES_INDEX.description,
+        path: '/guias',
+        breadcrumb: GUIDES_INDEX_BREADCRUMB,
+      }),
+    },
+  ];
+};
 
 /**
  * Descobre os guias pelo sistema de arquivos em vez de importar o registro do
@@ -84,16 +154,34 @@ const discoverGuides = async () => {
     files.map(async name => {
       const slug = name.replace(/\.md$/, '');
       const source = await readFile(join(dir, name), 'utf8');
-      const title = /^title:\s*(.+)$/m.exec(source)?.[1]?.trim() ?? slug;
-      const description = /^description:\s*(.+)$/m.exec(source)?.[1]?.trim() ?? '';
+      const field = key =>
+        new RegExp(`^${key}:\\s*(.+)$`, 'm').exec(source)?.[1]?.trim();
+
+      const title = field('title') ?? slug;
+      const description = field('description') ?? '';
+      const updatedAt = field('updatedAt');
+
+      if (!updatedAt) {
+        throw new Error(`[prerender] ${name} não declara "updatedAt".`);
+      }
+
+      const path = `/guias/${slug}`;
 
       return {
-        path: `/guias/${slug}`,
+        path,
         output: `guias/${slug}/index.html`,
         changefreq: 'monthly',
         priority: '0.6',
         title,
         description,
+        head: buildGuideHead({
+          siteUrl: SITE_URL,
+          title,
+          description,
+          path,
+          article: { updatedAt },
+          breadcrumb: guideBreadcrumb(slug, title),
+        }),
       };
     })
   );
@@ -268,8 +356,11 @@ const main = async () => {
   const shell = await readFile(join(DIST, 'index.html'), 'utf8');
   await writeFile(join(DIST, 'app.html'), shell, 'utf8');
 
-  const guides = await discoverGuides();
-  const pages = [...STATIC_PAGES, ...guides];
+  const [staticPages, guides] = await Promise.all([
+    buildStaticPages(),
+    discoverGuides(),
+  ]);
+  const pages = [...staticPages, ...guides];
 
   const server = await startServer();
 
@@ -307,19 +398,49 @@ const main = async () => {
       // reprovaria num limiar pensado para a landing.
       await tab.waitForSelector('main#conteudo h1', { timeout: 30_000 });
 
-      await tab.evaluate(() => {
-        document
-          .querySelectorAll('script[src*="clarity.ms"]')
-          .forEach(node => node.remove());
+      await tab.evaluate(
+        ({ headHtml, managedAttr, lang }) => {
+          document
+            .querySelectorAll('script[src*="clarity.ms"]')
+            .forEach(node => node.remove());
 
-        // O `Toaster` do sonner injeta ~15 KB de CSS no `<head>` em runtime,
-        // e o injeta de novo quando o idioma muda. A landing nunca mostra
-        // toast, e o bundle recria esse estilo ao montar — no HTML estático
-        // ele é só peso.
-        document.querySelectorAll('head style').forEach(node => {
-          if (node.textContent?.includes('data-sonner-toaster')) node.remove();
-        });
-      });
+          // O `Toaster` do sonner injeta ~15 KB de CSS no `<head>` em runtime,
+          // e o injeta de novo quando o idioma muda. A landing nunca mostra
+          // toast, e o bundle recria esse estilo ao montar — no HTML estático
+          // ele é só peso.
+          document.querySelectorAll('head style').forEach(node => {
+            if (node.textContent?.includes('data-sonner-toaster')) {
+              node.remove();
+            }
+          });
+
+          // O `<head>` de SEO sai por inteiro e entra de novo vindo do Node.
+          // A lista cobre também as tags estáticas do `index.html`, para o
+          // resultado não depender de qual efeito rodou antes do snapshot.
+          const substituidas = [
+            `[${managedAttr}]`,
+            'title',
+            'meta[name="description"]',
+            'meta[property^="og:"]',
+            'meta[name^="twitter:"]',
+            'link[rel="canonical"]',
+            'link[rel="alternate"]',
+            'script[type="application/ld+json"]',
+          ];
+
+          document.head
+            .querySelectorAll(substituidas.join(','))
+            .forEach(node => node.remove());
+
+          document.head.insertAdjacentHTML('beforeend', headHtml);
+          document.documentElement.lang = lang;
+        },
+        {
+          headHtml: renderHead(page.head),
+          managedAttr: MANAGED_ATTR,
+          lang: page.head.lang,
+        }
+      );
 
       const html = await tab.content();
       const output = join(DIST, page.output);
