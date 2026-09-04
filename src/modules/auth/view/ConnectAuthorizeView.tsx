@@ -30,7 +30,7 @@ import {
   isRequestNotFoundError,
 } from '../service/oauthError';
 import { InlineSigninForm } from '../components/InlineSigninForm';
-import { InlineSignupForm } from '../components/InlineSignupForm';
+import { SignupForm } from '../components/SignupForm';
 import type { AuthorizationDecision } from '../types/OAuthTypes';
 
 const PageShell: FC<PropsWithChildren> = ({ children }) => (
@@ -256,7 +256,7 @@ const ConnectAuthorizeView: FC = () => {
         </CardHeader>
         <CardContent className='space-y-4'>
           {isSignup ? (
-            <InlineSignupForm onSuccess={handleSigninSuccess} />
+            <SignupForm onSuccess={handleSigninSuccess} />
           ) : (
             <InlineSigninForm onSuccess={handleSigninSuccess} />
           )}
