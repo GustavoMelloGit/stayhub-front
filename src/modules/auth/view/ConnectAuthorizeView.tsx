@@ -30,6 +30,7 @@ import {
   isRequestNotFoundError,
 } from '../service/oauthError';
 import { InlineSigninForm } from '../components/InlineSigninForm';
+import { InlineSignupForm } from '../components/InlineSignupForm';
 import type { AuthorizationDecision } from '../types/OAuthTypes';
 
 const PageShell: FC<PropsWithChildren> = ({ children }) => (
@@ -109,6 +110,9 @@ const ConnectAuthorizeView: FC = () => {
   } = useDecideAuthorizationRequest();
 
   const [autoApproveFailed, setAutoApproveFailed] = useState(false);
+  // Cadastro e login moram na mesma tela: navegar para `/signup` perderia o
+  // `?request_id=`, que é o que amarra este consentimento.
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const hasAutoApprovedRef = useRef(false);
 
   const shouldAutoApprove =
@@ -225,11 +229,17 @@ const ConnectAuthorizeView: FC = () => {
   }
 
   if (!isAuthenticated) {
+    const isSignup = authMode === 'signup';
+
     return (
       <PageShell>
         <CardHeader className='space-y-3'>
           <h1 className='text-lg leading-none font-semibold'>
-            {t('connectAuthorize.signInTitle')}
+            {t(
+              isSignup
+                ? 'connectAuthorize.signUpTitle'
+                : 'connectAuthorize.signInTitle'
+            )}
           </h1>
           <AppIdentity
             name={request.app_display_name}
@@ -237,11 +247,39 @@ const ConnectAuthorizeView: FC = () => {
             t={t}
           />
           <CardDescription>
-            {t('connectAuthorize.signInDescription')}
+            {t(
+              isSignup
+                ? 'connectAuthorize.signUpDescription'
+                : 'connectAuthorize.signInDescription'
+            )}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <InlineSigninForm onSuccess={handleSigninSuccess} />
+        <CardContent className='space-y-4'>
+          {isSignup ? (
+            <InlineSignupForm onSuccess={handleSigninSuccess} />
+          ) : (
+            <InlineSigninForm onSuccess={handleSigninSuccess} />
+          )}
+
+          <p className='text-center text-sm text-muted-foreground'>
+            {t(
+              isSignup
+                ? 'connectAuthorize.hasAccountText'
+                : 'connectAuthorize.noAccountText'
+            )}{' '}
+            <Button
+              type='button'
+              variant='link'
+              className='h-auto p-0 align-baseline'
+              onClick={() => setAuthMode(isSignup ? 'signin' : 'signup')}
+            >
+              {t(
+                isSignup
+                  ? 'connectAuthorize.signInLink'
+                  : 'connectAuthorize.signUpLink'
+              )}
+            </Button>
+          </p>
         </CardContent>
       </PageShell>
     );
