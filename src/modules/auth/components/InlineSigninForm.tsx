@@ -109,12 +109,7 @@ export const InlineSigninForm: FC<InlineSigninFormProps> = ({ onSuccess }) => {
           />
         )}
 
-        <Button
-          type='submit'
-          size='lg'
-          className='w-full'
-          isLoading={isSigninLoading}
-        >
+        <Button type='submit' className='w-full' isLoading={isSigninLoading}>
           {t('inlineSigninForm.submitButton')}
         </Button>
       </form>
